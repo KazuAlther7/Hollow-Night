@@ -82,6 +82,7 @@ p{margin:0}
 .adm svg{width:16px;height:16px}
 .adm[aria-pressed="true"]{background:var(--gold);color:#1B1208;border-color:var(--gold)}
 .adm.saveall{background:var(--gold);color:#1B1208;border-color:var(--gold);animation:hnGlow 2s ease-in-out infinite}
+.adm.savestatus{opacity:.9;cursor:default}
 @keyframes hnGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,193,78,.5)}50%{box-shadow:0 0 0 6px rgba(242,193,78,0)}}
 .prog{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);width:0;border-radius:0 0 16px 16px}
 @media (max-width:760px){
@@ -96,10 +97,7 @@ p{margin:0}
   flex:none;margin:0 4px;transition:background .35s,box-shadow .35s;
   position:relative;
 }
-.save-light::after{
-  content:"";position:absolute;inset:-3px;border-radius:50%;
-  border:1px solid rgba(74,222,128,.35);
-}
+.save-light::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:1px solid rgba(74,222,128,.35)}
 .save-light.dirty{background:#ef4444;box-shadow:0 0 10px rgba(239,68,68,.85);animation:hnPulseLight 1.6s ease-in-out infinite}
 .save-light.dirty::after{border-color:rgba(239,68,68,.45)}
 @keyframes hnPulseLight{0%,100%{opacity:1}50%{opacity:.45}}
@@ -193,6 +191,56 @@ button.chip{background:transparent}
 .rowact{display:flex;gap:6px;padding-right:12px;flex-wrap:wrap}
 @media (max-width:520px){.row{flex-wrap:wrap}.rowact{padding:0 16px 12px}}
 
+/* Novels grid (Baca) */
+.novel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:24px}
+@media (max-width:480px){.novel-grid{grid-template-columns:repeat(2,1fr);gap:14px}}
+.novel-card{position:relative;background:var(--paper);border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow);overflow:hidden;text-decoration:none;transition:transform .18s;display:flex;flex-direction:column}
+.novel-card:hover{transform:translateY(-4px) rotate(-.3deg)}
+.novel-cover{aspect-ratio:2/3;background:linear-gradient(135deg,var(--night),var(--p1) 60%,var(--p2));display:grid;place-items:center;position:relative;overflow:hidden}
+.novel-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.novel-cover .ph{font:700 1.3rem/1.2 var(--f-display);color:var(--gold);text-align:center;padding:18px;z-index:1;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.novel-cover::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 120%, rgba(242,193,78,.15), transparent 60%);pointer-events:none}
+.novel-meta{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.novel-meta h3{font:400 1.05rem/1.25 var(--f-display)}
+.novel-meta .author{color:var(--ink-soft);font:700 .82rem/1.3 var(--f-ui)}
+.novel-meta .cnt{color:var(--ink-soft);font:600 .78rem/1.3 var(--f-ui);margin-top:auto;padding-top:6px}
+.novel-card .nbadge{position:absolute;top:8px;right:8px;z-index:2}
+.novel-card .cadmin{position:absolute;bottom:8px;right:8px;z-index:2;display:flex;gap:4px}
+
+/* Novel hero */
+.novel-hero{display:grid;grid-template-columns:220px 1fr;gap:26px;margin-bottom:28px;align-items:start}
+@media (max-width:640px){.novel-hero{grid-template-columns:1fr}}
+.novel-hero-cover{aspect-ratio:2/3;background:linear-gradient(135deg,var(--night),var(--p1) 60%,var(--p2));border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow);overflow:hidden;display:grid;place-items:center;position:relative}
+.novel-hero-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.novel-hero-cover .ph{font:700 1.8rem/1.2 var(--f-display);color:var(--gold);text-align:center;padding:20px;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.novel-hero-info h1{font-size:clamp(1.8rem,5vw,2.6rem)}
+.novel-hero-info .author{font:700 1.25rem/1.2 var(--f-hand);color:var(--ink-soft);margin-top:8px}
+.novel-hero-info .syn{font-family:var(--f-read);font-size:1.02rem;line-height:1.75;margin-top:14px}
+.novel-hero-info .syn p+p{margin-top:.9em}
+.novel-hero-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.novel-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+
+/* Chapter editor page */
+.ce-page{max-width:940px;margin:0 auto}
+.ce-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:20px}
+.ce-head .back{flex:none}
+.ce-head .title{flex:1;min-width:0}
+.ce-head .title h1{font-size:1.4rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ce-head .title .kicker{margin-bottom:3px}
+.ce-card{background:var(--paper);border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow);padding:clamp(16px,3vw,26px)}
+.ce-fields{display:grid;grid-template-columns:minmax(0,2fr) 90px minmax(0,1fr) 160px;gap:12px;margin-bottom:16px}
+@media (max-width:760px){.ce-fields{grid-template-columns:1fr 1fr}.ce-fields .full{grid-column:1/-1}}
+.ce-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.ce-save-info{color:var(--ink-soft);font:700 .82rem/1.3 var(--f-ui);display:flex;align-items:center;gap:6px}
+.ce-actions .right{display:flex;flex-wrap:wrap;gap:8px}
+
+/* Cover picker */
+.cover-pick{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+.cover-pick .preview{width:150px;aspect-ratio:2/3;border:1px solid var(--paper-edge);border-radius:6px;background:var(--field);overflow:hidden;display:grid;place-items:center;flex:none}
+.cover-pick .preview img{width:100%;height:100%;object-fit:cover;display:block}
+.cover-pick .preview .ph{font:700 .9rem/1.3 var(--f-display);color:var(--ink-soft);text-align:center;padding:8px}
+
+/* Reader */
 .rd-wrap{max-width:720px;margin:0 auto}
 .rd-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:18px}
 .reader{background:var(--paper);border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow);padding:clamp(22px,5vw,52px) clamp(18px,5vw,56px)}
@@ -285,7 +333,7 @@ select.in{appearance:auto}
 .f6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
 .f6 .in{padding:8px 4px;text-align:center}
 .ov{position:fixed;inset:0;z-index:60;background:rgba(8,14,18,.68);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:calc(18px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
-.md{background:var(--paper);color:var(--ink);width:min(760px,100%);border:1px solid var(--paper-edge);border-radius:10px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.md{background:var(--paper);color:var(--ink);width:min(760px,100%);border:1px solid var(--paper-edge);border-radius:10px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative}
 .md h2{font-size:1.5rem;margin-bottom:4px}
 .md .hint{color:var(--ink-soft);font-size:.92rem;margin-bottom:16px}
 .mfoot{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:8px}
@@ -302,7 +350,7 @@ select.in{appearance:auto}
 .rt-color-btn input[type=color]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
 .rt-color-btn .sw{display:inline-flex;flex-direction:column;align-items:center;line-height:1;gap:0}
 .rt-color-btn .sw::after{content:"";width:16px;height:3px;background:var(--sw,#B3372B);border-radius:2px;margin-top:1px}
-.rt-area{min-height:280px;max-height:65vh;overflow-y:auto;padding:16px 18px;font-family:var(--f-read);font-size:1.02rem;line-height:1.75;outline:0}
+.rt-area{min-height:320px;max-height:calc(100vh - 220px);overflow-y:auto;padding:16px 18px;font-family:var(--f-read);font-size:1.02rem;line-height:1.75;outline:0}
 .rt-area:focus{background:rgba(255,255,255,.3)}
 .rt-area p{margin:0 0 .9em}
 .rt-area h1{font-size:1.9rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
@@ -325,11 +373,8 @@ select.in{appearance:auto}
 .rt-area figure img{float:none!important;display:block;margin:8px auto!important}
 .rt-area a{color:var(--red);text-decoration:underline}
 
-.img-edit-panel{background:var(--paper);color:var(--ink);width:min(600px,100%);border:1px solid var(--paper-edge);border-radius:12px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.img-edit-panel h2{font-size:1.35rem;margin-bottom:4px}
-.img-edit-panel .hint{color:var(--ink-soft);font-size:.9rem;margin-bottom:16px}
 .ie-preview{background:var(--field);border:1.5px solid var(--paper-edge);border-radius:8px;padding:12px;text-align:center;margin-bottom:16px;min-height:80px;display:grid;place-items:center;overflow:hidden}
-.ie-preview img{max-height:200px;max-width:100%;border-radius:4px}
+.ie-preview img{max-height:220px;max-width:100%;border-radius:4px}
 .ie-row{margin-bottom:14px}
 .ie-row>label{display:block;font:800 .7rem/1 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
 .ie-btns{display:flex;gap:5px;flex-wrap:wrap}
@@ -357,17 +402,14 @@ select.in{appearance:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .ff{opacity:.7}
 }
-
 .reader .body figure,.rt-area figure{margin:1.4em 0;text-align:center}
 .reader .body img,.rt-area img{max-width:100%;height:auto;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
-.rtb[data-cmd=image]{padding:0 10px;font-size:.78rem}
-.rtb[data-cmd=link]{padding:0 10px}
 .profile-avatar{width:120px;height:120px;margin:0 auto 14px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);background:var(--night);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.3)}
 .profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
 .profile-avatar .initials{font:400 2.8rem/1 var(--f-display);color:var(--gold)}
 </style>
 <div id="app"></div>
-<script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": "", "avatar": ""}, "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
+<script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": "", "avatar": ""}, "novels": [], "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "novelId": "ndemo01", "body": "<p>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.</p><p>Untuk mengganti bab ini, buka <strong>Mode Penulis</strong>, lalu pilih <em>Impor dari PDF / Word</em> atau <em>Tulis bab baru</em>. Bab contoh ini bisa dihapus kapan saja.</p><hr><p>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.</p><blockquote><p>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.</p></blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "<p>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.</p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "<p>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.</p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
 <script id="hn-app">
 (function(){
 'use strict';
@@ -386,8 +428,8 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 function paras(t){return String(t||'').split(/\n{2,}/).map(function(s){return s.trim()}).filter(Boolean)}
 var S;
 try{S=JSON.parse(document.getElementById('hn-data').textContent)}catch(e){S=null}
-if(!S||!S.chapters){S={v:1,site:{tagline:'',synopsis:'',author:'',avatar:''},chapters:[],lore:[]}}
-S.site=S.site||{};S.site.avatar=S.site.avatar||'';S.lore=S.lore||[];
+if(!S||!S.chapters){S={v:1,site:{tagline:'',synopsis:'',author:'',avatar:''},novels:[],chapters:[],lore:[]}}
+S.site=S.site||{};S.site.avatar=S.site.avatar||'';S.lore=S.lore||[];S.novels=S.novels||[];
 var TYPES={
   world:{tab:'dunia',label:'Dunia',single:'entri lore',cats:['Wilayah','Sejarah','Magis & Aturan','Makhluk','Faksi','Budaya','Lainnya'],note:'Segala hal tentang dunia Hollow Night'},
   char:{tab:'tokoh',label:'Tokoh',single:'tokoh',note:'Lembar karakter ala petualang'},
@@ -405,11 +447,14 @@ var autoSave = lsGet('hn-autosave') !== '0';
 var pendingSave = false;
 function chapters(){return S.chapters.slice().sort(function(a,b){return (a.n-b.n)||((a.t||0)-(b.t||0))})}
 function chById(id){return S.chapters.find(function(c){return c.id===id})}
+function novelById(id){return S.novels.find(function(n){return n.id===id})}
+function chaptersOf(nid){return chapters().filter(function(c){return c.novelId===nid})}
+function sortedNovels(){return S.novels.slice().sort(function(a,b){return (b.t||0)-(a.t||0)})}
 function entry(id){return S.lore.find(function(e){return e.id===id})}
 function ofType(t){return S.lore.filter(function(e){return e.type===t})}
 function readSet(){try{return JSON.parse(lsGet('hn-read')||'[]')}catch(e){return []}}
 function markRead(id){var r=readSet();if(r.indexOf(id)<0){r.push(id);lsSet('hn-read',JSON.stringify(r))}}
-function allVolumes(){var seen={},out=[];chapters().forEach(function(c){var v=(c.vol||'').trim();if(v&&!seen[v]){seen[v]=1;out.push(v)}});return out}
+function allVolumes(nid){var seen={},out=[];chaptersOf(nid||'').forEach(function(c){var v=(c.vol||'').trim();if(v&&!seen[v]){seen[v]=1;out.push(v)}});return out}
 var IC={
   home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
   book:'<path d="M12 6c-2-1.6-5-2-8-1.5V19c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5V4.5C17 4 14 4.4 12 6z"/><path d="M12 6v14"/>',
@@ -434,7 +479,10 @@ var IC={
   discord:'<path d="M8 4c-2 0-3.5 1-4 2.5C3.4 8.5 3 10.5 3 12.5c0 3 1 5.5 3 6.5 1 .5 2 .8 3 .8l1-1.5c.3 0 .7.2 1 .2s.7-.1 1-.2l1 1.5c1 0 2-.3 3-.8 2-1 3-3.5 3-6.5 0-2-.4-4-1-6C17.5 5 16 4 14 4l-.7 1.6c-1-.2-1.6-.3-2.3-.3s-1.3.1-2.3.3L8 4z"/>',
   youtube:'<rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/>',
   copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/>',
-  external:'<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/>'
+  external:'<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/>',
+  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/>',
+  trash:'<path d="M3 6h18"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>',
+  arrow:'<path d="M5 12h14M12 5l7 7-7 7"/>'
 };
 function icon(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>'}
 var D20='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><polygon points="32,4 58,19 58,45 32,60 6,45 6,19"/><polygon points="32,18 46,42 18,42"/><path d="M32 4v14M58 19L46 42M6 19l12 23M32 60L18 42M32 60l14-18M58 45L46 42M6 45l12-3"/></svg>';
@@ -502,6 +550,9 @@ function valid(r){
   if(TABS.some(function(t){return t[0]===r}))return true;
   if(/^b-[A-Za-z0-9_-]+$/.test(r))return S.chapters.some(function(c){return 'b-'+c.id===r});
   if(/^e-[A-Za-z0-9_-]+$/.test(r))return S.lore.some(function(e){return 'e-'+e.id===r});
+  if(/^n-[A-Za-z0-9_-]+$/.test(r))return S.novels.some(function(n){return 'n-'+n.id===r});
+  if(/^tulis-[A-Za-z0-9_-]+$/.test(r))return S.novels.some(function(n){return 'tulis-'+n.id===r});
+  if(/^edit-[A-Za-z0-9_-]+$/.test(r))return S.chapters.some(function(c){return 'edit-'+c.id===r});
   return false;
 }
 function go(r){
@@ -511,7 +562,7 @@ function go(r){
   route=r;render();
 }
 function curTab(){
-  if(route.indexOf('b-')===0)return 'baca';
+  if(route.indexOf('b-')===0||route.indexOf('n-')===0||route.indexOf('tulis-')===0||route.indexOf('edit-')===0)return 'baca';
   if(route.indexOf('e-')===0){var e=entry(route.slice(2));return e?TYPES[e.type].tab:'home'}
   return route;
 }
@@ -523,7 +574,7 @@ function topbar(){
     if(pendingSave){
       h+='<button class="adm saveall" type="button" data-act="save-now" title="Ada perubahan belum disimpan. Klik untuk menyimpan sekarang">'+icon('upload')+'<span class="save-light dirty" aria-hidden="true"></span><span>Simpan</span></button>';
     }else{
-      h+='<button class="adm" type="button" data-act="save-now" title="Semua perubahan tersimpan" style="opacity:.9">'+icon('quill')+'<span class="save-light" aria-hidden="true"></span><span>Mode Penulis</span></button>';
+      h+='<button class="adm savestatus" type="button" disabled title="Semua perubahan tersimpan">'+icon('quill')+'<span class="save-light" aria-hidden="true"></span><span>Tersimpan</span></button>';
     }
   }
   h+=moreMenu();
@@ -532,17 +583,17 @@ function topbar(){
 }
 function moreMenu(){
   var items=[
-    ['user','Profil Penulis','Tentang siapa yang menulis',"#",'profile'],
-    ['share','Media Sosial','Instagram, Discord, dan lainnya',"#",'social'],
-    ['help','Bantuan','Cara menulis & mengimpor bab',"#",'help'],
-    ['info','Tentang Hollow Night','Info web dan versi',"#",'about'],
-    ['mail','Kontak','Kirim pesan & masukan',"#",'contact'],
-    ['gear','Pengaturan','Preferensi tampilan & penyimpanan',"#",'settings']
+    ['user','Profil Penulis','Tentang siapa yang menulis','profile'],
+    ['share','Media Sosial','Instagram, Discord, dan lainnya','social'],
+    ['help','Bantuan','Cara menulis & mengimpor bab','help'],
+    ['info','Tentang Hollow Night','Info web dan versi','about'],
+    ['mail','Kontak','Kirim pesan & masukan','contact'],
+    ['gear','Pengaturan','Preferensi tampilan & penyimpanan','settings']
   ];
   var h='<div class="menu-wrap"><button class="menu-btn" type="button" data-act="menu" aria-label="Menu lainnya" aria-expanded="false" aria-haspopup="true">'+icon('dots')+'</button><div class="menu-pop" id="menu-pop" hidden role="menu"><div class="menu-head"><b>Hollow Night</b><small>Menu tambahan & informasi</small></div>';
   items.forEach(function(x,i){
     if(i===2||i===4)h+='<div class="menu-sep"></div>';
-    h+='<button class="menu-item" type="button" role="menuitem" data-act="menu-item" data-m="'+x[4]+'">'+icon(x[0])+'<span>'+x[1]+'<small>'+x[2]+'</small></span></button>';
+    h+='<button class="menu-item" type="button" role="menuitem" data-act="menu-item" data-m="'+x[3]+'">'+icon(x[0])+'<span>'+x[1]+'<small>'+x[2]+'</small></span></button>';
   });
   return h+'</div></div>';
 }
@@ -554,8 +605,11 @@ function footer(){
 function caesar(s,k){return s.replace(/[a-z]/gi,function(c){var b=c<='Z'?65:97;return String.fromCharCode((c.charCodeAt(0)-b+k+26)%26+b)})}
 function view(){
   if(route==='home')return vHome();
-  if(route==='baca')return vToc();
+  if(route==='baca')return vBaca();
   if(route.indexOf('b-')===0)return vReader(route.slice(2));
+  if(route.indexOf('n-')===0)return vNovel(route.slice(2));
+  if(route.indexOf('tulis-')===0)return vChapterEditor(route.slice(6),null);
+  if(route.indexOf('edit-')===0)return vChapterEditor(null,route.slice(5));
   if(route.indexOf('e-')===0)return vEntry(route.slice(2));
   var t=TABMAP[route];
   if(t==='time')return vTime();
@@ -564,19 +618,20 @@ function view(){
 }
 function exStamp(x){return x.example?'<span class="stamp">CONTOH</span>':(x.status==='draft'?'<span class="stamp">DRAFT</span>':'')}
 function vHome(){
-  var chs=chapters(),last=lsGet('hn-last'),lc=last&&chById(last),first=chs[0];
+  var ns=sortedNovels(),chs=chapters(),last=lsGet('hn-last'),lc=last&&chById(last),first=ns[0]||chs[0];
   var cta='';
-  if(lc)cta+='<a class="btn gold" href="#b-'+lc.id+'" data-go="b-'+lc.id+'">'+icon('book')+'Lanjutkan: Bab '+lc.n+'</a>';
-  else if(first)cta+='<a class="btn gold" href="#b-'+first.id+'" data-go="b-'+first.id+'">'+icon('book')+'Mulai membaca</a>';
-  else cta+='<a class="btn gold" href="#dunia" data-go="dunia">'+icon('globe')+'Lihat catatan dunia</a>';
+  if(lc){var ln=novelById(lc.novelId);cta+='<a class="btn gold" href="#b-'+lc.id+'" data-go="b-'+lc.id+'">'+icon('book')+'Lanjutkan: Bab '+lc.n+'</a>'}
+  else if(ns.length){cta+='<a class="btn gold" href="#n-'+ns[0].id+'" data-go="n-'+ns[0].id+'">'+icon('book')+'Mulai membaca</a>'}
+  else if(admin){cta+='<button class="btn gold" type="button" data-act="novel-new">'+icon('plus')+'Buat novel pertama</button>'}
+  else{cta+='<a class="btn gold" href="#dunia" data-go="dunia">'+icon('globe')+'Lihat catatan dunia</a>'}
   if(chs.length)cta+='<button class="btn nightghost" type="button" data-act="roll"><span class="d20" id="d20" style="display:inline-flex;width:22px;height:22px">'+D20+'</span>Lempar d20</button>';
   var syn=paras(S.site.synopsis).map(function(p){return '<p>'+esc(p)+'</p>'}).join('')||'<p>Sinopsis belum ditulis.</p>';
   var h='<section class="hero"><div class="scene" aria-hidden="true">'+scene()+'</div><div class="hero-in"><img class="logo-big" src="'+LOGO+'" alt="Hollow Night"><p class="tag">'+esc(S.site.tagline||'')+'</p><div class="cta">'+cta+'</div><div class="rollout" id="rollout" aria-live="polite"></div></div></section>';
   if(admin)h+=deskPanel();
-  h+='<div class="cols"><section class="sheet taped syn"><div class="sec-h"><h2>Sinopsis</h2>'+(admin?'<button class="btn ghost sm" type="button" data-act="site-edit">Ubah</button>':'')+'</div>'+syn+'</section>';
-  h+='<section><div class="sec-h"><h2>Bab terbaru</h2><a class="kicker" href="#baca" data-go="baca">Semua bab</a></div>';
-  if(chs.length){h+='<div class="toc">'+chs.slice(-3).reverse().map(function(c){return chRow(c,false)}).join('')+'</div>'}
-  else h+='<div class="sheet empty"><p class="hand">Belum ada bab.</p></div>';
+  h+='<div class="cols"><section class="sheet taped syn"><div class="sec-h"><h2>Sinopsis situs</h2>'+(admin?'<button class="btn ghost sm" type="button" data-act="site-edit">Ubah</button>':'')+'</div>'+syn+'</section>';
+  h+='<section><div class="sec-h"><h2>Novel terbaru</h2><a class="kicker" href="#baca" data-go="baca">Semua novel</a></div>';
+  if(ns.length){h+='<div class="toc">'+ns.slice(0,3).map(function(n){var cc=chaptersOf(n.id).length;return '<div class="row"><a class="rowlink" href="#n-'+n.id+'" data-go="n-'+n.id+'"><span class="hex num">'+icon('book').replace('<svg','<svg width="18" height="18"')+'</span><span><span class="rt-title">'+esc(n.title)+'</span><div class="rt-meta">'+cc+' chapter'+(n.author?' &middot; '+esc(n.author):'')+'</div></span><span class="done"></span></a></div>'}).join('')+'</div>'}
+  else h+='<div class="sheet empty"><p class="hand">Belum ada novel.</p>'+(admin?'<button class="btn sm gold" type="button" data-act="novel-new">Buat novel pertama</button>':'')+'</div>';
   h+='</section></div><div class="nb">';
   Object.keys(TYPES).forEach(function(k){var t=TYPES[k];var ic={world:'globe',char:'person',map:'map',time:'hour',gloss:'scroll'}[k];
     h+='<a class="nbi" href="#'+t.tab+'" data-go="'+t.tab+'">'+icon(ic)+'<b>'+t.label+'</b><span>'+ofType(k).length+' catatan</span></a>'});
@@ -587,29 +642,96 @@ function deskPanel(){
   var saveState = pendingSave
     ? '<span class="save-light dirty" aria-hidden="true"></span> <b style="color:var(--red)">Ada perubahan belum disimpan</b>'
     : '<span class="save-light" aria-hidden="true"></span> <b style="color:var(--pine)">Semua tersimpan</b>';
-  return '<section class="sheet desk"><h2>Meja penulis</h2><p style="color:var(--ink-soft);margin-bottom:6px">'+saveState+'</p><p style="color:var(--ink-soft);margin-bottom:14px">Auto-save: <b>'+(autoSave?'AKTIF':'NONAKTIF')+'</b> (atur di Pengaturan). '+(autoSave?'Perubahan langsung disimpan ke database.':'Perubahan akan ditahan sampai kamu menekan tombol Simpan.')+'</p><div class="acts"><button class="btn sm" type="button" data-act="ch-new">'+icon('plus')+'Tulis bab baru</button><button class="btn sm gold" type="button" data-act="import">'+icon('upload')+'Impor dari PDF / Word</button><button class="btn sm ghost" type="button" data-act="site-edit">Ubah sinopsis & tagline</button>'+(pendingSave?'<button class="btn sm" type="button" data-act="save-now">'+icon('upload')+'Simpan sekarang</button>':'')+(ex?'<button class="btn sm ghost" type="button" data-act="clear-ex">Hapus semua contoh</button>':'')+'</div></section>';
+  return '<section class="sheet desk"><h2>Meja penulis</h2><p style="color:var(--ink-soft);margin-bottom:6px">'+saveState+'</p><p style="color:var(--ink-soft);margin-bottom:14px">Auto-save: <b>'+(autoSave?'AKTIF':'NONAKTIF')+'</b> (atur di Pengaturan). '+(autoSave?'Perubahan langsung disimpan ke database.':'Perubahan akan ditahan sampai kamu menekan tombol Simpan.')+'</p><div class="acts"><button class="btn sm gold" type="button" data-act="novel-new">'+icon('plus')+'Buat novel</button><button class="btn sm" type="button" data-act="import">'+icon('upload')+'Impor bab (PDF/Word)</button><button class="btn sm ghost" type="button" data-act="site-edit">Ubah sinopsis situs</button>'+(pendingSave?'<button class="btn sm" type="button" data-act="save-now">'+icon('upload')+'Simpan sekarang</button>':'')+(ex?'<button class="btn sm ghost" type="button" data-act="clear-ex">Hapus contoh</button>':'')+'</div></section>';
+}
+function vBaca(){
+  var ns=sortedNovels();
+  var h='<div class="ph"><div><div class="kicker">Perpustakaan</div><h1>Baca Hollow Night</h1><p class="sub">'+ns.length+' novel'+(ns.length!==1?'':'')+' di rak</p></div>';
+  if(admin)h+='<div class="acts"><button class="btn sm gold" type="button" data-act="novel-new">'+icon('plus')+'Buat Novel</button><button class="btn sm" type="button" data-act="import">'+icon('upload')+'Impor bab</button></div>';
+  h+='</div>';
+  if(!ns.length)return h+'<div class="sheet empty"><p class="hand">Rak masih kosong.</p><p>'+(admin?'Mulai dengan membuat novel pertamamu. Cover, judul, sinopsis, author, dan info novel bisa diisi di situ.':'Penulis belum menambahkan novel.')+'</p>'+(admin?'<button class="btn gold" type="button" data-act="novel-new">'+icon('plus')+'Buat Novel</button>':'')+'</div>';
+  h+='<div class="novel-grid">';
+  ns.forEach(function(n){
+    var cc=chaptersOf(n.id).length;
+    var cover=n.cover?'<img src="'+esc(n.cover)+'" alt="" loading="lazy">':'<div class="ph">'+esc(n.title||'Tanpa Judul')+'</div>';
+    h+='<a class="novel-card" href="#n-'+n.id+'" data-go="n-'+n.id+'" data-s="'+esc((n.title+' '+(n.author||'')+' '+(n.synopsis||'')).toLowerCase())+'">'
+      +'<div class="novel-cover">'+cover+'</div>'
+      +'<div class="novel-meta"><h3>'+esc(n.title)+'</h3>'
+      +(n.author?'<div class="author">oleh '+esc(n.author)+'</div>':'')
+      +'<div class="cnt">'+cc+' chapter</div></div>'
+      +(admin?'<div class="cadmin"><button class="btn gold sm" type="button" data-act="novel-edit" data-id="'+n.id+'">Ubah</button></div>':'')
+      +'</a>';
+  });
+  return h+'</div>';
+}
+function vNovel(nid){
+  var n=novelById(nid);if(!n)return vBaca();
+  var chs=chaptersOf(n.id);
+  var cover=n.cover?'<img src="'+esc(n.cover)+'" alt="">':'<div class="ph">'+esc(n.title)+'</div>';
+  var syn=paras(n.synopsis).map(function(p){return '<p>'+esc(p)+'</p>'}).join('')||'<p><i>Sinopsis belum diisi.</i></p>';
+  var h='<a class="back" href="#baca" data-go="baca">'+icon('back').replace('<svg','<svg width="16" height="16"')+'Perpustakaan</a>';
+  h+='<div class="novel-hero"><div class="novel-hero-cover">'+cover+'</div><div class="novel-hero-info"><div class="kicker">Novel</div><h1>'+esc(n.title)+'</h1>'+(n.author?'<div class="author">oleh '+esc(n.author)+'</div>':'')+'<div class="syn">'+syn+'</div><div class="novel-stats"><span class="chip">'+chs.length+' chapter</span><span class="chip">'+fmt(chs.reduce(function(a,c){return a+wordCount(c.body)},0))+' kata</span>'+(n.status==='complete'?'<span class="chip" style="border-color:var(--pine);color:var(--pine)">TAMAT</span>':'')+'</div><div class="novel-hero-actions">'+(chs.length?'<a class="btn gold" href="#b-'+chs[0].id+'" data-go="b-'+chs[0].id+'">'+icon('book')+'Mulai baca</a>':'')+(admin?'<button class="btn sm" type="button" data-act="ch-new" data-id="'+n.id+'">'+icon('plus')+'Tulis chapter</button><button class="btn ghost sm" type="button" data-act="novel-edit" data-id="'+n.id+'">Ubah info</button><button class="btn ghost sm" type="button" data-act="import" data-id="'+n.id+'">'+icon('upload')+'Impor</button>':'')+'</div></div></div>';
+  h+='<div class="sec-h"><h2>Daftar Chapter</h2></div>';
+  if(!chs.length)h+='<div class="sheet empty"><p class="hand">Belum ada chapter.</p><p>'+(admin?'Tulis chapter pertama atau impor dari PDF/Word.':'Penulis belum menambahkan chapter.')+'</p>'+(admin?'<button class="btn sm" type="button" data-act="ch-new" data-id="'+n.id+'">'+icon('plus')+'Tulis chapter</button>':'')+'</div>';
+  else{
+    var groups=[],map={};
+    chs.forEach(function(c){var v=c.vol||'';if(!(v in map)){map[v]=[];groups.push(v)}map[v].push(c)});
+    groups.forEach(function(v){if(v||groups.length>1)h+='<div class="vol">'+esc(v||'Tanpa volume')+'</div>';h+='<div class="toc">'+map[v].map(function(c){return chRow(c,admin)}).join('')+'</div>'});
+  }
+  return h;
 }
 function chRow(c,adm){
   var wc=wordCount(c.body),mins=Math.max(1,Math.round(wc/200)),rd=readSet().indexOf(c.id)>=0;
-  return '<div class="row"><a class="rowlink" href="#b-'+c.id+'" data-go="b-'+c.id+'"><span class="hex num">'+esc(c.n)+'</span><span><span class="rt-title">'+esc(c.title)+'</span><div class="rt-meta">'+fmt(wc)+' kata &middot; '+mins+' menit baca '+exStamp(c)+'</div></span><span class="done">'+(rd?'sudah dibaca':'')+'</span></a>'+(adm?'<div class="rowact"><button class="btn ghost sm" type="button" data-act="ch-pub" data-id="'+c.id+'">'+(c.status==='draft'?'Terbitkan':'Jadikan draft')+'</button><button class="btn ghost sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah</button><button class="btn ghost sm" type="button" data-act="ch-del" data-id="'+c.id+'">Hapus</button></div>':'')+'</div>';
+  return '<div class="row"><a class="rowlink" href="#b-'+c.id+'" data-go="b-'+c.id+'"><span class="hex num">'+esc(c.n)+'</span><span><span class="rt-title">'+esc(c.title)+'</span><div class="rt-meta">'+fmt(wc)+' kata &middot; '+mins+' menit baca '+exStamp(c)+'</div></span><span class="done">'+(rd?'sudah dibaca':'')+'</span></a>'+(adm?'<div class="rowact"><button class="btn ghost sm" type="button" data-act="ch-pub" data-id="'+c.id+'">'+(c.status==='draft'?'Terbitkan':'Draft')+'</button><button class="btn ghost sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah</button><button class="btn ghost sm" type="button" data-act="ch-del" data-id="'+c.id+'">Hapus</button></div>':'')+'</div>';
 }
-function vToc(){
-  var chs=chapters(),h='<div class="ph"><div><div class="kicker">Daftar isi</div><h1>Baca Hollow Night</h1><p class="sub">'+chs.length+' bab, dibaca dari mana saja</p></div>';
-  if(admin)h+='<div class="acts"><button class="btn sm" type="button" data-act="ch-new">'+icon('plus')+'Bab baru</button><button class="btn sm gold" type="button" data-act="import">'+icon('upload')+'Impor PDF / Word</button></div>';
-  h+='</div>';
-  if(!chs.length)return h+'<div class="sheet empty"><p class="hand">Halaman masih kosong.</p><p>Bab pertama akan muncul di sini setelah ditulis.</p></div>';
-  var groups=[],map={};
-  chs.forEach(function(c){var v=c.vol||'';if(!(v in map)){map[v]=[];groups.push(v)}map[v].push(c)});
-  groups.forEach(function(v){if(v||groups.length>1)h+='<div class="vol">'+esc(v||'Tanpa volume')+'</div>';h+='<div class="toc">'+map[v].map(function(c){return chRow(c,admin)}).join('')+'</div>'});
+/* --- CHAPTER EDITOR PAGE (fix: full page, topbar tetap terlihat) --- */
+function vChapterEditor(nid,cid){
+  var c=cid?chById(cid):null;
+  var n=nid?novelById(nid):(c?novelById(c.novelId):null);
+  if(!n&&!c)return vBaca();
+  var novelId=n?n.id:(c?c.novelId:null);
+  if(!novelId)return vBaca();
+  var back=admin?'#n-'+novelId:'#baca';
+  var h='<div class="ce-page">';
+  h+='<div class="ce-head"><a class="back" href="'+back+'" data-go="'+(admin?'n-'+novelId:'baca')+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(admin?(n?esc(n.title):'Novel'):'Perpustakaan')+'</a><div class="title"><div class="kicker">'+(c?'Ubah chapter':'Chapter baru')+'</div><h1>'+(c?esc(c.title)||'Tanpa judul':'Tulis chapter baru')+'</h1></div></div>';
+  h+='<div class="ce-card"><div class="ce-fields">'
+    +'<div class="f full"><label for="ce-t">Judul chapter</label><input class="in" id="ce-t" value="'+esc(c?c.title:'')+'" maxlength="160" placeholder="Judul chapter"></div>'
+    +'<div class="f"><label for="ce-n">Nomor</label><input class="in" id="ce-n" type="number" min="0" step="1" value="'+esc(c?c.n:nextNum(novelId))+'"></div>'
+    +'<div class="f"><label for="ce-v">Volume / arc</label><input class="in" id="ce-v" list="ce-v-list" value="'+esc(c?c.vol||'':'')+'" maxlength="60" placeholder="(opsional)"><datalist id="ce-v-list">'+allVolumes(novelId).map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist></div>'
+    +'<div class="f"><label for="ce-st">Status</label><select class="in" id="ce-st"><option value="draft"'+((c&&c.status==='draft')||!c?' selected':'')+'>Draft</option><option value="published"'+((c&&c.status==='published')?' selected':'')+'>Terbit</option></select></div>'
+    +'</div>';
+  h+='<div class="f" style="margin-bottom:0"><span class="lb">Isi chapter</span>'+richBox('ce-b',c?c.body:'')+'</div>';
+  h+='<div class="ce-actions"><div class="ce-save-info"><span class="save-light'+(pendingSave?' dirty':'')+'" aria-hidden="true"></span><span>'+(pendingSave?'Ada perubahan belum disimpan':'Semua tersimpan')+'</span></div><div class="right"><button class="btn ghost" type="button" data-act="ce-cancel" data-id="'+(c?c.id:'')+'">Batal</button><button class="btn gold" type="button" data-act="ce-save" data-id="'+(c?c.id:'')+'" data-n="'+novelId+'">Simpan chapter</button></div></div>';
+  h+='</div></div>';
   return h;
 }
+function nextNum(nid){return S.chapters.filter(function(c){return c.novelId===nid}).reduce(function(m,c){return Math.max(m,+c.n||0)},0)+1}
+function readChapterFromPage(){
+  var t=document.getElementById('ce-t'),n=document.getElementById('ce-n'),v=document.getElementById('ce-v'),s=document.getElementById('ce-st');
+  var body=readRich('ce-b');
+  return {title:t?t.value.trim():'',n:n?parseInt(n.value,10):1,vol:v?v.value.trim():'',status:s?s.value:'draft',body:body};
+}
+function saveChapterFromPage(cid,novelId){
+  var d=readChapterFromPage();
+  if(!d.title){toast('Isi judul chapter dulu.');return}
+  if(!textOf(d.body).trim()){toast('Isi chapter masih kosong.');return}
+  if(isNaN(d.n))d.n=nextNum(novelId);
+  commit(function(S2){
+    if(cid){var c=S2.chapters.find(function(x){return x.id===cid});if(c){c.title=d.title;c.n=d.n;c.vol=d.vol;c.status=d.status;c.body=d.body;delete c.example;c.novelId=novelId}}
+    else S2.chapters.push({id:uid('c'),novelId:novelId,title:d.title,n:d.n,vol:d.vol,body:d.body,status:d.status,t:Date.now()});
+  },'Chapter disimpan').then(function(ok){if(ok)go('n-'+novelId)});
+}
+/* --- READER --- */
 function vReader(id){
-  var c=chById(id);if(!c)return vToc();
+  var c=chById(id);if(!c)return vBaca();
   lsSet('hn-last',c.id);
-  var chs=chapters(),i=chs.indexOf(c),prev=chs[i-1],next=chs[i+1];
+  var n=novelById(c.novelId);
+  var chs=n?chaptersOf(n.id):chapters();
+  var i=chs.indexOf(c),prev=chs[i-1],next=chs[i+1];
   var fs=clamp(parseInt(lsGet('hn-fs')||'18',10)||18,15,26);
-  function nav(){return '<div class="rd-nav">'+(prev?'<a class="btn ghost" href="#b-'+prev.id+'" data-go="b-'+prev.id+'">'+icon('back')+'Bab '+esc(prev.n)+'</a>':'<span></span>')+(next?'<a class="btn" href="#b-'+next.id+'" data-go="b-'+next.id+'">Bab '+esc(next.n)+'</a>':'<a class="btn ghost" href="#baca" data-go="baca">Daftar isi</a>')+'</div>'}
-  return '<div class="rd-wrap"><div class="rd-tools"><a class="back" href="#baca" data-go="baca">'+icon('back').replace('<svg','<svg width="16" height="16"')+'Daftar isi</a><div class="acts"><button class="btn ghost sm" type="button" data-act="fs" data-d="-1" aria-label="Perkecil huruf">A-</button><button class="btn ghost sm" type="button" data-act="fs" data-d="1" aria-label="Perbesar huruf">A+</button>'+(admin?'<button class="btn sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah bab</button>':'')+'</div></div><article class="reader" id="reader"><header><div class="kicker">'+(c.vol?esc(c.vol)+' &middot; ':'')+'Bab '+esc(c.n)+' '+exStamp(c)+'</div><h1>'+esc(c.title)+'</h1>'+ORN+'</header><div class="body" style="--fs:'+fs+'px">'+c.body+'</div></article>'+nav()+'</div>';
+  var backLink=n?'#n-'+n.id:'#baca';
+  function nav(){return '<div class="rd-nav">'+(prev?'<a class="btn ghost" href="#b-'+prev.id+'" data-go="b-'+prev.id+'">'+icon('back')+'Bab '+esc(prev.n)+'</a>':'<span></span>')+(next?'<a class="btn" href="#b-'+next.id+'" data-go="b-'+next.id+'">Bab '+esc(next.n)+'</a>':'<a class="btn ghost" href="'+backLink+'" data-go="'+(n?'n-'+n.id:'baca')+'">Daftar isi</a>')+'</div>'}
+  return '<div class="rd-wrap"><div class="rd-tools"><a class="back" href="'+backLink+'" data-go="'+(n?'n-'+n.id:'baca')+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(n?esc(n.title):'Perpustakaan')+'</a><div class="acts"><button class="btn ghost sm" type="button" data-act="fs" data-d="-1" aria-label="Perkecil huruf">A-</button><button class="btn ghost sm" type="button" data-act="fs" data-d="1" aria-label="Perbesar huruf">A+</button>'+(admin?'<button class="btn sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah chapter</button>':'')+'</div></div><article class="reader" id="reader"><header><div class="kicker">'+(c.vol?esc(c.vol)+' &middot; ':'')+'Bab '+esc(c.n)+' '+exStamp(c)+'</div><h1>'+esc(c.title)+'</h1>'+ORN+'</header><div class="body" style="--fs:'+fs+'px">'+c.body+'</div></article>'+nav()+'</div>';
 }
 function pageHead(t,extra){
   var T=TYPES[t];
@@ -714,49 +836,72 @@ function slugFor(t){return (makeSlug(t)||'bab')+'-'+Math.random().toString(36).s
 function rowToCh(r){
   var raw=String(r.content||'');
   var body=/<(p|h2|h3|blockquote|hr|br|div)\b/i.test(raw)?cleanHtml(raw):textToHtml(raw);
-  return {id:String(r.id),slug:r.slug,n:r.chapter_number==null?0:r.chapter_number,vol:r.volume||'',title:r.title,body:body,status:r.status==='published'?'published':'draft',t:Date.parse(r.created_at)||0};
+  return {id:String(r.id),slug:r.slug,n:r.chapter_number==null?0:r.chapter_number,vol:r.volume||'',title:r.title,body:body,status:r.status==='published'?'published':'draft',novelId:r.novel_id||null,t:Date.parse(r.created_at)||0};
 }
 function notify(){try{document.dispatchEvent(new CustomEvent('hn-state'))}catch(e){}}
 async function loadContent(){
   if(!db)return;
   try{
     var sq=await db.from('hn_site').select('data').eq('id','main').maybeSingle();
-    var q=db.from('chapters').select('id,title,slug,volume,chapter_number,content,status,created_at').order('created_at',{ascending:true});
+    var q=db.from('chapters').select('id,title,slug,volume,chapter_number,content,status,created_at,novel_id').order('created_at',{ascending:true});
     if(!canEdit)q=q.eq('status','published');
     var cq=await q;
     if(sq.error)console.warn('hn_site:',sq.error.message);
     if(cq.error)console.warn('chapters:',cq.error.message);
     var hasRow=!!(sq.data&&sq.data.data);
-    if(hasRow){var d=sq.data.data;S.site=d.site||{tagline:'',synopsis:'',author:'',avatar:''};S.site.avatar=S.site.avatar||'';S.lore=d.lore||[]}
+    if(hasRow){var d=sq.data.data;S.site=d.site||{tagline:'',synopsis:'',author:'',avatar:''};S.site.avatar=S.site.avatar||'';S.lore=d.lore||[];S.novels=d.novels||S.novels||[]}
     if(!cq.error){
       var rows=cq.data||[];dbIds={};rows.forEach(function(r){dbIds[r.id]=1});
       if(rows.length||hasRow)S.chapters=rows.map(rowToCh);
     }
     dbLoaded=!sq.error&&!cq.error;
   }catch(e){console.error(e);dbLoaded=false}
+  migrateData();
   var h=(location.hash||'').slice(1);
   if(h&&valid(h))route=h;else if(!valid(route))route='home';
   render({keep:true});notify();
 }
+function migrateData(){
+  // assign orphan chapters to a default novel
+  var orphans=S.chapters.filter(function(c){return !c.novelId});
+  if(orphans.length){
+    var nid=S.novels[0]?S.novels[0].id:uid('n');
+    if(!S.novels[0])S.novels.push({id:nid,title:'Hollow Night',synopsis:S.site.synopsis||'',author:S.site.author||'',cover:'',t:Date.now()});
+    orphans.forEach(function(c){c.novelId=nid});
+  }
+}
 async function persist(next){
-  var up=await db.from('hn_site').upsert({id:'main',data:{v:1,site:next.site,lore:next.lore},updated_at:new Date().toISOString()}).select('id');
+  var up=await db.from('hn_site').upsert({id:'main',data:{v:1,site:next.site,lore:next.lore,novels:next.novels},updated_at:new Date().toISOString()}).select('id');
   if(up.error)throw up.error;
   if(!up.data||!up.data.length)throw new Error('ditolak');
   var keep={};
   var list=next.chapters.filter(function(c){return !c.example});
   for(var i=0;i<list.length;i++){
     var c=list[i];
-    var row={title:c.title,volume:c.vol||null,chapter_number:(c.n==null||isNaN(c.n))?null:c.n,content:c.body,status:c.status==='draft'?'draft':'published'};
+    var row={title:c.title,volume:c.vol||null,chapter_number:(c.n==null||isNaN(c.n))?null:c.n,content:c.body,status:c.status==='draft'?'draft':'published',novel_id:c.novelId||null};
     if(!dbIds[c.id]){
       row.slug=slugFor(c.title);
       var ins=await db.from('chapters').insert(row).select('id,slug').single();
-      if(ins.error)throw ins.error;
+      if(ins.error){
+        if(String(ins.error.message).match(/novel_id|column.*does not exist/i)){
+          delete row.novel_id;
+          ins=await db.from('chapters').insert(row).select('id,slug').single();
+          if(ins.error)throw ins.error;
+        }else throw ins.error;
+      }
       c.id=String(ins.data.id);c.slug=ins.data.slug;dbIds[c.id]=1;
     }else{
       var old=S.chapters.find(function(x){return x.id===c.id});
-      if(!old||old.title!==c.title||(old.vol||'')!==(c.vol||'')||old.n!==c.n||old.body!==c.body||(old.status||'published')!==(c.status||'published')){
+      var changed=!old||old.title!==c.title||(old.vol||'')!==(c.vol||'')||old.n!==c.n||old.body!==c.body||(old.status||'published')!==(c.status||'published')||(old.novelId||null)!==(c.novelId||null);
+      if(changed){
         var u=await db.from('chapters').update(row).eq('id',c.id).select('id');
-        if(u.error)throw u.error;
+        if(u.error){
+          if(String(u.error.message).match(/novel_id|column.*does not exist/i)){
+            delete row.novel_id;
+            u=await db.from('chapters').update(row).eq('id',c.id).select('id');
+          }
+          if(u.error)throw u.error;
+        }
         if(!u.data||!u.data.length)throw new Error('ditolak');
       }
     }
@@ -782,8 +927,7 @@ async function persistNow(){
     toast('Perubahan tersimpan');
     return true;
   }catch(e){
-    busy(false);
-    console.error(e);
+    busy(false);console.error(e);
     var m=String((e&&e.message)||e);
     toast(m==='ditolak'||(e&&e.code==='42501')?'Ditolak database ('+(e&&e.code||'RLS')+').':'Gagal menyimpan: '+m);
     return false;
@@ -792,7 +936,7 @@ async function persistNow(){
 function stageOrCommit(fn,okMsg){
   var next=clone(S);
   try{fn(next)}catch(err){console.error(err);toast('Perubahan gagal diproses: '+(err&&err.message||err));return Promise.resolve(false)}
-  if(JSON.stringify({site:next.site,lore:next.lore}).length>6000000){toast('Data terlalu besar. Kecilkan gambar atau hapus beberapa.');return Promise.resolve(false)}
+  if(JSON.stringify({site:next.site,lore:next.lore,novels:next.novels}).length>6000000){toast('Data terlalu besar. Kecilkan cover atau hapus beberapa.');return Promise.resolve(false)}
   S=next;
   if(autoSave){
     return persistNow().then(function(ok){
@@ -812,14 +956,13 @@ function commit(fn,okMsg){
   if(!dbLoaded){toast('Data belum termuat dari database. Muat ulang halaman, lalu coba lagi.');return Promise.resolve(false)}
   return stageOrCommit(fn,okMsg);
 }
+/* --- content cleaning --- */
 var FLAT={DIV:1,SECTION:1,ARTICLE:1,BODY:1,TABLE:1,TBODY:1,THEAD:1,TFOOT:1,TR:1,TD:1,TH:1,FIGURE:1,MAIN:1,CENTER:1,HEADER:1,FOOTER:1,ASIDE:1,NAV:1,DL:1,DD:1,DT:1};
 var SKIP={SCRIPT:1,STYLE:1,IMG:1,SVG:1,IFRAME:1,OBJECT:1,EMBED:1,NOSCRIPT:1,CANVAS:1,VIDEO:1,AUDIO:1,HEAD:1,TITLE:1,META:1,LINK:1};
 function inlineNode(c){
   if(c.nodeType===3)return esc(c.nodeValue.replace(/ /g,' '));
   if(c.nodeType!==1)return '';
-  var tg=c.tagName;
-  if(SKIP[tg])return '';
-  if(tg==='BR')return '<br>';
+  var tg=c.tagName;if(SKIP[tg])return '';if(tg==='BR')return '<br>';
   var inner=inlineChildren(c);
   if(tg==='STRONG'||tg==='B')return inner.trim()?'<strong>'+inner+'</strong>':inner;
   if(tg==='EM'||tg==='I')return inner.trim()?'<em>'+inner+'</em>':inner;
@@ -843,8 +986,7 @@ function safeImg(src){
 }
 function blank(h){return !h.replace(/<br>|&nbsp;|\s/g,'')}
 function blocksOf(node,out){
-  var buf='';
-  function flush(){if(!blank(buf))out.push('<p>'+buf.trim()+'</p>');buf=''}
+  var buf='';function flush(){if(!blank(buf))out.push('<p>'+buf.trim()+'</p>');buf=''}
   for(var i=0;i<node.childNodes.length;i++){
     var c=node.childNodes[i];
     if(c.nodeType===3){buf+=esc(c.nodeValue.replace(/ /g,' '));continue}
@@ -864,11 +1006,7 @@ function blocksOf(node,out){
   }
   flush();
 }
-function cleanHtml(html){
-  var d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),out=[];
-  blocksOf(d.body,out);
-  return out.join('');
-}
+function cleanHtml(html){var d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),out=[];blocksOf(d.body,out);return out.join('')}
 function textToHtml(t){
   t=String(t).replace(/\r\n?/g,'\n').trim();
   var heads=function(line){return esc(line).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>')};
@@ -948,8 +1086,7 @@ async function pdfToHtml(file){
     else if(/[a-zà-ÿ]-$/.test(buf)&&/^[a-z]/.test(t))buf=buf.slice(0,-1)+t;
     else buf+=' '+t;
   }
-  push();
-  return out.join('');
+  push();return out.join('');
 }
 async function fileToChunks(file){
   var ext=(file.name.split('.').pop()||'').toLowerCase(),base=file.name.replace(/\.[^.]+$/,'').replace(/[_]+/g,' ').trim()||'Bab baru',html='';
@@ -963,18 +1100,8 @@ async function fileToChunks(file){
   else throw new Error('type');
   return splitChapters(html,base);
 }
-var FONT_OPTS=[
-  ['inherit','Default'],
-  ['Literata,Georgia,serif','Literata'],
-  ['Georgia,\'Times New Roman\',serif','Georgia'],
-  ['\'Times New Roman\',serif','Times New Roman'],
-  ['Nunito,Arial,sans-serif','Nunito'],
-  ['Arial,Helvetica,sans-serif','Arial'],
-  ['Verdana,sans-serif','Verdana'],
-  ['\'Courier New\',monospace','Courier New'],
-  ['Metamorphous,Georgia,serif','Metamorphous'],
-  ['Caveat,cursive','Caveat (tulisan tangan)']
-];
+/* --- rich editor toolbar --- */
+var FONT_OPTS=[['inherit','Default'],['Literata,Georgia,serif','Literata'],['Georgia,\'Times New Roman\',serif','Georgia'],['\'Times New Roman\',serif','Times New Roman'],['Nunito,Arial,sans-serif','Nunito'],['Arial,Helvetica,sans-serif','Arial'],['Verdana,sans-serif','Verdana'],['\'Courier New\',monospace','Courier New'],['Metamorphous,Georgia,serif','Metamorphous'],['Caveat,cursive','Caveat']];
 var SIZE_OPTS=[11,12,14,16,18,20,22,24,28,32,40,48,64];
 var BLOCK_OPTS=[['p','Teks biasa'],['h1','Judul 1'],['h2','Judul 2'],['h3','Judul 3'],['h4','Judul 4'],['blockquote','Kutipan']];
 function richBox(id,html){
@@ -986,9 +1113,9 @@ function richBox(id,html){
   bar+='<select class="rt-sel" data-act="rt-sel" data-cmd="font" title="Jenis huruf">'+FONT_OPTS.map(function(o){return '<option value="'+o[0]+'">'+o[1]+'</option>'}).join('')+'</select>';
   bar+='<select class="rt-sel" data-act="rt-sel" data-cmd="size" title="Ukuran huruf" style="max-width:70px">'+SIZE_OPTS.map(function(s){return '<option value="'+s+'"'+(s===18?' selected':'')+'>'+s+'</option>'}).join('')+'</select>';
   bar+='<span class="rt-sep"></span>';
-  bar+='<button type="button" class="rtb" data-act="rt" data-cmd="bold" title="Tebal (Ctrl+B)"><b>B</b></button>';
-  bar+='<button type="button" class="rtb" data-act="rt" data-cmd="italic" title="Miring (Ctrl+I)"><i>I</i></button>';
-  bar+='<button type="button" class="rtb" data-act="rt" data-cmd="underline" title="Garis bawah (Ctrl+U)"><u>U</u></button>';
+  bar+='<button type="button" class="rtb" data-act="rt" data-cmd="bold" title="Tebal"><b>B</b></button>';
+  bar+='<button type="button" class="rtb" data-act="rt" data-cmd="italic" title="Miring"><i>I</i></button>';
+  bar+='<button type="button" class="rtb" data-act="rt" data-cmd="underline" title="Garis bawah"><u>U</u></button>';
   bar+='<button type="button" class="rtb" data-act="rt" data-cmd="strikeThrough" title="Coret"><s>S</s></button>';
   bar+='<button type="button" class="rtb" data-act="rt" data-cmd="sup" title="Superskrip">x²</button>';
   bar+='<button type="button" class="rtb" data-act="rt" data-cmd="sub" title="Subskrip">x₂</button>';
@@ -1040,11 +1167,11 @@ async function insertImage(file,area){
     if(imgRange&&area.contains(imgRange.commonAncestorContainer)){sel.removeAllRanges();sel.addRange(imgRange)}
     else{var r=document.createRange();r.selectNodeContents(area);r.collapse(false);sel.removeAllRanges();sel.addRange(r)}
     document.execCommand('insertHTML',false,'<figure><img src="'+esc(url)+'" alt="" data-align="center" data-wrap="none" data-round="6" data-border="0"></figure><p><br></p>');
-    busy(false);toast('Gambar ditambahkan. Klik gambar untuk mengatur ukuran, posisi, dan bingkainya.');
+    busy(false);toast('Gambar ditambahkan. Klik gambar untuk mengatur.');
   }catch(e){
     busy(false);console.error(e);
     var m=String((e&&e.message)||e);
-    toast(/bucket/i.test(m)?'Bucket chapter-images belum dibuat. Jalankan SQL tahap 2 di Supabase.':/row-level|policy|permission|unauthor/i.test(m)?'Upload ditolak. Pastikan masih login dan SQL tahap 2 sudah dijalankan.':'Gagal mengunggah gambar: '+m);
+    toast(/bucket/i.test(m)?'Bucket chapter-images belum dibuat.':/row-level|policy|permission|unauthor/i.test(m)?'Upload ditolak. Pastikan sudah login.':'Gagal mengunggah gambar: '+m);
   }
 }
 function rtCmd(cmd){
@@ -1068,10 +1195,7 @@ function rtCmd(cmd){
   else if(cmd==='h2'){var sel=window.getSelection(),n=sel&&sel.anchorNode;while(n&&n.nodeType!==1)n=n.parentNode;document.execCommand('formatBlock',false,(n&&n.closest&&n.closest('h2'))?'p':'h2')}
   else if(cmd==='quote')document.execCommand('formatBlock',false,'blockquote');
   else if(cmd==='hr')document.execCommand('insertHorizontalRule');
-  else if(cmd==='link'){
-    var u=prompt('Alamat tautan (https://...)','https://');
-    if(u&&/^https?:\/\//i.test(u))document.execCommand('createLink',false,u);
-  }
+  else if(cmd==='link'){var u=prompt('Alamat tautan (https://...)','https://');if(u&&/^https?:\/\//i.test(u))document.execCommand('createLink',false,u)}
   else if(cmd==='image'){
     var sl=window.getSelection();
     imgRange=(sl&&sl.rangeCount&&a&&a.contains(sl.anchorNode))?sl.getRangeAt(0).cloneRange():null;
@@ -1096,12 +1220,12 @@ function applyStyleToSelection(prop,value){
   sel.removeAllRanges();var r=document.createRange();r.selectNodeContents(span);sel.addRange(r);
 }
 function propToCamel(p){return p.replace(/-([a-z])/g,function(m,c){return c.toUpperCase()})}
+/* --- IMAGE EDITOR (fixed: now the only modal open, no parent destroyed) --- */
 var ieImg=null,ieState=null;
 function openImageEditor(img){
   ieImg=img;
   var st={
     width:img.style.width||'',
-    height:img.style.height||'',
     align:img.getAttribute('data-align')||'center',
     wrap:img.getAttribute('data-wrap')||'none',
     border:img.getAttribute('data-border')||'0',
@@ -1112,7 +1236,7 @@ function openImageEditor(img){
   };
   ieState=st;
   var src=img.getAttribute('src')||'';
-  var h='<h2>Atur Gambar</h2><p class="hint">Klik dan atur tampilan gambar di dalam bab. Semua pengaturan ikut tersimpan saat kamu menekan Simpan bab.</p>';
+  var h='<h2>Atur Gambar</h2><p class="hint">Atur tampilan gambar. Tekan <b>Terapkan</b> untuk menyimpan perubahan pada editor. Setelah itu masih perlu menekan <b>Simpan chapter</b>.</p>';
   h+='<div class="ie-preview"><img id="ie-prev" src="'+esc(src)+'" alt=""></div>';
   h+='<div class="ie-row"><label>Ukuran cepat</label><div class="ie-btns">';
   [['25%','Kecil'],['50%','Sedang'],['75%','Besar'],['100%','Penuh'],['','Asli']].forEach(function(s){
@@ -1131,7 +1255,7 @@ function openImageEditor(img){
     h+='<button type="button" data-ie="wrap" data-v="'+w[0]+'"'+(st.wrap===w[0]?' class="on"':'')+'>'+w[1]+'</button>';
   });
   h+='</div></div>';
-  h+='<div class="ie-row"><label>Bingkai (stroke)</label><div class="ie-btns">';
+  h+='<div class="ie-row"><label>Bingkai</label><div class="ie-btns">';
   [['0','Tidak'],['2','Tipis'],['4','Sedang'],['8','Tebal']].forEach(function(b){
     h+='<button type="button" data-ie="border" data-v="'+b[0]+'"'+(st.border===b[0]?' class="on"':'')+'>'+b[1]+'</button>';
   });
@@ -1146,9 +1270,9 @@ function openImageEditor(img){
     h+='<button type="button" data-ie="shadow" data-v="'+s[0]+'"'+(st.shadow===s[0]?' class="on"':'')+'>'+s[1]+'</button>';
   });
   h+='</div></div>';
-  h+='<div class="ie-row"><label>Kecerahan (opacity)</label><div class="ie-slider"><input type="range" id="ie-o" min="20" max="100" value="'+Math.round(parseFloat(st.opacity)*100)+'"><output id="ie-oo">'+Math.round(parseFloat(st.opacity)*100)+'%</output></div></div>';
-  h+='<div class="ie-row"><label>Teks alternatif (untuk pembaca layar)</label><input class="in" id="ie-alt" value="'+esc(st.alt)+'" maxlength="200" placeholder="Deskripsi singkat gambar"></div>';
-  h+='<div class="mfoot"><button class="btn ghost" type="button" data-act="ie-del">Hapus gambar</button><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="ie-apply">Terapkan</button></div>';
+  h+='<div class="ie-row"><label>Kecerahan</label><div class="ie-slider"><input type="range" id="ie-o" min="20" max="100" value="'+Math.round(parseFloat(st.opacity)*100)+'"><output id="ie-oo">'+Math.round(parseFloat(st.opacity)*100)+'%</output></div></div>';
+  h+='<div class="ie-row"><label>Teks alternatif</label><input class="in" id="ie-alt" value="'+esc(st.alt)+'" maxlength="200" placeholder="Deskripsi singkat gambar"></div>';
+  h+='<div class="mfoot"><button class="btn ghost" type="button" data-act="ie-del">Hapus gambar</button><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn gold" type="button" data-act="ie-apply">Terapkan</button></div>';
   openModal(h,{save:applyImageEdit});
   ieUpdatePreview();
 }
@@ -1183,8 +1307,7 @@ function applyImageEdit(){
   var fig=ieImg.closest('figure');
   if(fig){
     if(ieState.wrap==='wrap'){
-      fig.style.display='block';
-      fig.style.cssText+=';overflow:hidden;';
+      fig.style.display='block';fig.style.cssText+=';overflow:hidden;';
       ieImg.style.float=ieState.align==='left'?'left':ieState.align==='right'?'right':'none';
       ieImg.style.margin=ieState.align==='left'?'6px 16px 10px 0':ieState.align==='right'?'6px 0 10px 16px':'14px auto';
       ieImg.style.display='block';
@@ -1194,49 +1317,63 @@ function applyImageEdit(){
       fig.style.cssText='';
     }
   }
+  ieImg=null;ieState=null;
   closeModal();
-  toast('Gambar diperbarui. Tekan Simpan bab untuk menyimpan.');
+  toast('Gambar diperbarui. Tekan Simpan chapter untuk menyimpan.');
 }
+/* --- editors --- */
 function field(label,inner,id){return '<div class="f"><label'+(id?' for="'+id+'"':' class="lb"')+'>'+label+'</label>'+inner+'</div>'}
 function modalHead(t,hint){return '<h2>'+t+'</h2>'+(hint?'<p class="hint">'+hint+'</p>':'')}
 function modalFoot(label,extra){return '<div class="mfoot">'+(extra||'')+'<button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="m-save">'+label+'</button></div>'}
 function val(id){var e=document.getElementById(id);return e?e.value:''}
-function nextNum(){return S.chapters.reduce(function(m,c){return Math.max(m,+c.n||0)},0)+1}
-function chapterEditor(id){
-  var c=id?chById(id):null;
-  openModal(modalHead(c?'Ubah bab':'Bab baru','Tulis langsung, atau tempel dari Word. Toolbar lengkap tersedia seperti di Google Docs.')
-    +field('Judul bab','<input class="in" id="ce-t" value="'+esc(c?c.title:'')+'" maxlength="140">','ce-t')
-    +'<div class="f2">'+field('Nomor','<input class="in" id="ce-n" type="number" min="0" step="1" value="'+esc(c?c.n:nextNum())+'">','ce-n')+field('Volume atau arc (opsional)','<input class="in" id="ce-v" list="ce-v-list" value="'+esc(c?c.vol||'':(chapters().length?(chapters().slice(-1)[0].vol||''):''))+'" maxlength="60"><datalist id="ce-v-list">'+allVolumes().map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist>','ce-v')+'</div>'
-    +field('Status','<select class="in" id="ce-st"><option value="draft"'+((c&&c.status!=='draft')?'':' selected')+'>Draft (hanya terlihat Author)</option><option value="published"'+((c&&c.status!=='draft')?' selected':'')+'>Terbit (terlihat semua pembaca)</option></select>','ce-st')
-    +'<div class="f"><span class="lb">Isi bab</span>'+richBox('ce-b',c?c.body:'')+'</div>'
-    +modalFoot('Simpan bab'),{
-    save:function(){
-      var title=val('ce-t').trim(),body=readRich('ce-b');
-      if(!title){toast('Isi judul bab dulu.');return}
-      if(!textOf(body).trim()){toast('Isi bab masih kosong.');return}
-      var n=parseInt(val('ce-n'),10);if(isNaN(n))n=nextNum();var vol=val('ce-v').trim();var st=val('ce-st')==='published'?'published':'draft';
-      commit(function(d){
-        if(c){var t=d.chapters.find(function(x){return x.id===c.id});t.title=title;t.n=n;t.vol=vol;t.body=body;t.status=st;delete t.example}
-        else d.chapters.push({id:uid('c'),title:title,n:n,vol:vol,body:body,status:st,t:Date.now()});
-      },'Bab tersimpan');
-    }});
+var modalCover='';
+function novelEditor(id){
+  var n=id?novelById(id):null;
+  modalCover=n&&n.cover?n.cover:'';
+  var coverHtml=modalCover?'<img id="nv-prev" src="'+esc(modalCover)+'" alt="">':'<img id="nv-prev" alt="" hidden>';
+  var h=modalHead(n?'Ubah Novel':'Buat Novel Baru','Isi identitas novel. Cover bisa di-upload, tidak wajib.')
+    +'<div class="cover-pick">'
+    +'<div class="preview">'+(modalCover?'<img id="nv-prev-wrap" src="'+esc(modalCover)+'" alt="">':'<div class="ph" id="nv-prev-wrap">Tanpa Cover</div>')+'</div>'
+    +'<div style="flex:1;min-width:220px">'
+    +field('Judul novel *','<input class="in" id="nv-t" value="'+esc(n?n.title:'')+'" maxlength="160" placeholder="Judul novel">','nv-t')
+    +field('Author / penulis','<input class="in" id="nv-a" value="'+esc(n?n.author||'':(S.site.author||''))+'" maxlength="80" placeholder="Nama penulis">','nv-a')
+    +'<div class="f2">'+field('Genre (pisah dengan koma)','<input class="in" id="nv-g" value="'+esc(n?n.genre||'':'')+'" maxlength="120" placeholder="Fantasy, Adventure">','nv-g')+field('Status','<select class="in" id="nv-s"><option value="ongoing"'+((!n||n.status!=='complete')?' selected':'')+'>Sedang berjalan</option><option value="complete"'+((n&&n.status==='complete')?' selected':'')+'>Tamat</option><option value="hiatus"'+((n&&n.status==='hiatus')?' selected':'')+'>Hiatus</option></select>','nv-s')+'</div>'
+    +'<div class="acts"><label class="btn ghost sm" style="cursor:pointer"><input id="nv-file" type="file" accept="image/*" hidden>Pilih Cover</label><button class="btn ghost sm" type="button" data-act="nv-clear-cover">Hapus Cover</button></div>'
+    +'</div>'
+    +'</div>'
+    +field('Sinopsis','<textarea class="in" id="nv-syn" rows="6" placeholder="Ringkasan cerita...">'+esc(n?n.synopsis||'':'')+'</textarea>','nv-syn')
+    +field('Identitas tambahan (opsional)','<textarea class="in" id="nv-id" rows="3" placeholder="Penerbit, tahun, ISBN, catatan...">'+esc(n?n.identity||'':'')+'</textarea>','nv-id')
+    +modalFoot(n?'Simpan perubahan':'Buat Novel');
+  openModal(h,{save:function(){
+    var t=val('nv-t').trim();
+    if(!t){toast('Isi judul novel dulu.');return}
+    var data={title:t,author:val('nv-a').trim(),genre:val('nv-g').trim(),status:val('nv-s'),synopsis:val('nv-syn').trim(),identity:val('nv-id').trim(),cover:modalCover};
+    var newId=id||uid('n');
+    commit(function(S2){
+      if(n){var x=S2.novels.find(function(q){return q.id===n.id});Object.assign(x,data);delete x.example}
+      else S2.novels.push(Object.assign({id:newId,t:Date.now()},data));
+    },n?'Novel tersimpan':'Novel dibuat').then(function(ok){if(ok&&!id)go('n-'+newId);else if(ok)go('n-'+newId)});
+  }});
 }
-function importDialog(){
+function importDialog(novelId){
   impChunks=[];
-  var vols=allVolumes();
-  var volField='<div class="f" style="margin-top:14px"><label for="imp-vol">Volume atau arc untuk semua bab ini (opsional)</label><input class="in" id="imp-vol" list="imp-vol-list" maxlength="60" placeholder="Pilih yang sudah ada atau ketik baru"><datalist id="imp-vol-list">'+vols.map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist>'+(vols.length?'<p class="hint" style="margin:4px 0 0">Volume yang sudah ada: '+esc(vols.join(', '))+'</p>':'<p class="hint" style="margin:4px 0 0">Belum ada volume sebelumnya.</p>')+'</div>';
-  openModal(modalHead('Impor bab dari file','Format yang bisa dibaca: .docx, .pdf, .txt, .md. Satu file boleh berisi banyak bab, aku pecah otomatis dari judul seperti "Bab 1" atau "Chapter 2".')
-    +'<div class="drop"><p class="hand">Pilih satu atau beberapa file</p><p style="color:var(--ink-soft);margin:6px 0 14px">PDF hanya membawa teks. Tebal dan miring tidak ikut, dan hasilnya perlu dicek lagi.</p><label class="btn gold"><input id="imp-file" type="file" accept=".docx,.pdf,.txt,.md,.markdown,.html,.htm" multiple hidden>Pilih file</label></div><div id="imp-out"></div>'
+  if(!S.novels.length){toast('Buat novel dulu di menu Baca.');return}
+  var nid=novelId||S.novels[0].id;
+  var n=novelById(nid);
+  var vols=allVolumes(nid);
+  openModal(modalHead('Impor bab dari file','Format: .docx, .pdf, .txt, .md. Bab dipecah otomatis dari judul seperti "Bab 1" atau "Chapter 2".')
+    +field('Novel tujuan','<select class="in" id="imp-nid">'+S.novels.map(function(x){return '<option value="'+esc(x.id)+'"'+(x.id===nid?' selected':'')+'>'+esc(x.title)+'</option>'}).join('')+'</select>','imp-nid')
+    +'<div class="drop"><p class="hand">Pilih satu atau beberapa file</p><p style="color:var(--ink-soft);margin:6px 0 14px">PDF hanya membawa teks polos.</p><label class="btn gold"><input id="imp-file" type="file" accept=".docx,.pdf,.txt,.md,.markdown,.html,.htm" multiple hidden>Pilih file</label></div><div id="imp-out"></div>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button><button class="btn" type="button" data-act="m-save" id="imp-save" hidden>Tambahkan ke novel</button></div>',{
     save:function(){
-      var rows=[].slice.call(document.querySelectorAll('.imp-row')),vol=val('imp-vol').trim(),add=[];
+      var rows=[].slice.call(document.querySelectorAll('.imp-row')),targetNid=val('imp-nid'),vol=val('imp-vol').trim(),add=[];
       rows.forEach(function(r){
         if(!r.querySelector('[data-k=on]').checked)return;
-        var i=+r.getAttribute('data-i'),c=impChunks[i],n=parseInt(r.querySelector('[data-k=n]').value,10);
-        add.push({id:uid('c'),title:(r.querySelector('[data-k=t]').value.trim()||c.title),n:isNaN(n)?0:n,vol:vol,body:c.html,status:'draft',t:Date.now()+i});
+        var i=+r.getAttribute('data-i'),c=impChunks[i],n2=parseInt(r.querySelector('[data-k=n]').value,10);
+        add.push({id:uid('c'),novelId:targetNid,title:(r.querySelector('[data-k=t]').value.trim()||c.title),n:isNaN(n2)?0:n2,vol:vol,body:c.html,status:'draft',t:Date.now()+i});
       });
       if(!add.length){toast('Centang minimal satu bab.');return}
-      commit(function(d){add.forEach(function(a){d.chapters.push(a)})},add.length+' bab ditambahkan sebagai draft');
+      commit(function(d){add.forEach(function(a){d.chapters.push(a)})},add.length+' chapter ditambahkan').then(function(ok){if(ok)go('n-'+targetNid)});
     }});
 }
 async function handleImport(files){
@@ -1246,24 +1383,25 @@ async function handleImport(files){
   var all=[],errs=[];
   for(var i=0;i<files.length;i++){
     try{var ch=await fileToChunks(files[i]);ch.forEach(function(c){c.file=files[i].name;all.push(c)})}
-    catch(e){errs.push(files[i].name+(e&&e.message==='type'?' (format belum didukung, simpan sebagai .docx atau .pdf)':e&&e.message==='empty'?' (PDF ini tidak berisi teks yang bisa dibaca, mungkin hasil scan)':' (gagal dibaca)'))}
+    catch(e){errs.push(files[i].name+(e&&e.message==='type'?' (format tidak didukung)':e&&e.message==='empty'?' (PDF tidak berisi teks, mungkin scan)':' (gagal dibaca)'))}
   }
   impChunks=all.filter(function(c){return textOf(c.html).trim()});
-  var start=nextNum(),used=0;
+  var nid=val('imp-nid')||S.novels[0].id;
+  var start=nextNum(nid),used=0;
   var h='';
   if(errs.length)h+='<p class="hint" style="color:var(--red);margin-top:14px">Tidak terbaca: '+esc(errs.join('; '))+'</p>';
   if(!impChunks.length){out.innerHTML=h||'<p class="hint">Tidak ada isi yang bisa diimpor.</p>';save.hidden=true;return}
-  var vols=allVolumes();
-  h+='<div class="f" style="margin-top:14px"><label for="imp-vol">Volume atau arc untuk semua bab ini (opsional)</label><input class="in" id="imp-vol" list="imp-vol-list" maxlength="60" placeholder="Pilih yang sudah ada atau ketik baru"><datalist id="imp-vol-list">'+vols.map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist>'+(vols.length?'<p class="hint" style="margin:4px 0 0">Volume yang sudah ada: '+esc(vols.join(', '))+'</p>':'<p class="hint" style="margin:4px 0 0">Belum ada volume sebelumnya.</p>')+'</div><div class="imp-list">';
+  var vols=allVolumes(nid);
+  h+='<div class="f" style="margin-top:14px"><label for="imp-vol">Volume / arc untuk semua chapter (opsional)</label><input class="in" id="imp-vol" list="imp-vol-list" maxlength="60" placeholder="(opsional)"><datalist id="imp-vol-list">'+vols.map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist></div><div class="imp-list">';
   impChunks.forEach(function(c,i){
-    var n=c.n!=null?c.n:start+used;if(c.n==null)used++;
-    h+='<div class="imp-row" data-i="'+i+'"><input type="checkbox" data-k="on" checked aria-label="Sertakan"><input class="in" data-k="t" value="'+esc(c.title)+'" aria-label="Judul"><input class="in" data-k="n" type="number" value="'+n+'" aria-label="Nomor"><small>'+fmt(wordCount(c.html))+' kata &middot; '+esc(c.file)+'</small></div>';
+    var n2=c.n!=null?c.n:start+used;if(c.n==null)used++;
+    h+='<div class="imp-row" data-i="'+i+'"><input type="checkbox" data-k="on" checked aria-label="Sertakan"><input class="in" data-k="t" value="'+esc(c.title)+'" aria-label="Judul"><input class="in" data-k="n" type="number" value="'+n2+'" aria-label="Nomor"><small>'+fmt(wordCount(c.html))+' kata &middot; '+esc(c.file)+'</small></div>';
   });
-  out.innerHTML=h+'</div><p class="hint">Ditemukan '+impChunks.length+' bab. Ubah judul atau nomor sebelum menambahkan.</p>';
+  out.innerHTML=h+'</div><p class="hint">Ditemukan '+impChunks.length+' chapter.</p>';
   save.hidden=false;
 }
 function siteEditor(){
-  openModal(modalHead('Sinopsis, tagline & profil')+field('Tagline di beranda','<input class="in" id="se-t" value="'+esc(S.site.tagline||'')+'" maxlength="120">','se-t')+field('Sinopsis (pisahkan paragraf dengan baris kosong)','<textarea class="in" id="se-s" rows="8">'+esc(S.site.synopsis||'')+'</textarea>','se-s')+field('Nama penulis (opsional)','<input class="in" id="se-a" value="'+esc(S.site.author||'')+'" maxlength="80">','se-a')+modalFoot('Simpan'),{
+  openModal(modalHead('Sinopsis situs & tagline')+field('Tagline di beranda','<input class="in" id="se-t" value="'+esc(S.site.tagline||'')+'" maxlength="120">','se-t')+field('Sinopsis situs','<textarea class="in" id="se-s" rows="8">'+esc(S.site.synopsis||'')+'</textarea>','se-s')+field('Nama penulis di footer (opsional)','<input class="in" id="se-a" value="'+esc(S.site.author||'')+'" maxlength="80">','se-a')+modalFoot('Simpan'),{
     save:function(){var t=val('se-t').trim(),s=val('se-s').trim(),a=val('se-a').trim();commit(function(d){d.site.tagline=t;d.site.synopsis=s;d.site.author=a},'Sinopsis tersimpan')}
   });
 }
@@ -1287,17 +1425,17 @@ function loreEditor(type,id){
   var h=modalHead((e?'Ubah ':'Tambah ')+T.single)+field(title,'<input class="in" id="le-t" value="'+esc(v('title'))+'" maxlength="120">','le-t');
   if(type==='world')h+=field('Kategori','<select class="in" id="le-cat">'+T.cats.map(function(c){return '<option'+(v('cat')===c?' selected':'')+'>'+esc(c)+'</option>'}).join('')+'</select>','le-cat');
   if(type==='char'){
-    h+='<div class="f2">'+field('Peran dalam cerita','<input class="in" id="le-role" value="'+esc(v('role'))+'" placeholder="Protagonis, rival, mentor" maxlength="60">','le-role')+field('Kelas atau ras','<input class="in" id="le-cls" value="'+esc(v('cls'))+'" placeholder="Ranger, Elf" maxlength="60">','le-cls')+'</div>';
+    h+='<div class="f2">'+field('Peran','<input class="in" id="le-role" value="'+esc(v('role'))+'" placeholder="Protagonis, rival" maxlength="60">','le-role')+field('Kelas/ras','<input class="in" id="le-cls" value="'+esc(v('cls'))+'" placeholder="Ranger, Elf" maxlength="60">','le-cls')+'</div>';
     h+=field('Alignment','<select class="in" id="le-al">'+ALIGN.map(function(a){return '<option value="'+a+'"'+(v('align')===a?' selected':'')+'>'+(a||'(tidak diisi)')+'</option>'}).join('')+'</select>','le-al');
     var st=(e&&e.stats)||[];
-    h+='<div class="f"><span class="lb">Statistik (opsional, 1 sampai 20)</span><div class="f6">'+STATK.map(function(k,i){return '<input class="in" type="number" min="1" max="20" id="le-st'+i+'" aria-label="'+k+'" placeholder="'+k+'" value="'+(st[i]!=null?st[i]:'')+'">'}).join('')+'</div></div>';
+    h+='<div class="f"><span class="lb">Statistik (1-20)</span><div class="f6">'+STATK.map(function(k,i){return '<input class="in" type="number" min="1" max="20" id="le-st'+i+'" aria-label="'+k+'" placeholder="'+k+'" value="'+(st[i]!=null?st[i]:'')+'">'}).join('')+'</div></div>';
   }
-  if(type==='time'){h+='<div class="f2">'+field('Waktu kejadian','<input class="in" id="le-when" value="'+esc(v('when'))+'" placeholder="Tahun 312, malam pertama" maxlength="60">','le-when')+field('Urutan (angka kecil tampil lebih dulu)','<input class="in" id="le-ord" type="number" value="'+esc(e?v('ord'):(ofType('time').length+1))+'">','le-ord')+'</div>'}
-  var sumLabel={world:'Ringkasan singkat',char:'Kutipan atau satu kalimat tentang tokoh',map:'Ringkasan singkat',time:'Ringkasan singkat',gloss:'Arti atau penjelasan'}[type];
+  if(type==='time'){h+='<div class="f2">'+field('Waktu','<input class="in" id="le-when" value="'+esc(v('when'))+'" placeholder="Tahun 312" maxlength="60">','le-when')+field('Urutan','<input class="in" id="le-ord" type="number" value="'+esc(e?v('ord'):(ofType('time').length+1))+'">','le-ord')+'</div>'}
+  var sumLabel={world:'Ringkasan singkat',char:'Kutipan/kalimat kunci',map:'Ringkasan singkat',time:'Ringkasan singkat',gloss:'Arti/penjelasan'}[type];
   h+=field(sumLabel,'<textarea class="in" id="le-sum" rows="'+(type==='gloss'?5:3)+'">'+esc(v('summary'))+'</textarea>','le-sum');
   if(type==='world'||type==='char'||type==='map')h+=imgField(v('img'));
-  if(type!=='gloss')h+='<div class="f"><span class="lb">'+(type==='char'?'Biografi':type==='map'?'Catatan tentang peta':'Isi lengkap')+'</span>'+richBox('le-b',v('body'))+'</div>';
-  if(type==='char')h+=field('Rahasia tokoh (disembunyikan sampai pembaca mengklik)','<textarea class="in" id="le-sec" rows="3">'+esc(v('secret'))+'</textarea>','le-sec');
+  if(type!=='gloss')h+='<div class="f"><span class="lb">'+(type==='char'?'Biografi':type==='map'?'Catatan':'Isi lengkap')+'</span>'+richBox('le-b',v('body'))+'</div>';
+  if(type==='char')h+=field('Rahasia tokoh','<textarea class="in" id="le-sec" rows="3">'+esc(v('secret'))+'</textarea>','le-sec');
   openModal(h+modalFoot('Simpan'),{save:function(){
     var t=val('le-t').trim();if(!t){toast('Isi namanya dulu.');return}
     var data={title:t,summary:val('le-sum').trim()};
@@ -1328,8 +1466,8 @@ function profileModal(){
     +avatarHtml
     +(admin?'<div class="acts" style="justify-content:center;margin-bottom:14px"><label class="btn ghost sm" style="cursor:pointer"><input id="pf-file" type="file" accept="image/*" hidden>Ganti foto profil</label>'+(av?'<button class="btn ghost sm" type="button" data-act="pf-clear">Hapus foto</button>':'')+'</div>':'')
     +'<p style="margin-bottom:10px"><b>Nama:</b> '+esc(S.site.author||'—')+'</p>'
-    +'<p>Hollow Night adalah ruang untuk membangun dunia ceritamu: novel, catatan lore, peta, lini masa, dan glosarium dalam satu tempat.</p>'
-    +(admin?'<p class="hint" style="margin-top:12px">Untuk mengubah nama yang muncul di footer, buka Mode Penulis → Ubah sinopsis & tagline.</p>':'')
+    +'<p>Hollow Night adalah ruang untuk membangun dunia ceritamu: novel, chapter, lore, peta, lini masa, dan glosarium dalam satu tempat.</p>'
+    +(admin?'<p class="hint" style="margin-top:12px">Nama penulis di footer diubah lewat Pengaturan → Ubah sinopsis situs.</p>':'')
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>';
   openModal(h);
 }
@@ -1349,39 +1487,35 @@ function socialModal(){
 function helpModal(){
   var mail='juliandoniel07@gmail.com';
   openModal(modalHead('Bantuan','Panduan singkat untuk penulis & pembaca.')
-    +'<h3 style="margin:14px 0 6px">Menulis bab</h3>'
-    +'<p>Klik <b>Mode Penulis → Tulis bab baru</b>. Toolbar di atas editor mirip Google Docs: pilih font, ukuran, perataan, bullet, nomor, inden, warna, dan lainnya.</p>'
-    +'<h3 style="margin:14px 0 6px">Menambahkan gambar</h3>'
-    +'<p>Klik ikon 🖼 di toolbar. Setelah gambar muncul di editor, klik gambarnya untuk membuka panel <b>Atur Gambar</b>. Kamu bisa mengatur ukuran, posisi (kiri/tengah/kanan), mode wrap teks, bingkai, sudut membulat, bayangan, dan kecerahan.</p>'
+    +'<h3 style="margin:14px 0 6px">Konsep Novel & Chapter</h3>'
+    +'<p>Hollow Night bekerja seperti rak buku. Di menu <b>Baca</b> kamu melihat daftar <b>Novel</b> (cover, judul, author). Klik sebuah novel untuk melihat daftar chapternya. Di dalam novel itu kamu bisa menulis, mengubah, atau mengimpor <b>Chapter</b>.</p>'
+    +'<h3 style="margin:14px 0 6px">Buat Novel</h3>'
+    +'<p>Klik tombol <b>Buat Novel</b> di menu Baca (khusus Mode Penulis). Isi judul, author, genre, status, cover, sinopsis, dan identitas tambahan.</p>'
+    +'<h3 style="margin:14px 0 6px">Buat Chapter</h3>'
+    +'<p>Masuk ke halaman novel → tekan <b>Tulis chapter</b>. Editor chapter terbuka sebagai <b>halaman tersendiri</b>, sehingga tombol bar atas (home, indikator simpan) tetap terlihat. Di sana tersedia toolbar lengkap seperti Google Docs.</p>'
+    +'<h3 style="margin:14px 0 6px">Atur gambar di chapter</h3>'
+    +'<p>Klik ikon 🖼 di toolbar untuk menyisipkan gambar. Setelah gambar muncul, klik gambarnya → panel <b>Atur Gambar</b> terbuka. Ubah ukuran, posisi, bingkai, sudut, bayangan, kecerahan. Tekan <b>Terapkan</b> untuk konfirmasi, lalu <b>Simpan chapter</b>.</p>'
     +'<h3 style="margin:14px 0 6px">Impor dari PDF / Word</h3>'
-    +'<p>Buka <b>Impor dari PDF / Word</b> di Meja Penulis. Pilih file .docx / .pdf / .txt. Bab-bab akan dipecah otomatis dari judul seperti "Bab 1". Kamu juga bisa memilih volume yang sudah ada dari daftar.</p>'
+    +'<p>Buka <b>Impor bab</b> di Meja Penulis atau halaman novel. Format didukung: .docx, .pdf, .txt, .md. Chapter dipecah otomatis dari judul seperti "Bab 1".</p>'
     +'<h3 style="margin:14px 0 6px">Simpan otomatis & manual</h3>'
-    +'<p>Lampu hijau di tombol Mode Penulis berarti semua perubahan sudah tersimpan. Lampu merah berarti ada perubahan yang belum disimpan. Atur <b>Auto-save ON/OFF</b> di <b>Pengaturan</b> (menu titik tiga). Kalau Auto-save OFF, tekan tombol <b>Simpan</b> di bar atas untuk menyimpan semua perubahan sekaligus. Shortcut: <b>Ctrl+S / Cmd+S</b>.</p>'
-    +'<h3 style="margin:14px 0 6px">Fitur di Hollow Night</h3>'
-    +'<p><b>Bab:</b> daftar isi bervolume, pengingat bab terakhir, pengatur ukuran huruf, draft/pratinjau.<br>'
-    +'<b>Dunia:</b> catatan lore dengan kategori (Wilayah, Sejarah, Magis & Aturan, Makhluk, Faksi, Budaya).<br>'
-    +'<b>Tokoh:</b> lembar karakter ala DnD dengan statistik, alignment, dan rahasia tersembunyi.<br>'
-    +'<b>Peta:</b> unggah gambar dan tandai lokasi dengan pin bernomor.<br>'
-    +'<b>Lini Masa:</b> urutkan peristiwa bersejarah dunia ceritamu.<br>'
-    +'<b>Istilah:</b> glosarium otomatis berurut abjad & bisa dicari.<br>'
-    +'<b>Konten contoh:</b> semua bab & catatan bertanda CONTOH bisa dihapus sekali klik dari Meja Penulis.</p>'
+    +'<p>Lampu <span class="save-light" style="vertical-align:middle"></span> hijau = semua tersimpan. Lampu <span class="save-light dirty" style="vertical-align:middle"></span> merah = ada perubahan tertunda. Atur Auto-save ON/OFF di Pengaturan. Kalau OFF, tekan tombol <b>Simpan</b> di bar atas atau <b>Ctrl+S</b>.</p>'
+    +'<h3 style="margin:14px 0 6px">Fitur lain</h3>'
+    +'<p><b>Dunia:</b> catatan lore dengan kategori. <b>Tokoh:</b> lembar karakter ala DnD. <b>Peta:</b> pin lokasi bernomor. <b>Lini Masa:</b> urutan peristiwa. <b>Istilah:</b> glosarium otomatis berurut abjad.</p>'
     +'<h3 style="margin:14px 0 6px">Ada Masalah?/Masukan?</h3>'
-    +'<p>Kalau menemukan bug, punya ide, atau ingin memberi masukan, kirim email ke '
-    +'<a href="mailto:'+esc(mail)+'" style="color:var(--red);font-weight:800;text-decoration:underline">'+esc(mail)+'</a>. '
-    +'Sertakan tangkapan layar kalau memungkinkan supaya bisa lebih cepat ditangani.</p>'
+    +'<p>Kirim email ke <a href="mailto:'+esc(mail)+'" style="color:var(--red);font-weight:800;text-decoration:underline">'+esc(mail)+'</a>. Sertakan tangkapan layar jika memungkinkan.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function aboutModal(){
-  openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel statis yang menyimpan konten di Supabase. Fitur utamanya: daftar bab, mode penulis, impor dokumen, editor kaya, image editor, peta lokasi, lini masa, glosarium, dan lore dunia.</p>'
-    +'<p style="margin-top:10px">Versi 1.3 &middot; dibuat untuk para pencerita.</p>'
+  openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel yang menyimpan konten di Supabase. Fitur: rak novel, chapter editor, impor dokumen, editor kaya, image editor, peta, lini masa, glosarium.</p>'
+    +'<p style="margin-top:10px">Versi 1.4 &middot; dibuat untuk para pencerita.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function contactModal(){
   openModal(modalHead('Kontak','Kirim masukan, laporan bug, atau ide cerita.')
     +field('Nama','<input class="in" id="ct-n" maxlength="80">','ct-n')
     +field('Email','<input class="in" id="ct-e" type="email" maxlength="120">','ct-e')
-    +field('Pesan','<textarea class="in" id="ct-m" rows="5" placeholder="Tulis pesanmu di sini..."></textarea>','ct-m')
-    +'<p class="hint" style="margin-top:6px">Atau langsung kirim ke <a href="mailto:juliandoniel07@gmail.com" style="color:var(--red);font-weight:800">juliandoniel07@gmail.com</a></p>'
+    +field('Pesan','<textarea class="in" id="ct-m" rows="5" placeholder="Tulis pesanmu..."></textarea>','ct-m')
+    +'<p class="hint" style="margin-top:6px">Atau langsung ke <a href="mailto:juliandoniel07@gmail.com" style="color:var(--red);font-weight:800">juliandoniel07@gmail.com</a></p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="ct-send">Kirim</button></div>');
 }
 function settingsModal(){
@@ -1390,13 +1524,13 @@ function settingsModal(){
   openModal(modalHead('Pengaturan','Sesuaikan tampilan web dan cara penyimpanan.')
     +field('Tema','<select class="in" id="st-theme"><option value="auto"'+(theme==='auto'?' selected':'')+'>Ikuti sistem</option><option value="light"'+(theme==='light'?' selected':'')+'>Terang</option><option value="dark"'+(theme==='dark'?' selected':'')+'>Gelap</option></select>','st-theme')
     +field('Ukuran huruf pembaca (px)','<input class="in" id="st-fs" type="number" min="15" max="26" value="'+(lsGet('hn-fs')||'18')+'">','st-fs')
-    +'<div class="f"><label for="st-as">Auto-save (Mode Penulis)</label><select class="in" id="st-as"><option value="on"'+(as==='on'?' selected':'')+'>AKTIF — simpan otomatis setiap perubahan</option><option value="off"'+(as==='off'?' selected':'')+'>NONAKTIF — simpan hanya saat menekan tombol Simpan</option></select><p class="hint" style="margin:6px 0 0">Indikator lampu di tombol Mode Penulis: <span class="save-light" style="vertical-align:middle"></span> hijau = tersimpan, <span class="save-light dirty" style="vertical-align:middle"></span> merah = ada perubahan belum tersimpan.</p></div>'
+    +'<div class="f"><label for="st-as">Auto-save (Mode Penulis)</label><select class="in" id="st-as"><option value="on"'+(as==='on'?' selected':'')+'>AKTIF — simpan otomatis</option><option value="off"'+(as==='off'?' selected':'')+'>NONAKTIF — simpan manual</option></select><p class="hint" style="margin:6px 0 0">Indikator: <span class="save-light" style="vertical-align:middle"></span> hijau tersimpan, <span class="save-light dirty" style="vertical-align:middle"></span> merah belum tersimpan.</p></div>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="st-save">Simpan</button></div>');
 }
 function roll(){
   var chs=chapters();if(!chs.length)return;
   var n=1+Math.floor(Math.random()*20),pick=n===20?chs[chs.length-1]:chs[Math.floor(Math.random()*chs.length)];
-  var msg=n===20?'Critical hit! Kamu mendapat bab paling baru.':n===1?'Critical fail... untung ada bab yang menolongmu.':n>=15?'Bagus! Dadu memilihkan bab ini.':n>=8?'Lumayan, ada yang menunggumu.':'Dadu agak malas, tapi bab ini layak dibaca.';
+  var msg=n===20?'Critical hit! Kamu mendapat chapter paling baru.':n===1?'Critical fail... untung ada chapter yang menolongmu.':n>=15?'Bagus! Dadu memilihkan chapter ini.':n>=8?'Lumayan, ada yang menunggumu.':'Dadu agak malas, tapi chapter ini layak dibaca.';
   var d=document.getElementById('d20'),o=document.getElementById('rollout');
   if(d){d.classList.remove('spin');void d.offsetWidth;d.classList.add('spin')}
   if(o)o.innerHTML='<b>'+n+'</b> '+esc(msg)+' <a href="#b-'+pick.id+'" data-go="b-'+pick.id+'" style="color:var(--gold)">Baca Bab '+esc(pick.n)+'</a>';
@@ -1409,12 +1543,25 @@ function armDelete(btn,fn){
   armed={btn:btn,label:label,t:setTimeout(function(){btn.textContent=label;armed=null},3500)};
 }
 function closeMenu(){var p=document.getElementById('menu-pop');if(p)p.hidden=true;var b=document.querySelector('.menu-btn');if(b)b.setAttribute('aria-expanded','false')}
+function isEditorDirty(){
+  if(!canEdit||!route)return false;
+  if(route.indexOf('tulis-')===0||route.indexOf('edit-')===0){
+    var t=document.getElementById('ce-t');if(!t)return false;
+    var d=readChapterFromPage(),c=route.indexOf('edit-')===0?chById(route.slice(5)):null;
+    if(!c)return !!d.title||!!textOf(d.body).trim();
+    return d.title!==c.title||textOf(d.body).trim()!==textOf(c.body).trim()||d.n!==c.n||(d.vol||'')!==(c.vol||'')||d.status!==(c.status||'draft');
+  }
+  return false;
+}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest('[data-go]');
   if(a&&!ev.target.closest('[data-act]')){
     if(pendingSave&&!autoSave){
       if(!confirm('Ada perubahan belum disimpan. Tinggalkan halaman ini?')){ev.preventDefault();return}
       pendingSave=false;
+    }
+    if(isEditorDirty()){
+      if(!confirm('Ada perubahan pada editor chapter yang belum disimpan. Tinggalkan?')){ev.preventDefault();return}
     }
     ev.preventDefault();closeModal();closeMenu();go(a.getAttribute('data-go'));return
   }
@@ -1429,13 +1576,25 @@ document.addEventListener('click',function(ev){
     case 'fs':{var f=clamp((parseInt(lsGet('hn-fs')||'18',10)||18)+(+el.getAttribute('data-d'))*1,15,26);lsSet('hn-fs',String(f));var b=document.querySelector('.reader .body');if(b)b.style.setProperty('--fs',f+'px');updateProg();break}
     case 'reveal':el.classList.toggle('on');break;
     case 'cat':{document.querySelectorAll('[data-act=cat]').forEach(function(c){c.classList.toggle('on',c===el)});filterLore();break}
-    case 'ch-new':chapterEditor(null);break;
-    case 'ch-edit':chapterEditor(id);break;
-    case 'ch-pub':{var pc=chById(id);if(pc){var ns=pc.status==='draft'?'published':'draft';commit(function(d){d.chapters.find(function(x){return x.id===id}).status=ns},ns==='published'?'Bab diterbitkan':'Bab dijadikan draft')}break}
-    case 'ch-del':armDelete(el,function(){commit(function(d){d.chapters=d.chapters.filter(function(c){return c.id!==id})},'Bab dihapus')});break;
-    case 'import':importDialog();break;
+    /* --- NOVEL --- */
+    case 'novel-new':novelEditor(null);break;
+    case 'novel-edit':novelEditor(id);break;
+    case 'nv-clear-cover':{modalCover='';var pv=document.getElementById('nv-prev-wrap');if(pv){pv.outerHTML='<div class="ph" id="nv-prev-wrap">Tanpa Cover</div>'};break}
+    /* --- CHAPTER --- */
+    case 'ch-new':go('tulis-'+(id||(S.novels[0]&&S.novels[0].id)));break;
+    case 'ch-edit':go('edit-'+id);break;
+    case 'ce-save':saveChapterFromPage(id||null,el.getAttribute('data-n'));break;
+    case 'ce-cancel':{
+      var nid=el.getAttribute('data-n')||(id?chById(id).novelId:null);
+      if(isEditorDirty()){if(!confirm('Batalkan dan tinggalkan editor? Perubahan tidak disimpan.'))return}
+      go(nid?'n-'+nid:'baca');
+      break;
+    }
+    case 'ch-pub':{var pc=chById(id);if(pc){var ns=pc.status==='draft'?'published':'draft';commit(function(d){d.chapters.find(function(x){return x.id===id}).status=ns},ns==='published'?'Chapter diterbitkan':'Chapter dijadikan draft')}break}
+    case 'ch-del':armDelete(el,function(){var c=chById(id),nid=c?c.novelId:null;commit(function(d){d.chapters=d.chapters.filter(function(x){return x.id!==id})},'Chapter dihapus').then(function(ok){if(ok&&nid)go('n-'+nid)});break});
+    case 'import':importDialog(el.getAttribute('data-id'));break;
     case 'site-edit':siteEditor();break;
-    case 'clear-ex':armDelete(el,function(){commit(function(d){d.chapters=d.chapters.filter(function(c){return !c.example});d.lore=d.lore.filter(function(e){return !e.example})},'Contoh dihapus')});break;
+    case 'clear-ex':armDelete(el,function(){commit(function(d){d.chapters=d.chapters.filter(function(c){return !c.example});d.lore=d.lore.filter(function(e){return !e.example});d.novels=d.novels.filter(function(n){return !n.example})},'Contoh dihapus')});break;
     case 'lore-new':loreEditor(el.getAttribute('data-t'),null);break;
     case 'lore-edit':{var e=entry(id);if(e)loreEditor(e.type,id);break}
     case 'lore-del':armDelete(el,function(){var e=entry(id),pr=route;if(e&&route==='e-'+id)route=TYPES[e.type].tab;commit(function(d){d.lore=d.lore.filter(function(q){return q.id!==id})},'Dihapus').then(function(ok){if(!ok&&route!==pr){route=pr}render({keep:true})})});break;
@@ -1445,9 +1604,9 @@ document.addEventListener('click',function(ev){
     case 'pin-del':{var ix=+el.getAttribute('data-i'),eid=route.slice(2);armDelete(el,function(){commit(function(d){d.lore.find(function(q){return q.id===eid}).pins.splice(ix,1)},'Pin dihapus')});break}
     case 'map-click':{if(!(admin&&pinMode))break;if(ev.target.closest('.pin'))break;var r=el.getBoundingClientRect(),x=clamp((ev.clientX-r.left)/r.width*100,1,99),y=clamp((ev.clientY-r.top)/r.height*100,3,99);pinEditor(route.slice(2),-1,+x.toFixed(2),+y.toFixed(2));break}
     case 'rt':rtCmd(el.getAttribute('data-cmd'));break;
-    case 'img-clear':{modalImg='';var pv=document.getElementById('if-prev');if(pv)pv.hidden=true;break}
+    case 'img-clear':{modalImg='';var pv2=document.getElementById('if-prev');if(pv2)pv2.hidden=true;break}
     case 'ie-apply':applyImageEdit();break;
-    case 'ie-del':{if(ieImg){var fig=ieImg.closest('figure');if(fig)fig.remove();else ieImg.remove();closeModal();toast('Gambar dihapus. Tekan Simpan bab untuk menyimpan.')}break}
+    case 'ie-del':{if(ieImg){var fig=ieImg.closest('figure');if(fig)fig.remove();else ieImg.remove();ieImg=null;ieState=null;closeModal();toast('Gambar dihapus dari editor. Tekan Simpan chapter untuk menyimpan.')}break}
     case 'pf-clear':{commit(function(d){d.site.avatar=''},'Foto profil dihapus').then(function(){profileModal()});break}
     case 'm-close':closeModal();break;
     case 'm-save':if(modalCtx&&modalCtx.save)modalCtx.save();break;
@@ -1484,13 +1643,20 @@ document.addEventListener('change',function(ev){
   if(t.id==='imp-file'&&t.files.length)handleImport(t.files);
   if(t.id==='if-file'&&t.files[0]){
     readImage(t.files[0],1500,.82).then(function(u){
-      if(u.length>2200000){toast('Gambar masih terlalu besar. Pakai gambar yang lebih kecil.');return}
+      if(u.length>2200000){toast('Gambar masih terlalu besar.');return}
       modalImg=u;var pv=document.getElementById('if-prev');if(pv){pv.src=u;pv.hidden=false}
     }).catch(function(){toast('Gambar tidak bisa dibaca.')});
   }
   if(t.id==='pf-file'&&t.files[0]){
     readImage(t.files[0],512,.85).then(function(u){
       commit(function(d){d.site.avatar=u},'Foto profil diperbarui').then(function(){profileModal()});
+    }).catch(function(){toast('Gambar tidak bisa dibaca.')});
+  }
+  if(t.id==='nv-file'&&t.files[0]){
+    readImage(t.files[0],800,.8).then(function(u){
+      if(u.length>1000000){toast('Cover terlalu besar. Pakai gambar lebih kecil.');return}
+      modalCover=u;var wrap=document.getElementById('nv-prev-wrap');
+      if(wrap){wrap.outerHTML='<img id="nv-prev-wrap" src="'+u+'" alt="">'}
     }).catch(function(){toast('Gambar tidak bisa dibaca.')});
   }
 });
@@ -1538,11 +1704,15 @@ window.addEventListener('hashchange',function(){
       if(!confirm('Ada perubahan belum disimpan. Tinggalkan halaman ini?')){location.hash=route;return}
       pendingSave=false;
     }
+    if((route.indexOf('tulis-')===0||route.indexOf('edit-')===0)&&isEditorDirty()){
+      if(!confirm('Ada perubahan pada editor chapter yang belum disimpan. Tinggalkan?')){location.hash=route;return}
+    }
     pinMode=false;selPin=-1;route=h;render();
   }
 });
 window.addEventListener('beforeunload',function(ev){
   if(pendingSave&&!autoSave){ev.preventDefault();ev.returnValue='';return ''}
+  if((route.indexOf('tulis-')===0||route.indexOf('edit-')===0)&&isEditorDirty()){ev.preventDefault();ev.returnValue='';return ''}
 });
 function applySession(session){
   var a=!!(session&&session.user&&session.user.id===AUTHOR_UID);
@@ -1560,11 +1730,14 @@ function initDb(){
 window.hnApp={
   isAuthor:function(){return canEdit},
   isAdmin:function(){return admin},
-  chapters:function(){return chapters().filter(function(c){return !c.example}).map(function(c){return {id:c.id,title:c.title,vol:c.vol,n:c.n,status:c.status==='draft'?'draft':'published'}})},
-  create:function(){if(canEdit){admin=true;chapterEditor(null)}},
-  edit:function(id){if(canEdit&&chById(id))chapterEditor(id)},
-  togglePublish:function(id){var c=chById(id);if(!c||!canEdit)return;var ns=c.status==='draft'?'published':'draft';commit(function(d){d.chapters.find(function(x){return x.id===id}).status=ns},ns==='published'?'Bab diterbitkan':'Bab dijadikan draft')},
-  remove:function(id){if(!canEdit)return;commit(function(d){d.chapters=d.chapters.filter(function(c){return c.id!==id})},'Bab dihapus')},
+  chapters:function(){return chapters().filter(function(c){return !c.example}).map(function(c){return {id:c.id,title:c.title,vol:c.vol,n:c.n,novelId:c.novelId,status:c.status==='draft'?'draft':'published'}})},
+  novels:function(){return sortedNovels().filter(function(n){return !n.example}).map(function(n){return {id:n.id,title:n.title,author:n.author||'',status:n.status||'ongoing'}})},
+  createNovel:function(){if(canEdit){admin=true;novelEditor(null)}},
+  editNovel:function(id){if(canEdit&&novelById(id))novelEditor(id)},
+  create:function(nid){if(canEdit){admin=true;go('tulis-'+(nid||(S.novels[0]&&S.novels[0].id)))}},
+  edit:function(id){if(canEdit&&chById(id))go('edit-'+id)},
+  togglePublish:function(id){var c=chById(id);if(!c||!canEdit)return;var ns=c.status==='draft'?'published':'draft';commit(function(d){d.chapters.find(function(x){return x.id===id}).status=ns},ns==='published'?'Chapter diterbitkan':'Chapter dijadikan draft')},
+  remove:function(id){if(!canEdit)return;commit(function(d){d.chapters=d.chapters.filter(function(c){return c.id!==id})},'Chapter dihapus')},
   toggleAdmin:function(){admin=!admin;lsSet('hn-admin',admin?'1':'0');pinMode=false;render({keep:true});notify();return admin},
   save:function(){return persistNow()},
   hasPending:function(){return pendingSave},
@@ -1637,21 +1810,22 @@ window.hnApp={
       <div class="hn-writer-header">
         <p>HOLLOW NIGHT // AUTHOR MODE</p>
         <h2>Author's Archive</h2>
-        <p>Edit langsung dari tiap halaman. Di sini kamu mengatur daftar chapter dan status terbitnya.</p>
+        <p>Edit langsung dari tiap halaman. Di sini kamu mengatur novel & chapter.</p>
       </div>
       <div class="hn-writer-stats">
-        <div><span>Total Chapters</span><strong id="hn-stat-total">0</strong></div>
+        <div><span>Novels</span><strong id="hn-stat-novels">0</strong></div>
+        <div><span>Chapters</span><strong id="hn-stat-total">0</strong></div>
         <div><span>Drafts</span><strong id="hn-stat-drafts">0</strong></div>
-        <div><span>Published</span><strong id="hn-stat-published">0</strong></div>
       </div>
       <div class="hn-author-actions">
+        <button type="button" id="hn-author-newnovel">NEW NOVEL</button>
         <button type="button" id="hn-author-newchapter">NEW CHAPTER</button>
         <button type="button" id="hn-author-modetoggle">EDIT TOOLS: ON</button>
       </div>
       <hr>
-      <h3>CHAPTER ARCHIVE</h3>
+      <h3>NOVEL & CHAPTER</h3>
       <p id="hn-chapter-message" role="status" aria-live="polite"></p>
-      <div id="hn-chapter-list"><p>Chapter archive will appear here.</p></div>
+      <div id="hn-chapter-list"><p>Archive will appear here.</p></div>
       <button type="button" id="hn-author-logout">SIGN OUT</button>
     </div>
   </section>
@@ -1672,102 +1846,71 @@ window.hnApp={
   const chapterList = document.getElementById("hn-chapter-list");
   const toggleBtn = document.getElementById("hn-author-modetoggle");
   if (!db) {
-    button.addEventListener("click", () => { alert("Supabase belum siap. Periksa koneksi dan urutan script."); });
+    button.addEventListener("click", () => { alert("Supabase belum siap."); });
     return;
   }
   const api = () => window.hnApp;
-  function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
-  }
-  function syncToggle() {
-    const on = api() && api().isAdmin();
-    toggleBtn.textContent = on ? "EDIT TOOLS: ON" : "EDIT TOOLS: OFF";
-  }
-  function renderArchive() {
-    const app = api();
-    if (!app) { chapterList.innerHTML = "<p>Memuat chapter...</p>"; return; }
-    const chapters = app.chapters();
-    document.getElementById("hn-stat-total").textContent = chapters.length;
-    document.getElementById("hn-stat-drafts").textContent = chapters.filter(c => c.status === "draft").length;
-    document.getElementById("hn-stat-published").textContent = chapters.filter(c => c.status === "published").length;
+  function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+  function syncToggle(){const on=api()&&api().isAdmin();toggleBtn.textContent=on?"EDIT TOOLS: ON":"EDIT TOOLS: OFF"}
+  function renderArchive(){
+    const app=api();if(!app){chapterList.innerHTML="<p>Memuat...</p>";return}
+    const ns=app.novels(),cs=app.chapters();
+    document.getElementById("hn-stat-novels").textContent=ns.length;
+    document.getElementById("hn-stat-total").textContent=cs.length;
+    document.getElementById("hn-stat-drafts").textContent=cs.filter(c=>c.status==="draft").length;
     syncToggle();
-    if (!chapters.length) { chapterList.innerHTML = "<p>Belum ada chapter. Tekan NEW CHAPTER untuk mulai menulis.</p>"; return; }
-    chapterList.innerHTML = chapters.map(c => `
-      <article class="hn-chapter-card">
-        <h4>${escapeHTML(c.title)}</h4>
-        <p>${escapeHTML(c.vol || "No volume")}${c.n ? " — Chapter " + escapeHTML(c.n) : ""}</p>
-        <p>Status: <strong>${c.status === "draft" ? "draft" : "published"}</strong></p>
-        <div class="hn-author-actions">
-          <button type="button" data-hn-act="edit" data-id="${escapeHTML(c.id)}">EDIT</button>
-          <button type="button" data-hn-act="pub" data-id="${escapeHTML(c.id)}">${c.status === "draft" ? "PUBLISH" : "UNPUBLISH"}</button>
-          <button type="button" data-hn-act="del" data-id="${escapeHTML(c.id)}">DELETE</button>
-        </div>
-      </article>
-    `).join("");
+    if(!ns.length&&!cs.length){chapterList.innerHTML="<p>Belum ada novel. Tekan NEW NOVEL.</p>";return}
+    let html="";
+    ns.forEach(n=>{
+      const nc=cs.filter(c=>c.novelId===n.id);
+      html+=`<div class="hn-chapter-card" style="border-color:#B99A61"><h4 style="font-family:Metamorphous,serif">📖 ${escapeHTML(n.title)}</h4><p>${escapeHTML(n.author||"No author")} — ${nc.length} chapter</p><div class="hn-author-actions"><button type="button" data-hn-act="editnovel" data-id="${escapeHTML(n.id)}">EDIT NOVEL</button><button type="button" data-hn-act="newchap" data-id="${escapeHTML(n.id)}">+ CHAPTER</button></div></div>`;
+      nc.forEach(c=>{
+        html+=`<div class="hn-chapter-card" style="margin-left:16px"><h4>${escapeHTML(c.title)}</h4><p>${escapeHTML(c.vol||"No volume")}${c.n?" — Ch "+escapeHTML(c.n):""}</p><p>Status: <strong>${c.status==="draft"?"draft":"published"}</strong></p><div class="hn-author-actions"><button type="button" data-hn-act="edit" data-id="${escapeHTML(c.id)}">EDIT</button><button type="button" data-hn-act="pub" data-id="${escapeHTML(c.id)}">${c.status==="draft"?"PUBLISH":"UNPUBLISH"}</button><button type="button" data-hn-act="del" data-id="${escapeHTML(c.id)}">DELETE</button></div></div>`;
+      });
+    });
+    chapterList.innerHTML=html;
   }
-  function showLoggedOut() {
-    form.hidden = false; dashboard.hidden = true;
-    subtitle.textContent = "AUTHOR ARCHIVE // RESTRICTED ACCESS";
-    button.textContent = "AUTHOR ACCESS";
-    passwordInput.value = "";
+  function showLoggedOut(){form.hidden=false;dashboard.hidden=true;subtitle.textContent="AUTHOR ARCHIVE // RESTRICTED ACCESS";button.textContent="AUTHOR ACCESS";passwordInput.value=""}
+  async function updateSessionUI(){
+    const {data,error}=await db.auth.getSession();
+    if(error){message.textContent="Gagal memeriksa sesi.";return}
+    const user=data.session?.user;
+    if(user&&user.id===AUTHOR_UID){form.hidden=true;dashboard.hidden=false;subtitle.textContent="IDENTITY VERIFIED";button.textContent="AUTHOR MODE";message.textContent="Akun Author berhasil diverifikasi.";renderArchive()}
+    else showLoggedOut();
   }
-  async function updateSessionUI() {
-    const { data, error } = await db.auth.getSession();
-    if (error) { message.textContent = "Gagal memeriksa sesi. Silakan coba lagi."; return; }
-    const user = data.session?.user;
-    if (user && user.id === AUTHOR_UID) {
-      form.hidden = true; dashboard.hidden = false;
-      subtitle.textContent = "IDENTITY VERIFIED";
-      button.textContent = "AUTHOR MODE";
-      message.textContent = "Akun Author berhasil diverifikasi.";
-      renderArchive();
-    } else { showLoggedOut(); }
-  }
-  button.addEventListener("click", async () => { modal.hidden = false; await updateSessionUI(); });
-  document.getElementById("hn-author-close").addEventListener("click", () => { modal.hidden = true; });
-  modal.addEventListener("click", event => { if (event.target === modal) modal.hidden = true; });
-  form.addEventListener("submit", async event => {
-    event.preventDefault();
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-    message.textContent = "Memverifikasi identitas...";
-    const { data, error } = await db.auth.signInWithPassword({ email, password });
-    if (error) { message.textContent = "Login gagal. Periksa email, password, dan konfigurasi Auth."; return; }
-    if (data.user?.id !== AUTHOR_UID) {
-      await db.auth.signOut(); showLoggedOut();
-      message.textContent = "Akses ditolak. Akun ini bukan Author Hollow Night.";
-      return;
-    }
-    passwordInput.value = "";
-    message.textContent = "Identitas berhasil diverifikasi.";
-    await updateSessionUI();
+  button.addEventListener("click",async()=>{modal.hidden=false;await updateSessionUI()});
+  document.getElementById("hn-author-close").addEventListener("click",()=>{modal.hidden=true});
+  modal.addEventListener("click",e=>{if(e.target===modal)modal.hidden=true});
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    message.textContent="Memverifikasi identitas...";
+    const {data,error}=await db.auth.signInWithPassword({email:emailInput.value.trim(),password:passwordInput.value});
+    if(error){message.textContent="Login gagal. Periksa email, password.";return}
+    if(data.user?.id!==AUTHOR_UID){await db.auth.signOut();showLoggedOut();message.textContent="Akses ditolak.";return}
+    passwordInput.value="";message.textContent="Identitas berhasil diverifikasi.";await updateSessionUI();
   });
-  document.getElementById("hn-author-logout").addEventListener("click", async () => {
-    message.textContent = "Keluar...";
-    try { const { error } = await db.auth.signOut({ scope: "local" }); if (error) console.warn("signOut:", error.message); } catch (err) { console.warn("signOut gagal:", err); }
-    try { Object.keys(localStorage).filter(k => /^sb-.*-auth-token/.test(k)).forEach(k => localStorage.removeItem(k)); } catch (err) {}
-    showLoggedOut();
-    message.textContent = "Kamu sudah keluar dari Author Archive.";
-    location.reload();
+  document.getElementById("hn-author-logout").addEventListener("click",async()=>{
+    message.textContent="Keluar...";
+    try{const {error}=await db.auth.signOut({scope:"local"});if(error)console.warn(error.message)}catch(e){}
+    try{Object.keys(localStorage).filter(k=>/^sb-.*-auth-token/.test(k)).forEach(k=>localStorage.removeItem(k))}catch(e){}
+    showLoggedOut();message.textContent="Kamu sudah keluar.";location.reload();
   });
-  document.getElementById("hn-author-newchapter").addEventListener("click", () => { modal.hidden = true; api()?.create(); });
-  toggleBtn.addEventListener("click", () => { api()?.toggleAdmin(); syncToggle(); });
-  chapterList.addEventListener("click", event => {
-    const b = event.target.closest("[data-hn-act]");
-    if (!b || !api()) return;
-    const id = b.dataset.id;
-    const act = b.dataset.hnAct;
-    if (act === "edit") { modal.hidden = true; api().edit(id); }
-    else if (act === "pub") { api().togglePublish(id); }
-    else if (act === "del") { if (confirm("Hapus chapter ini secara permanen?")) api().remove(id); }
+  document.getElementById("hn-author-newnovel").addEventListener("click",()=>{modal.hidden=true;api()?.createNovel()});
+  document.getElementById("hn-author-newchapter").addEventListener("click",()=>{modal.hidden=true;api()?.create()});
+  toggleBtn.addEventListener("click",()=>{api()?.toggleAdmin();syncToggle()});
+  chapterList.addEventListener("click",e=>{
+    const b=e.target.closest("[data-hn-act]");if(!b||!api())return;
+    const id=b.dataset.id,act=b.dataset.hnAct;
+    if(act==="edit"){modal.hidden=true;api().edit(id)}
+    else if(act==="editnovel"){modal.hidden=true;api().editNovel(id)}
+    else if(act==="newchap"){modal.hidden=true;api().create(id)}
+    else if(act==="pub"){api().togglePublish(id)}
+    else if(act==="del"){if(confirm("Hapus chapter ini permanen?"))api().remove(id)}
   });
-  document.addEventListener("hn-state", () => {
-    const isAuthor = !!(api() && api().isAuthor());
-    button.textContent = isAuthor ? "AUTHOR MODE" : "AUTHOR ACCESS";
-    if (!dashboard.hidden) {
-      if (isAuthor) renderArchive();
-      else showLoggedOut();
-    }
+  document.addEventListener("hn-state",()=>{
+    const isAuthor=!!(api()&&api().isAuthor());
+    button.textContent=isAuthor?"AUTHOR MODE":"AUTHOR ACCESS";
+    if(!dashboard.hidden){if(isAuthor)renderArchive();else showLoggedOut()}
   });
 })();
 </script>
