@@ -299,13 +299,13 @@ select.in{appearance:auto}
 .md .hint{color:var(--ink-soft);font-size:.92rem;margin-bottom:16px}
 .mfoot{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:8px}
 .rt{border:1.5px solid var(--paper-edge);border-radius:8px;background:var(--field);overflow:hidden}
-.rt-bar{display:flex;flex-wrap:wrap;gap:3px;padding:6px;border-bottom:1px solid var(--paper-edge);background:var(--paper);align-items:center;position:sticky;top:0;z-index:2;transition:background .2s}
-.rt-bar[data-mode="image"]{background:linear-gradient(180deg,rgba(242,193,78,.22),var(--paper));border-bottom-color:var(--gold)}
+.rt-bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--paper-edge);background:var(--paper);align-items:center;position:sticky;top:0;z-index:2;transition:background .2s}
+.rt-bar[data-mode="image"]{background:linear-gradient(180deg,rgba(242,193,78,.28),var(--paper));border-bottom-color:var(--gold)}
 .rtb{min-width:34px;min-height:34px;padding:0 8px;border:1.5px solid transparent;background:transparent;border-radius:6px;font:700 .85rem/1 var(--f-ui);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);transition:background .12s}
 .rtb:hover{background:rgba(42,27,18,.08)}
 .rtb.on{background:var(--ink);color:var(--paper)}
 .rtb svg{width:16px;height:16px}
-.rtb.img-done{background:var(--gold);color:#1B1208;font-weight:800;padding:0 12px;min-width:auto}
+.rtb.img-done{background:var(--gold);color:#1B1208;font-weight:800;padding:0 14px;min-width:auto;border-color:#c8a342}
 .rtb.img-done:hover{background:#e0b340}
 .rtb.img-del{color:var(--red)}
 .rt-sel{height:34px;border:1.5px solid var(--paper-edge);background:var(--field);color:var(--ink);border-radius:6px;padding:0 6px;font:700 .78rem/1 var(--f-ui);cursor:pointer;max-width:130px}
@@ -316,7 +316,7 @@ select.in{appearance:auto}
 .rt-color-btn input[type=color]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
 .rt-color-btn .sw{display:inline-flex;flex-direction:column;align-items:center;line-height:1;gap:0}
 .rt-color-btn .sw::after{content:"";width:16px;height:3px;background:var(--sw,#B3372B);border-radius:2px;margin-top:1px}
-.rt-area{min-height:280px;max-height:65vh;overflow-y:auto;padding:16px 18px;font-family:var(--f-read);font-size:1.02rem;line-height:1.75;outline:0}
+.rt-area{min-height:280px;max-height:65vh;overflow-y:auto;padding:16px 18px;font-family:var(--f-read);font-size:1.02rem;line-height:1.75;outline:0;position:relative}
 .rt-area:focus{background:rgba(255,255,255,.3)}
 .rt-area p{margin:0 0 .9em}
 .rt-area h1{font-size:1.9rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
@@ -327,10 +327,11 @@ select.in{appearance:auto}
 .rt-area ul,.rt-area ol{padding-left:1.6em;margin:0 0 1em}
 .rt-area hr{border:0;height:1.5em;text-align:center;margin:1em 0}
 .rt-area hr::after{content:"* * *";letter-spacing:.3em;color:var(--red)}
-.rt-area figure{margin:1em 0;display:block}
-.rt-area img{cursor:pointer;transition:outline .15s;max-width:100%;height:auto;border-radius:6px;vertical-align:middle}
+.rt-area figure{margin:1em 0;display:block;position:relative}
+.rt-area img{cursor:grab;transition:outline .15s;max-width:100%;height:auto;border-radius:6px;vertical-align:middle;user-select:none;-webkit-user-drag:none}
 .rt-area img:hover{outline:2px solid var(--gold);outline-offset:2px}
-.rt-area img.sel{outline:3px solid var(--red);outline-offset:2px}
+.rt-area img.sel{outline:3px solid var(--red);outline-offset:2px;cursor:grab}
+.rt-area img.sel.dragging{cursor:grabbing;outline-color:var(--gold)}
 .rt-area img[data-align=left]{float:left;margin:6px 16px 10px 0}
 .rt-area img[data-align=right]{float:right;margin:6px 0 10px 16px}
 .rt-area img[data-wrap=none]{float:none!important;display:block;margin:14px auto}
@@ -338,6 +339,24 @@ select.in{appearance:auto}
 .rt-area img[data-wrap=none][data-align=right]{margin-right:0}
 .rt-area figure img{float:none!important;display:block;margin:8px auto!important}
 .rt-area a{color:var(--red);text-decoration:underline}
+.img-handle-bar{position:absolute;left:50%;bottom:-34px;transform:translateX(-50%);display:flex;gap:4px;background:rgba(20,35,42,.92);border-radius:8px;padding:4px;pointer-events:auto;z-index:5;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.img-handle-bar button{width:30px;height:30px;border:0;background:transparent;color:#EBD9B4;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font:700 .8rem/1 var(--f-ui)}
+.img-handle-bar button:hover{background:rgba(242,193,78,.24);color:var(--gold)}
+.img-handle-bar button svg{width:15px;height:15px}
+
+/* Image tools panel v1.7 — gdocs/word style sliders */
+.rt-bar .img-tools-wrap{display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%}
+.img-group{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.5);border:1px solid var(--paper-edge);border-radius:6px;padding:3px 8px;height:38px}
+.img-group>label{font:700 .7rem/1 var(--f-ui);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;padding-right:4px}
+.img-slider{display:flex;align-items:center;gap:6px}
+.img-slider input[type=range]{width:110px;accent-color:var(--red);cursor:pointer}
+.img-slider output{font:700 .74rem/1 var(--f-ui);min-width:40px;text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+.img-btn-group{display:flex;gap:2px}
+.img-btn-group button{min-width:32px;height:30px;border:1.5px solid transparent;background:transparent;border-radius:5px;cursor:pointer;color:var(--ink);font:700 .8rem/1 var(--f-ui);display:flex;align-items:center;justify-content:center;padding:0 6px}
+.img-btn-group button:hover{background:rgba(42,27,18,.08)}
+.img-btn-group button.on{background:var(--ink);color:var(--paper)}
+.img-btn-group button svg{width:15px;height:15px}
+.img-tools-help{font:600 .74rem/1.4 var(--f-ui);color:var(--ink-soft);width:100%;margin-top:2px}
 
 .imgf{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .imgf img{width:96px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--paper-edge);background:var(--night)}
@@ -493,7 +512,12 @@ var IC={
   external:'<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/>',
   image:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 17l-5-5-9 8"/>',
   check:'<path d="M4 12l5 5L20 6"/>',
-  trash:'<path d="M3 6h18"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>'
+  trash:'<path d="M3 6h18"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>',
+  alignLeft:'<path d="M3 6h18M3 12h12M3 18h18"/>',
+  alignCenter:'<path d="M3 6h18M6 12h12M3 18h18"/>',
+  alignRight:'<path d="M3 6h18M9 12h12M3 18h18"/>',
+  move:'<path d="M12 3v18M3 12h18"/><path d="M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/>',
+  reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4"/>'
 };
 function icon(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>'}
 var D20='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><polygon points="32,4 58,19 58,45 32,60 6,45 6,19"/><polygon points="32,18 46,42 18,42"/><path d="M32 4v14M58 19L46 42M6 19l12 23M32 60L18 42M32 60l14-18M58 45L46 42M6 45l12-3"/></svg>';
@@ -1136,7 +1160,7 @@ function safeImg(el){
   else{
     src=el.getAttribute('src')||'';
     var attrs=[];
-    ['alt','style','data-align','data-wrap','data-border','data-round','data-shadow'].forEach(function(k){
+    ['alt','style','data-align','data-wrap','data-border','data-round','data-shadow','data-rotate','data-offset-x','data-offset-y','data-position'].forEach(function(k){
       var v=el.getAttribute(k);if(v!=null&&v!=='')attrs.push(k+'="'+esc(v)+'"');
     });
     if(attrs.length)extra=' '+attrs.join(' ');
@@ -1323,36 +1347,47 @@ function writeToolbarHTML(){
   return bar;
 }
 
+/* === v1.7 Image toolbar — Google Docs/Word style === */
 function imageToolbarHTML(){
   var bar='<div class="rt-bar" data-mode="image" role="toolbar" aria-label="Alat gambar">';
-  bar+='<span class="rt-label">Gambar</span>';
-  bar+='<span class="rt-sep"></span>';
-  bar+='<select class="rt-sel" data-act="img-sel" data-k="size" title="Ukuran cepat">';
-  [['','Asli'],['25%','Kecil (25%)'],['50%','Sedang (50%)'],['75%','Besar (75%)'],['100%','Penuh (100%)']].forEach(function(o){bar+='<option value="'+o[0]+'">'+o[1]+'</option>'});
-  bar+='</select>';
-  bar+='<select class="rt-sel" data-act="img-sel" data-k="align" title="Posisi">';
-  [['left','Kiri'],['center','Tengah'],['right','Kanan']].forEach(function(o){bar+='<option value="'+o[0]+'">'+o[1]+'</option>'});
-  bar+='</select>';
-  bar+='<select class="rt-sel" data-act="img-sel" data-k="wrap" title="Mode teks">';
-  [['none','Baris baru'],['wrap','Teks mengelilingi']].forEach(function(o){bar+='<option value="'+o[0]+'">'+o[1]+'</option>'});
-  bar+='</select>';
-  bar+='<span class="rt-sep"></span>';
-  bar+='<select class="rt-sel" data-act="img-sel" data-k="border" title="Bingkai">';
-  [['0','Tanpa bingkai'],['2','Bingkai tipis'],['4','Bingkai sedang'],['8','Bingkai tebal']].forEach(function(o){bar+='<option value="'+o[0]+'">'+o[1]+'</option>'});
-  bar+='</select>';
-  bar+='<select class="rt-sel" data-act="img-sel" data-k="round" title="Sudut">';
-  [['0','Sudut tajam'],['6','Sudut kecil'],['16','Sudut sedang'],['32','Sudut bulat'],['999','Lingkaran']].forEach(function(o){bar+='<option value="'+o[0]+'">'+o[1]+'</option>'});
-  bar+='</select>';
-  bar+='<select class="rt-sel" data-act="img-sel" data-k="shadow" title="Bayangan">';
-  [['0','Tanpa bayangan'],['1','Bayangan halus'],['2','Bayangan kuat']].forEach(function(o){bar+='<option value="'+o[0]+'">'+o[1]+'</option>'});
-  bar+='</select>';
-  bar+='<span class="rt-sep"></span>';
-  bar+='<label class="rt-label" style="display:inline-flex;align-items:center;gap:6px;text-transform:none;letter-spacing:normal;font-weight:700;color:var(--ink)">Opasitas&nbsp;<input type="range" id="ie-op" min="20" max="100" value="100" style="width:80px;accent-color:var(--red)"><output id="ie-opv" style="min-width:38px;text-align:right;font-variant-numeric:tabular-nums">100%</output></label>';
+  bar+='<div class="img-tools-wrap">';
+  // Size + rotation + width sliders
+  bar+='<div class="img-group"><label>Ukuran</label><div class="img-slider"><input type="range" id="ie-size" min="10" max="100" value="100" step="1"><output id="ie-sizev">100%</output></div></div>';
+  bar+='<div class="img-group"><label>Putar</label><div class="img-slider"><input type="range" id="ie-rot" min="-180" max="180" value="0" step="1"><output id="ie-rotv">0°</output></div></div>';
+  bar+='<div class="img-group"><label>Opasitas</label><div class="img-slider"><input type="range" id="ie-op" min="10" max="100" value="100" step="1"><output id="ie-opv">100%</output></div></div>';
+  // Alignment
+  bar+='<div class="img-group"><label>Posisi</label><div class="img-btn-group">';
+  bar+='<button type="button" data-act="img-align" data-v="left" title="Rata kiri">'+icon('alignLeft')+'</button>';
+  bar+='<button type="button" data-act="img-align" data-v="center" title="Tengah">'+icon('alignCenter')+'</button>';
+  bar+='<button type="button" data-act="img-align" data-v="right" title="Rata kanan">'+icon('alignRight')+'</button>';
+  bar+='</div></div>';
+  // Text wrap
+  bar+='<div class="img-group"><label>Wrap</label><div class="img-btn-group">';
+  bar+='<button type="button" data-act="img-wrap" data-v="none" title="Baris baru (block)">▭</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="wrap" title="Teks mengelilingi">▥</button>';
+  bar+='</div></div>';
+  // Border
+  bar+='<div class="img-group"><label>Bingkai</label><div class="img-slider"><input type="range" id="ie-bw" min="0" max="12" value="0" step="1"><output id="ie-bwv">0px</output></div><label class="rt-color-btn" title="Warna bingkai" style="min-width:28px;min-height:28px;padding:0 4px"><span class="sw" id="ie-bc-sw" style="--sw:#B3372B"></span><input type="color" id="ie-bc" value="#B3372B"></label></div>';
+  // Corner
+  bar+='<div class="img-group"><label>Sudut</label><div class="img-slider"><input type="range" id="ie-round" min="0" max="999" value="6" step="1"><output id="ie-roundv">6px</output></div></div>';
+  // Shadow
+  bar+='<div class="img-group"><label>Bayangan</label><div class="img-btn-group">';
+  bar+='<button type="button" data-act="img-shadow" data-v="0" title="Tanpa">—</button>';
+  bar+='<button type="button" data-act="img-shadow" data-v="1" title="Halus">▢</button>';
+  bar+='<button type="button" data-act="img-shadow" data-v="2" title="Kuat">▣</button>';
+  bar+='</div></div>';
+  // Offset X/Y sliders (free positioning)
+  bar+='<div class="img-group"><label>X</label><div class="img-slider"><input type="range" id="ie-ox" min="-200" max="200" value="0" step="1"><output id="ie-oxv">0</output></div></div>';
+  bar+='<div class="img-group"><label>Y</label><div class="img-slider"><input type="range" id="ie-oy" min="-200" max="200" value="0" step="1"><output id="ie-oyv">0</output></div></div>';
+  // Reset
+  bar+='<button type="button" class="rtb" data-act="img-reset" title="Reset semua">'+icon('reset')+'</button>';
   bar+='<span class="rt-sep"></span>';
   bar+='<button type="button" class="rtb" data-act="img-alt" title="Teks alternatif (untuk pembaca layar)">Alt</button>';
   bar+='<span class="rt-sep"></span>';
   bar+='<button type="button" class="rtb img-done" data-act="img-done" title="Selesai mengatur gambar">'+icon('check')+'<span style="margin-left:4px">Selesai</span></button>';
   bar+='<button type="button" class="rtb img-del" data-act="img-delete" title="Hapus gambar">'+icon('trash')+'</button>';
+  bar+='<div class="img-tools-help">Klik &amp; geser gambar di editor untuk memindahkan secara bebas, atau pakai slider X/Y. Semua perubahan langsung tersimpan di gambar.</div>';
+  bar+='</div>';
   bar+='</div>';
   return bar;
 }
@@ -1373,6 +1408,7 @@ function enterImageMode(img){
   img.classList.add('sel');
   bar.outerHTML=imageToolbarHTML();
   syncImageToolbarFromState();
+  bindImageDrag();
 }
 function exitImageMode(){
   var bar=getRtBar();
@@ -1387,36 +1423,54 @@ function syncImageToolbarFromState(){
   if(!ieImg)return;
   var bar=getRtBar();if(!bar)return;
   var img=ieImg;
-  var sizeSel=bar.querySelector('[data-act="img-sel"][data-k="size"]');
-  var alignSel=bar.querySelector('[data-act="img-sel"][data-k="align"]');
-  var wrapSel=bar.querySelector('[data-act="img-sel"][data-k="wrap"]');
-  var borderSel=bar.querySelector('[data-act="img-sel"][data-k="border"]');
-  var roundSel=bar.querySelector('[data-act="img-sel"][data-k="round"]');
-  var shadowSel=bar.querySelector('[data-act="img-sel"][data-k="shadow"]');
-  var op=bar.querySelector('#ie-op');
-  var opv=bar.querySelector('#ie-opv');
-  var w=img.style.width||'';
-  if(sizeSel)sizeSel.value=(w==='25%'||w==='50%'||w==='75%'||w==='100%')?w:'';
-  if(alignSel)alignSel.value=img.getAttribute('data-align')||'center';
-  if(wrapSel)wrapSel.value=img.getAttribute('data-wrap')||'none';
-  if(borderSel)borderSel.value=img.getAttribute('data-border')||'0';
-  if(roundSel)roundSel.value=img.getAttribute('data-round')||'6';
-  if(shadowSel)shadowSel.value=img.getAttribute('data-shadow')||'0';
-  var opv0=img.style.opacity?Math.round(parseFloat(img.style.opacity)*100):100;
-  if(op)op.value=opv0;
-  if(opv)opv.textContent=opv0+'%';
+  var size=img.style.width||'100%';
+  var sizePct=parseFloat(size)||100;
+  var rot=parseFloat(img.getAttribute('data-rotate')||'0')||0;
+  var op=img.style.opacity?Math.round(parseFloat(img.style.opacity)*100):100;
+  var bw=parseFloat(img.getAttribute('data-border')||'0')||0;
+  var bc=img.getAttribute('data-border-color')||'#B3372B';
+  var round=parseFloat(img.getAttribute('data-round')||'6')||0;
+  var shadow=img.getAttribute('data-shadow')||'0';
+  var ox=parseFloat(img.getAttribute('data-offset-x')||'0')||0;
+  var oy=parseFloat(img.getAttribute('data-offset-y')||'0')||0;
+  var align=img.getAttribute('data-align')||'center';
+  var wrap=img.getAttribute('data-wrap')||'none';
+  setVal('ie-size',Math.round(sizePct));setTxt('ie-sizev',Math.round(sizePct)+'%');
+  setVal('ie-rot',rot);setTxt('ie-rotv',rot+'°');
+  setVal('ie-op',op);setTxt('ie-opv',op+'%');
+  setVal('ie-bw',bw);setTxt('ie-bwv',bw+'px');
+  setVal('ie-round',round);setTxt('ie-roundv',round==='999'? '∞':round+'px');
+  setVal('ie-ox',ox);setTxt('ie-oxv',ox);
+  setVal('ie-oy',oy);setTxt('ie-oyv',oy);
+  var bcEl=bar.querySelector('#ie-bc');if(bcEl)bcEl.value=bc;
+  var bcSw=bar.querySelector('#ie-bc-sw');if(bcSw)bcSw.style.setProperty('--sw',bc);
+  // Highlight active buttons
+  bar.querySelectorAll('[data-act="img-align"]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===align)});
+  bar.querySelectorAll('[data-act="img-wrap"]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===wrap)});
+  bar.querySelectorAll('[data-act="img-shadow"]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===shadow)});
 }
+function setVal(id,v){var e=document.getElementById(id);if(e)e.value=v}
+function setTxt(id,t){var e=document.getElementById(id);if(e)e.textContent=t}
+
+/* === Apply image styles to img (called on every change) === */
 function applyImageStyle(){
   if(!ieImg)return;
   var img=ieImg;
   var align=img.getAttribute('data-align')||'center';
   var wrap=img.getAttribute('data-wrap')||'none';
-  var border=img.getAttribute('data-border')||'0';
-  var round=img.getAttribute('data-round')||'6';
+  var bw=parseFloat(img.getAttribute('data-border')||'0')||0;
+  var bc=img.getAttribute('data-border-color')||'#B3372B';
+  var round=parseFloat(img.getAttribute('data-round')||'6')||0;
   var shadow=img.getAttribute('data-shadow')||'0';
-  img.style.border = (border!=='0') ? (border+'px solid #B3372B') : 'none';
-  img.style.borderRadius = (round==='999') ? '50%' : (round+'px');
-  img.style.boxShadow = shadow==='1' ? '0 4px 12px rgba(0,0,0,.25)' : shadow==='2' ? '0 10px 30px rgba(0,0,0,.5)' : '';
+  var rot=parseFloat(img.getAttribute('data-rotate')||'0')||0;
+  var ox=parseFloat(img.getAttribute('data-offset-x')||'0')||0;
+  var oy=parseFloat(img.getAttribute('data-offset-y')||'0')||0;
+  img.style.border = bw>0 ? (bw+'px solid '+bc) : 'none';
+  img.style.borderRadius = round>=999 ? '50%' : (round+'px');
+  img.style.boxShadow = shadow==='1' ? '0 4px 12px rgba(0,0,0,.25)' : shadow==='2' ? '0 10px 30px rgba(0,0,0,.5)' : 'none';
+  img.style.transform = 'translate('+ox+'px,'+oy+'px) rotate('+rot+'deg)';
+  img.style.transformOrigin = 'center center';
+  // Alignment + wrap (position in flow)
   if(wrap==='wrap'){
     img.style.cssFloat = align==='left'?'left':align==='right'?'right':'none';
     img.style.display='block';
@@ -1427,7 +1481,7 @@ function applyImageStyle(){
     img.style.margin = align==='left'?'14px auto 14px 0':align==='right'?'14px 0 14px auto':'14px auto';
   }
   var fig=img.closest('figure');
-  if(fig){fig.style.margin='1.4em 0';fig.style.textAlign='center';fig.style.display='block';}
+  if(fig){fig.style.margin='1.4em 0';fig.style.textAlign='center';fig.style.display='block';fig.style.position='relative';}
 }
 function imgDeleteNow(){
   if(!ieImg)return;
@@ -1444,6 +1498,64 @@ function imgAskAlt(){
   if(v===null)return;
   ieImg.alt=v;
   toast('Teks alternatif disimpan di gambar.');
+}
+function imgReset(){
+  if(!ieImg)return;
+  ieImg.style.width='';
+  ieImg.style.opacity='';
+  ieImg.setAttribute('data-align','center');
+  ieImg.setAttribute('data-wrap','none');
+  ieImg.setAttribute('data-border','0');
+  ieImg.setAttribute('data-round','6');
+  ieImg.setAttribute('data-shadow','0');
+  ieImg.setAttribute('data-rotate','0');
+  ieImg.setAttribute('data-offset-x','0');
+  ieImg.setAttribute('data-offset-y','0');
+  applyImageStyle();
+  syncImageToolbarFromState();
+  toast('Gambar direset ke default.');
+}
+
+/* === Free-drag image with cursor/finger === */
+var imgDragState=null;
+function bindImageDrag(){
+  if(!ieImg)return;
+  // Use pointer events (works for mouse + touch)
+  ieImg.style.touchAction='none';
+  if(ieImg.__hnDragBound)return;
+  ieImg.__hnDragBound=true;
+  ieImg.addEventListener('pointerdown',function(ev){
+    if(!ieImg||ev.button===2)return;
+    // Only drag when in image mode
+    if(ieImg!==arguments.callee.target && !ieImg.classList.contains('sel'))return;
+    ev.preventDefault();
+    var ox0=parseFloat(ieImg.getAttribute('data-offset-x')||'0')||0;
+    var oy0=parseFloat(ieImg.getAttribute('data-offset-y')||'0')||0;
+    imgDragState={startX:ev.clientX,startY:ev.clientY,ox0:ox0,oy0:oy0,img:ieImg};
+    ieImg.classList.add('dragging');
+    try{ieImg.setPointerCapture(ev.pointerId)}catch(e){}
+  });
+  ieImg.addEventListener('pointermove',function(ev){
+    if(!imgDragState||imgDragState.img!==ieImg)return;
+    ev.preventDefault();
+    var dx=ev.clientX-imgDragState.startX;
+    var dy=ev.clientY-imgDragState.startY;
+    var nx=Math.round(imgDragState.ox0+dx);
+    var ny=Math.round(imgDragState.oy0+dy);
+    nx=clamp(nx,-300,300);ny=clamp(ny,-300,300);
+    ieImg.setAttribute('data-offset-x',nx);
+    ieImg.setAttribute('data-offset-y',ny);
+    ieImg.style.transform='translate('+nx+'px,'+ny+'px) rotate('+(parseFloat(ieImg.getAttribute('data-rotate')||'0')||0)+'deg)';
+    setVal('ie-ox',nx);setTxt('ie-oxv',nx);
+    setVal('ie-oy',ny);setTxt('ie-oyv',ny);
+  });
+  ieImg.addEventListener('pointerup',function(ev){
+    if(imgDragState&&imgDragState.img===ieImg){
+      ieImg.classList.remove('dragging');
+      imgDragState=null;
+    }
+  });
+  ieImg.addEventListener('pointercancel',function(){if(imgDragState&&imgDragState.img===ieImg){ieImg.classList.remove('dragging');imgDragState=null;}});
 }
 
 var imgRange=null;
@@ -1467,14 +1579,14 @@ async function insertImage(file,area){
     var sel=window.getSelection();
     if(imgRange&&area.contains(imgRange.commonAncestorContainer)){sel.removeAllRanges();sel.addRange(imgRange)}
     else{var r=document.createRange();r.selectNodeContents(area);r.collapse(false);sel.removeAllRanges();sel.addRange(r)}
-    document.execCommand('insertHTML',false,'<figure><img src="'+esc(url)+'" alt="" data-align="center" data-wrap="none" data-round="6" data-border="0"></figure><p><br></p>');
+    document.execCommand('insertHTML',false,'<figure><img src="'+esc(url)+'" alt="" data-align="center" data-wrap="none" data-round="6" data-border="0" data-rotate="0" data-offset-x="0" data-offset-y="0"></figure><p><br></p>');
     busy(false);
     setTimeout(function(){
       var imgs=area.querySelectorAll('img');
       var last=imgs[imgs.length-1];
       if(last)enterImageMode(last);
     },30);
-    toast('Gambar ditambahkan. Atur dari toolbar di atas, lalu tekan Selesai.');
+    toast('Gambar ditambahkan. Seret gambar untuk memindahkan, atau pakai slider. Tekan Selesai kalau sudah.');
   }catch(e){
     busy(false);console.error(e);
     var m=String((e&&e.message)||e);
@@ -1622,11 +1734,20 @@ function helpModal(){
     +'<h3 style="margin:14px 0 6px">Menulis bab</h3>'
     +'<p>Editor bab terbuka sebagai halaman penuh dengan bar menu di atas. Toolbar editor mirip Google Docs: pilih font, ukuran, perataan, bullet, nomor, inden, warna, dan lainnya. Tombol <b>Simpan bab</b> di bawah untuk menyimpan.</p>'
     +'<h3 style="margin:14px 0 6px">Menyisipkan gambar</h3>'
-    +'<p>Klik ikon 🖼 di toolbar tulisan. Setelah gambar diunggah, toolbar otomatis berubah menjadi <b>toolbar gambar</b> — mirip Google Docs / Word.</p>'
+    +'<p>Klik ikon 🖼 di toolbar tulisan. Setelah gambar diunggah, toolbar otomatis berubah menjadi <b>toolbar gambar</b>.</p>'
     +'<h3 style="margin:14px 0 6px">Mengedit gambar</h3>'
-    +'<p>Klik gambar mana saja di dalam editor untuk membuka <b>toolbar gambar</b> di atas. Ubah ukuran, posisi, bingkai, sudut, bayangan, dan opasitas — semua perubahan <b>langsung terlihat di gambar</b>. Tekan <b>Selesai</b> untuk kembali ke toolbar tulisan, atau ikon 🗑 untuk menghapus gambar. Jangan lupa tekan <b>Simpan bab</b> setelah selesai.</p>'
+    +'<p>Klik gambar mana saja di dalam editor untuk membuka <b>toolbar gambar</b>. Kamu bisa:</p>'
+    +'<ul style="padding-left:20px;margin:6px 0 10px">'
+    +'<li><b>Seret gambar</b> langsung di editor untuk memindahkan secara bebas (bisa pakai jari juga di HP).</li>'
+    +'<li>Atur <b>ukuran, putaran, opasitas, bingkai (warna &amp; ketebalan), sudut, dan bayangan</b> lewat slider di toolbar.</li>'
+    +'<li>Klik tombol <b>kiri/tengah/kanan</b> untuk alignment, dan <b>wrap</b> untuk pilihan baris-baru vs teks-mengelilingi.</li>'
+    +'<li>Slider <b>X / Y</b> untuk menggeser posisi secara presisi.</li>'
+    +'<li><b>Reset</b> mengembalikan gambar ke default.</li>'
+    +'<li><b>Selesai</b> untuk kembali ke toolbar tulisan. <b>🗑</b> untuk hapus gambar.</li>'
+    +'</ul>'
+    +'<p>Setelah selesai, tekan <b>Simpan bab</b> agar semua perubahan tersimpan.</p>'
     +'<h3 style="margin:14px 0 6px">Indikator & Mode Penulis</h3>'
-    +'<p>Di bar atas ada dua hal terpisah: <b>lampu indikator</b> <span class="save-light" style="vertical-align:middle"></span> hijau = tersimpan, merah = ada perubahan belum tersimpan; dan <b>tombol Mode Penulis</b> untuk menyalakan/mematikan alat edit. Lampu tetap terlihat meskipun Mode Penulis mati.</p>'
+    +'<p>Di bar atas ada dua hal terpisah: <b>lampu indikator</b> <span class="save-light" style="vertical-align:middle"></span> hijau = tersimpan, merah = ada perubahan belum tersimpan; dan <b>tombol Mode Penulis</b> untuk menyalakan/mematikan alat edit.</p>'
     +'<h3 style="margin:14px 0 6px">Impor dari PDF / Word</h3>'
     +'<p>Buka <b>Impor dari PDF / Word</b> di Meja Penulis atau di halaman novel. Pilih file .docx / .pdf / .txt. Bab-bab dipecah otomatis dari judul seperti "Bab 1".</p>'
     +'<h3 style="margin:14px 0 6px">Simpan otomatis & manual</h3>'
@@ -1637,8 +1758,8 @@ function helpModal(){
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function aboutModal(){
-  openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel statis yang menyimpan konten di Supabase. Fitur: perpustakaan novel dengan cover, daftar bab bervolume, mode penulis, impor dokumen, editor kaya dengan toolbar gambar langsung, peta lokasi, lini masa, glosarium, dan lore dunia.</p>'
-    +'<p style="margin-top:10px">Versi 1.6 &middot; dibuat untuk para pencerita.</p>'
+  openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel statis yang menyimpan konten di Supabase. Fitur: perpustakaan novel dengan cover, daftar bab bervolume, mode penulis, impor dokumen, editor kaya dengan toolbar gambar langsung (drag/rotate/free position), peta lokasi, lini masa, glosarium, dan lore dunia.</p>'
+    +'<p style="margin-top:10px">Versi 1.7 &middot; dibuat untuk para pencerita.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function contactModal(){
@@ -1792,6 +1913,10 @@ document.addEventListener('click',function(ev){
     case 'img-done':exitImageMode();toast('Selesai mengatur gambar. Jangan lupa Simpan bab.');break;
     case 'img-delete':imgDeleteNow();break;
     case 'img-alt':imgAskAlt();break;
+    case 'img-reset':imgReset();break;
+    case 'img-align':{if(!ieImg)break;ieImg.setAttribute('data-align',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
+    case 'img-wrap':{if(!ieImg)break;ieImg.setAttribute('data-wrap',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
+    case 'img-shadow':{if(!ieImg)break;ieImg.setAttribute('data-shadow',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
     case 'img-clear':{modalImg='';var pv=document.getElementById('if-prev');if(pv)pv.hidden=true;break}
     case 'pf-clear':{commit(function(d){d.site.avatar=''},'Foto profil dihapus').then(function(){profileModal()});break}
     case 'm-close':closeModal();break;
@@ -1805,6 +1930,8 @@ document.addEventListener('click',function(ev){
 document.addEventListener('click',function(ev){
   var img=ev.target.closest('.rt-area img');
   if(!img)return;
+  // Don't intercept during active drag
+  if(imgDragState)return;
   ev.preventDefault();
   enterImageMode(img);
 },true);
@@ -1817,21 +1944,20 @@ document.addEventListener('input',function(ev){
     document.execCommand(cmd,false,col);
   }
   if(t.id==='q')filterLore();
-  if(t.id==='ie-op'&&ieImg){
-    ieImg.style.opacity=(t.value/100).toString();
-    var opv=document.getElementById('ie-opv');
-    if(opv)opv.textContent=t.value+'%';
-  }
+  // Image toolbar slider inputs (live)
+  if(!ieImg)return;
+  if(t.id==='ie-size'){ieImg.style.width=t.value+'%';setTxt('ie-sizev',t.value+'%')}
+  else if(t.id==='ie-rot'){ieImg.setAttribute('data-rotate',t.value);applyImageStyle();setTxt('ie-rotv',t.value+'°')}
+  else if(t.id==='ie-op'){ieImg.style.opacity=(t.value/100).toString();setTxt('ie-opv',t.value+'%')}
+  else if(t.id==='ie-bw'){ieImg.setAttribute('data-border',t.value);applyImageStyle();setTxt('ie-bwv',t.value+'px')}
+  else if(t.id==='ie-bc'){ieImg.setAttribute('data-border-color',t.value);applyImageStyle();var sw=document.getElementById('ie-bc-sw');if(sw)sw.style.setProperty('--sw',t.value)}
+  else if(t.id==='ie-round'){ieImg.setAttribute('data-round',t.value);applyImageStyle();setTxt('ie-roundv',parseFloat(t.value)>=999?'∞':t.value+'px')}
+  else if(t.id==='ie-ox'){ieImg.setAttribute('data-offset-x',t.value);applyImageStyle();setTxt('ie-oxv',t.value)}
+  else if(t.id==='ie-oy'){ieImg.setAttribute('data-offset-y',t.value);applyImageStyle();setTxt('ie-oyv',t.value)}
 });
 document.addEventListener('change',function(ev){
   var t=ev.target;
   if(t.matches('.rt-sel[data-act="rt-sel"]')){rtSel(t.getAttribute('data-cmd'),t.value);return}
-  if(t.matches('.rt-sel[data-act="img-sel"]')&&ieImg){
-    var k=t.getAttribute('data-k');
-    if(k==='size'){ieImg.style.width=t.value||''}
-    else{ieImg.setAttribute('data-'+k,t.value);applyImageStyle()}
-    return;
-  }
   if(t.id==='imp-file'&&t.files.length)handleImport(t.files);
   if(t.id==='imp-novel'){var nv=novel(t.value);if(nv&&impChunks.length){var start=nextNumForNovel(nv.id);var used=0;document.querySelectorAll('.imp-row').forEach(function(r){var ci=+r.getAttribute('data-i');var c=impChunks[ci];var nInput=r.querySelector('[data-k=n]');if(c&&c.n==null){nInput.value=start+used;used++}else if(c){nInput.value=c.n}})}}
   if(t.id==='if-file'&&t.files[0]){
