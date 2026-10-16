@@ -1426,15 +1426,26 @@ window.hnApp={
 
   document.getElementById("hn-author-logout")
     .addEventListener("click", async () => {
-      const { error } = await db.auth.signOut();
+      message.textContent = "Keluar...";
 
-      if (error) {
-        message.textContent = "Gagal keluar. Silakan coba lagi.";
-        return;
+      try {
+        // scope "local": hapus sesi di browser ini tanpa bergantung pada server
+        const { error } = await db.auth.signOut({ scope: "local" });
+        if (error) console.warn("signOut:", error.message);
+      } catch (err) {
+        console.warn("signOut gagal:", err);
       }
+
+      // Pastikan token tersimpan benar-benar hilang
+      try {
+        Object.keys(localStorage)
+          .filter(k => /^sb-.*-auth-token/.test(k))
+          .forEach(k => localStorage.removeItem(k));
+      } catch (err) {}
 
       showLoggedOut();
       message.textContent = "Kamu sudah keluar dari Author Archive.";
+      location.reload();
     });
 
   document.getElementById("hn-author-newchapter")
