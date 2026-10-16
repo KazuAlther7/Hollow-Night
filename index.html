@@ -1,4 +1,13 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+/* Hollow Night v1.8 — floating editor toolbars */
+.rt{border:0;background:transparent;overflow:visible;display:flex;flex-direction:column;gap:12px}
+.rt-bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);border:1px solid var(--paper-edge);border-radius:12px;box-shadow:0 5px 18px rgba(0,0,0,.13);padding:10px;background:var(--paper);gap:5px}
+.rt-bar[data-mode="image"]{border:1px solid var(--gold);border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.16);background:var(--paper)}
+.rt-area{background:var(--field);border:1px solid var(--paper-edge);border-radius:8px;box-shadow:inset 0 1px 3px rgba(0,0,0,.04);min-height:420px}
+.editor-page .rt-bar{top:calc(env(safe-area-inset-top,0px) + 78px)}
+@media(max-width:680px){.rt-bar{top:calc(env(safe-area-inset-top,0px) + 112px);padding:7px}.rt-area{padding:14px;min-height:360px}.img-group{max-width:100%;height:auto;min-height:38px;flex-wrap:wrap}.img-slider input[type=range]{width:78px}}
+
+</style></head><body>
 <title>Hollow Night</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -335,6 +344,12 @@ select.in{appearance:auto}
 .rt-area img[data-align=left]{float:left;margin:6px 16px 10px 0}
 .rt-area img[data-align=right]{float:right;margin:6px 0 10px 16px}
 .rt-area img[data-wrap=none]{float:none!important;display:block;margin:14px auto}
+.rt-area img[data-wrap=tight],.rt-area img[data-wrap=through]{float:left;margin:6px 16px 10px 0;shape-outside:margin-box}
+.rt-area img[data-wrap=inline]{float:none!important;display:inline-block;vertical-align:middle;margin:0 3px}
+.rt-area img[data-wrap=top-bottom]{float:none!important;display:block;clear:both;margin:14px auto}
+.rt-area img[data-wrap=behind]{position:relative;z-index:0;opacity:.72}
+.rt-area img[data-wrap=front]{position:relative;z-index:3}
+
 .rt-area img[data-wrap=none][data-align=left]{margin-left:0}
 .rt-area img[data-wrap=none][data-align=right]{margin-right:0}
 .rt-area figure img{float:none!important;display:block;margin:8px auto!important}
@@ -588,6 +603,7 @@ function valid(r){
   if(/^nubah-[A-Za-z0-9_-]+$/.test(r))return S.novels.some(function(n){return 'nubah-'+n.id===r});
   if(/^n-[A-Za-z0-9_-]+$/.test(r))return S.novels.some(function(n){return 'n-'+n.id===r});
   if(/^tulis-[A-Za-z0-9_-]+$/.test(r))return S.chapters.some(function(c){return 'tulis-'+c.id===r});
+  if(/^babmeta-[A-Za-z0-9_-]+$/.test(r))return S.chapters.some(function(c){return 'babmeta-'+c.id===r});
   if(/^b-[A-Za-z0-9_-]+$/.test(r))return S.chapters.some(function(c){return 'b-'+c.id===r});
   if(/^e-[A-Za-z0-9_-]+$/.test(r))return S.lore.some(function(e){return 'e-'+e.id===r});
   return false;
@@ -602,18 +618,19 @@ function go(r){
 function curTab(){
   if(route.indexOf('b-')===0)return 'baca';
   if(route.indexOf('n-')===0||route.indexOf('nubah-')===0||route==='nbaru')return 'baca';
-  if(route.indexOf('tulis')===0)return 'baca';
+  if(route.indexOf('tulis')===0||route.indexOf('babmeta-')===0)return 'baca';
   if(route.indexOf('e-')===0){var e=entry(route.slice(2));return e?TYPES[e.type].tab:'home'}
   return route;
 }
 function topbar(){
-  var tab=curTab(),h='<header class="top"><div class="bar"><a class="brand" href="#home" data-go="home" aria-label="Hollow Night, beranda"><img src="'+LOGO+'" alt="Hollow Night"></a><nav class="tabs" aria-label="Menu utama">';
+  var tab=curTab(),h='<header class="top"><div class="bar"><a class="brand" href="#home" data-go="home" aria-label="Hollow Night, beranda"><img src="'+esc(S.site.logo||LOGO)+'" alt="Hollow Night"></a><nav class="tabs" aria-label="Menu utama">';
   TABS.forEach(function(t){h+='<a class="tab" href="#'+t[0]+'" data-go="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'>'+icon(t[2])+'<span>'+t[1]+'</span></a>'});
   h+='</nav>';
   if(canEdit){
     var lightCls = pendingSave ? 'save-light dirty' : 'save-light';
     var lightTitle = pendingSave ? 'Ada perubahan belum disimpan' : 'Semua perubahan tersimpan';
     h+='<span class="save-indicator" title="'+lightTitle+'" aria-label="'+lightTitle+'"><span class="'+lightCls+'" aria-hidden="true"></span></span>';
+    if(admin)h+='<button class="adm" type="button" data-act="menu-item" data-m="logo" title="Pengaturan logo">Logo</button>';
     h+='<button class="adm mode-btn" type="button" data-act="toggle-admin" aria-pressed="'+(admin?'true':'false')+'" title="Aktif/nonaktifkan alat edit">'+icon('quill')+'<span>Mode Penulis</span></button>';
     if(pendingSave){
       h+='<button class="adm saveall" type="button" data-act="save-now" title="Simpan semua perubahan sekarang">'+icon('upload')+'<span>Simpan</span></button>';
@@ -653,6 +670,7 @@ function view(){
   if(route.indexOf('n-')===0)return vNovel(route.slice(2));
   if(route==='tulis')return vChapterEditor(null);
   if(route.indexOf('tulis-')===0)return vChapterEditor(route.slice(6));
+  if(route.indexOf('babmeta-')===0)return vChapterMetaEditor(route.slice(8));
   if(route.indexOf('b-')===0)return vReader(route.slice(2));
   if(route.indexOf('e-')===0)return vEntry(route.slice(2));
   var t=TABMAP[route];
@@ -669,7 +687,7 @@ function vHome(){
   else cta+='<a class="btn gold" href="#baca" data-go="baca">'+icon('book')+'Buka perpustakaan</a>';
   cta+='<button class="btn nightghost" type="button" data-act="roll"><span class="d20" id="d20" style="display:inline-flex;width:22px;height:22px">'+D20+'</span>Lempar d20</button>';
   var syn=paras(S.site.synopsis).map(function(p){return '<p>'+esc(p)+'</p>'}).join('')||'<p>Sinopsis belum ditulis.</p>';
-  var h='<section class="hero"><div class="scene" aria-hidden="true">'+scene()+'</div><div class="hero-in"><img class="logo-big" src="'+LOGO+'" alt="Hollow Night"><p class="tag">'+esc(S.site.tagline||'')+'</p><div class="cta">'+cta+'</div><div class="rollout" id="rollout" aria-live="polite"></div></div></section>';
+  var h='<section class="hero"><div class="scene" aria-hidden="true">'+scene()+'</div><div class="hero-in"><img class="logo-big" src="'+esc(S.site.logo||LOGO)+'" alt="Hollow Night"><p class="tag">'+esc(S.site.tagline||'')+'</p><div class="cta">'+cta+'</div><div class="rollout" id="rollout" aria-live="polite"></div></div></section>';
   if(admin)h+=deskPanel();
   h+='<div class="cols"><section class="sheet taped syn"><div class="sec-h"><h2>Sinopsis</h2>'+(admin?'<button class="btn ghost sm" type="button" data-act="site-edit">Ubah</button>':'')+'</div>'+syn+'</section>';
   h+='<section><div class="sec-h"><h2>Novel terbaru</h2><a class="kicker" href="#baca" data-go="baca">Semua novel</a></div>';
@@ -690,7 +708,7 @@ function deskPanel(){
 }
 function chRow(c,adm){
   var wc=wordCount(c.body),mins=Math.max(1,Math.round(wc/200)),rd=readSet().indexOf(c.id)>=0;
-  return '<div class="row"><a class="rowlink" href="#b-'+c.id+'" data-go="b-'+c.id+'"><span class="hex num">'+esc(c.n)+'</span><span><span class="rt-title">'+esc(c.title)+'</span><div class="rt-meta">'+fmt(wc)+' kata &middot; '+mins+' menit baca '+exStamp(c)+'</div></span><span class="done">'+(rd?'sudah dibaca':'')+'</span></a>'+(adm?'<div class="rowact"><button class="btn ghost sm" type="button" data-act="ch-pub" data-id="'+c.id+'">'+(c.status==='draft'?'Terbitkan':'Jadikan draft')+'</button><button class="btn ghost sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah</button><button class="btn ghost sm" type="button" data-act="ch-del" data-id="'+c.id+'">Hapus</button></div>':'')+'</div>';
+  return '<div class="row"><a class="rowlink" href="#b-'+c.id+'" data-go="b-'+c.id+'"><span class="hex num">'+esc(c.n)+'</span><span><span class="rt-title">'+esc(c.title)+'</span><div class="rt-meta">'+fmt(wc)+' kata &middot; '+mins+' menit baca '+exStamp(c)+'</div></span><span class="done">'+(rd?'sudah dibaca':'')+'</span></a>'+(adm?'<div class="rowact"><button class="btn ghost sm" type="button" data-act="ch-pub" data-id="'+c.id+'">'+(c.status==='draft'?'Terbitkan':'Jadikan draft')+'</button><button class="btn ghost sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah Bab</button><button class="btn sm" type="button" data-act="ch-content" data-id="'+c.id+'">Edit Isi</button><button class="btn ghost sm" type="button" data-act="ch-del" data-id="'+c.id+'">Hapus</button></div>':'')+'</div>';
 }
 
 function vBaca(){
@@ -793,16 +811,16 @@ function vChapterEditor(id){
   var h='<div class="editor-page">';
   var backTo = nid ? '#n-'+nid : '#baca';
   h+='<a class="back" href="'+backTo+'" data-go="'+backTo.slice(1)+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(nid?'Kembali ke novel':'Kembali')+'</a>';
-  h+='<h1 style="margin:6px 0 16px">'+(c?'Ubah Bab':'Bab Baru')+'</h1>';
-  h+='<div class="f2">';
-  h+=field('Judul bab','<input class="in" id="ce-t" value="'+esc(c?c.title:'')+'" maxlength="140" placeholder="Judul bab">','ce-t');
-  h+=field('Nomor','<input class="in" id="ce-n" type="number" min="0" step="1" value="'+esc(c?c.n:nextNumForNovel(nid))+'">','ce-n');
-  h+='</div>';
-  h+='<div class="f2">';
-  h+=field('Volume atau arc (opsional)','<input class="in" id="ce-v" list="ce-v-list" value="'+esc(c?c.vol||'':'')+'" maxlength="60"><datalist id="ce-v-list">'+allVolumes().map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist>','ce-v');
-  h+=field('Status','<select class="in" id="ce-st"><option value="draft"'+((c&&c.status==='draft')?' selected':(!c?' selected':''))+'>Draft</option><option value="published"'+((c&&c.status==='published')?' selected':'')+'>Terbit</option></select>','ce-st');
-  h+='</div>';
+  h+='<h1 style="margin:6px 0 6px">'+(c?'Edit Isi Chapter':'Bab Baru')+'</h1>';
+  if(c)h+='<p class="hint" style="margin-bottom:18px;color:var(--ink-soft)">Naskah: Bab '+esc(c.n)+' — '+esc(c.title)+'. Identitas bab diubah lewat tombol “Ubah Bab” pada daftar isi.</p>';
   if(!c){
+    h+='<div class="f2">';
+    h+=field('Judul bab','<input class="in" id="ce-t" value="" maxlength="140" placeholder="Judul bab">','ce-t');
+    h+=field('Nomor','<input class="in" id="ce-n" type="number" min="0" step="1" value="'+esc(nextNumForNovel(nid))+'">','ce-n');
+    h+='</div><div class="f2">';
+    h+=field('Volume atau arc (opsional)','<input class="in" id="ce-v" list="ce-v-list" value="" maxlength="60"><datalist id="ce-v-list">'+allVolumes().map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist>','ce-v');
+    h+=field('Status','<select class="in" id="ce-st"><option value="draft" selected>Draft</option><option value="published">Terbit</option></select>','ce-st');
+    h+='</div>';
     h+=field('Novel','<select class="in" id="ce-novel">'+ns.map(function(n){return '<option value="'+esc(n.id)+'"'+(n.id===nid?' selected':'')+'>'+esc(n.title)+'</option>'}).join('')+'</select>','ce-novel');
   }
   h+='<div class="f"><span class="lb">Isi bab</span>'+richBox('ce-b',c?c.body:'')+'</div>';
@@ -811,6 +829,18 @@ function vChapterEditor(id){
   h+='<button class="btn ghost" type="button" data-act="ch-cancel">Batal</button>';
   h+='<button class="btn" type="button" data-act="ch-save-page" data-id="'+(c?c.id:'')+'">Simpan bab</button>';
   h+='</div></div>';
+  return h;
+}
+
+function vChapterMetaEditor(id){
+  var c=chById(id);if(!c)return vHome();
+  if(!canEdit)return '<div class="sheet empty"><p class="hand">Hanya Author yang bisa membuka halaman ini.</p></div>';
+  var nid=(novelOf(c.id)||{}).id||'';
+  var h='<div class="editor-page"><a class="back" href="#'+(nid?'n-'+nid:'baca')+'" data-go="'+(nid?'n-'+nid:'baca')+'">'+icon('back')+'Kembali ke daftar isi</a>';
+  h+='<h1 style="margin:6px 0">Ubah Bab</h1><p class="hint" style="margin-bottom:18px;color:var(--ink-soft)">Atur identitas dan status bab. Naskah tidak akan berubah di halaman ini.</p>';
+  h+='<div class="f2">'+field('Judul bab','<input class="in" id="ce-t" value="'+esc(c.title)+'" maxlength="140">','ce-t')+field('Nomor bab','<input class="in" id="ce-n" type="number" min="0" step="1" value="'+esc(c.n)+'">','ce-n')+'</div>';
+  h+='<div class="f2">'+field('Volume atau arc','<input class="in" id="ce-v" list="ce-v-list" value="'+esc(c.vol||'')+'" maxlength="60"><datalist id="ce-v-list">'+allVolumes().map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist>','ce-v')+field('Status','<select class="in" id="ce-st"><option value="draft"'+(c.status==='draft'?' selected':'')+'>Draft</option><option value="published"'+(c.status==='published'?' selected':'')+'>Terbit</option></select>','ce-st')+'</div>';
+  h+='<div class="acts" style="justify-content:flex-end;margin-top:18px"><button class="btn ghost" data-act="ch-cancel" data-id="'+c.id+'">Batal</button><button class="btn" data-act="ch-meta-save" data-id="'+c.id+'">Simpan Identitas</button><button class="btn gold" data-act="ch-content" data-id="'+c.id+'">Edit Isi</button></div></div>';
   return h;
 }
 
@@ -823,7 +853,7 @@ function vReader(id){
   var fs=clamp(parseInt(lsGet('hn-fs')||'18',10)||18,15,26);
   var backTo = nv ? 'n-'+nv.id : 'baca';
   function nav(){return '<div class="rd-nav">'+(prev?'<a class="btn ghost" href="#b-'+prev.id+'" data-go="b-'+prev.id+'">'+icon('back')+'Bab '+esc(prev.n)+'</a>':'<span></span>')+(next?'<a class="btn" href="#b-'+next.id+'" data-go="b-'+next.id+'">Bab '+esc(next.n)+'</a>':'<a class="btn ghost" href="#'+backTo+'" data-go="'+backTo+'">Daftar bab</a>')+'</div>'}
-  return '<div class="rd-wrap"><div class="rd-tools"><a class="back" href="#'+backTo+'" data-go="'+backTo+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(nv?esc(nv.title):'Daftar isi')+'</a><div class="acts"><button class="btn ghost sm" type="button" data-act="fs" data-d="-1" aria-label="Perkecil huruf">A-</button><button class="btn ghost sm" type="button" data-act="fs" data-d="1" aria-label="Perbesar huruf">A+</button>'+(admin?'<button class="btn sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah bab</button>':'')+'</div></div><article class="reader" id="reader"><header><div class="kicker">'+(c.vol?esc(c.vol)+' &middot; ':'')+'Bab '+esc(c.n)+' '+exStamp(c)+'</div><h1>'+esc(c.title)+'</h1>'+ORN+'</header><div class="body" style="--fs:'+fs+'px">'+c.body+'</div></article>'+nav()+'</div>';
+  return '<div class="rd-wrap"><div class="rd-tools"><a class="back" href="#'+backTo+'" data-go="'+backTo+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(nv?esc(nv.title):'Daftar isi')+'</a><div class="acts"><button class="btn ghost sm" type="button" data-act="fs" data-d="-1" aria-label="Perkecil huruf">A-</button><button class="btn ghost sm" type="button" data-act="fs" data-d="1" aria-label="Perbesar huruf">A+</button>'+(admin?'<button class="btn sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah Bab</button><button class="btn sm" type="button" data-act="ch-content" data-id="'+c.id+'">Edit Isi</button>':'')+'</div></div><article class="reader" id="reader"><header><div class="kicker">'+(c.vol?esc(c.vol)+' &middot; ':'')+'Bab '+esc(c.n)+' '+exStamp(c)+'</div><h1>'+esc(c.title)+'</h1>'+ORN+'</header><div class="body" style="--fs:'+fs+'px">'+c.body+'</div></article>'+nav()+'</div>';
 }
 
 function pageHead(t,extra){
@@ -1048,12 +1078,12 @@ async function saveChapterFromPage(){
   var btn=document.querySelector('[data-act="ch-save-page"]');
   if(!btn)return;
   var cid=btn.getAttribute('data-id');
-  var title=val('ce-t').trim();
-  var body=readRich('ce-b');
-  var n=parseInt(val('ce-n'),10);if(isNaN(n))n=0;
-  var vol=val('ce-v').trim();
-  var st=val('ce-st')==='published'?'published':'draft';
   var c=cid?chById(cid):null;
+  var title=c?c.title:val('ce-t').trim();
+  var body=readRich('ce-b');
+  var n=c?c.n:(parseInt(val('ce-n'),10)||0);
+  var vol=c?(c.vol||''):val('ce-v').trim();
+  var st=c?(c.status||'draft'):(val('ce-st')==='published'?'published':'draft');
   var novelId=c?(novelOf(cid)||{}).id:val('ce-novel');
   if(!title){toast('Isi judul bab dulu.');return}
   if(!textOf(body).trim()){toast('Isi bab masih kosong.');return}
@@ -1063,7 +1093,7 @@ async function saveChapterFromPage(){
   if(c){
     var t=next.chapters.find(function(x){return x.id===c.id});
     if(!t){toast('Bab tidak ditemukan.');return}
-    t.title=title;t.n=n;t.vol=vol;t.body=body;t.status=st;
+    t.body=body;
     delete t.example;
   }else{
     next.chapters.push({id:tempId,title:title,n:n,vol:vol,body:body,status:st,t:Date.now()});
@@ -1363,8 +1393,14 @@ function imageToolbarHTML(){
   bar+='</div></div>';
   // Text wrap
   bar+='<div class="img-group"><label>Wrap</label><div class="img-btn-group">';
-  bar+='<button type="button" data-act="img-wrap" data-v="none" title="Baris baru (block)">▭</button>';
-  bar+='<button type="button" data-act="img-wrap" data-v="wrap" title="Teks mengelilingi">▥</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="inline" title="Sejajar dengan teks (In line)">↔</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="none" title="Baris baru (Break text)">▭</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="wrap" title="Teks mengelilingi (Square)">▥</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="tight" title="Rapat (Tight)">▤</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="through" title="Menembus teks (Through)">▧</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="top-bottom" title="Atas dan bawah (Top & Bottom)">↕</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="behind" title="Di belakang teks (Behind text)">▱</button>';
+  bar+='<button type="button" data-act="img-wrap" data-v="front" title="Di depan teks (In front of text)">▣</button>';
   bar+='</div></div>';
   // Border
   bar+='<div class="img-group"><label>Bingkai</label><div class="img-slider"><input type="range" id="ie-bw" min="0" max="12" value="0" step="1"><output id="ie-bwv">0px</output></div><label class="rt-color-btn" title="Warna bingkai" style="min-width:28px;min-height:28px;padding:0 4px"><span class="sw" id="ie-bc-sw" style="--sw:#B3372B"></span><input type="color" id="ie-bc" value="#B3372B"></label></div>';
@@ -1848,6 +1884,15 @@ async function handleImport(files){
   out.innerHTML=h+'</div><p class="hint">Ditemukan '+impChunks.length+' bab. Ubah judul atau nomor sebelum menambahkan.</p>';
   save.hidden=false;
 }
+function logoSettingsModal(){
+  if(!admin||!canEdit){toast('Login dan aktifkan Mode Penulis untuk mengatur logo.');return}
+  var logo=S.site.logo||'';
+  var h=modalHead('Identitas Logo Hollow Night','Logo ini digunakan pada seluruh bagian website.');
+  h+='<div style="display:grid;place-items:center;min-height:130px;background:var(--night);border-radius:10px;padding:16px;margin-bottom:14px"><img id="logo-preview" src="'+esc(logo||LOGO)+'" alt="Pratinjau logo" style="max-width:100%;max-height:130px;object-fit:contain"></div>';
+  h+='<div class="f"><label for="logo-file">Unggah logo baru</label><input class="in" id="logo-file" type="file" accept="image/*"><small class="hint">PNG transparan disarankan. Logo akan langsung diperbarui setelah disimpan.</small></div>';
+  h+='<div class="mfoot"><button class="btn ghost" data-act="logo-reset">Pakai logo bawaan</button><button class="btn ghost" data-act="m-close">Batal</button><button class="btn" data-act="logo-save">Simpan Logo</button></div>';
+  openModal(h);window.hnLogoTemp=logo;
+}
 function siteEditor(){
   openModal(modalHead('Sinopsis, tagline & profil')+field('Tagline di beranda','<input class="in" id="se-t" value="'+esc(S.site.tagline||'')+'" maxlength="120">','se-t')+field('Sinopsis (pisahkan paragraf dengan baris kosong)','<textarea class="in" id="se-s" rows="8">'+esc(S.site.synopsis||'')+'</textarea>','se-s')+field('Nama penulis (opsional)','<input class="in" id="se-a" value="'+esc(S.site.author||'')+'" maxlength="80">','se-a')+modalFoot('Simpan'),{
     save:function(){var t=val('se-t').trim(),s=val('se-s').trim(),a=val('se-a').trim();commit(function(d){d.site.tagline=t;d.site.synopsis=s;d.site.author=a},'Sinopsis tersimpan')}
@@ -1887,7 +1932,9 @@ document.addEventListener('click',function(ev){
     case 'novel-save-page':saveNovelFromPage();break;
     case 'ne-cover-clear':{novelCoverTemp='';var pv=document.getElementById('ne-cover-prev');if(pv){pv.src='';pv.hidden=true}break}
     case 'ch-new':{currentNovelId=el.getAttribute('data-novel')||currentNovelId;go('tulis');break}
-    case 'ch-edit':go('tulis-'+id);break;
+    case 'ch-edit':go('babmeta-'+id);break;
+    case 'ch-content':go('tulis-'+id);break;
+    case 'ch-meta-save':{var mt=val('ce-t').trim();if(!mt){toast('Judul bab wajib diisi.');break}commit(function(d){var q=d.chapters.find(function(x){return x.id===id});if(q){q.title=mt;q.n=Math.max(0,parseInt(val('ce-n'),10)||0);q.vol=val('ce-v').trim();q.status=val('ce-st')}} ,'Identitas bab diperbarui').then(function(ok){if(ok){var nn=(novelOf(id)||{}).id;go(nn?'n-'+nn:'baca')}});break}
     case 'ch-cancel':{var cc=id?chById(id):null;var nid=cc?(novelOf(cc.id)||{}).id:currentNovelId;go(nid?'n-'+nid:'baca');break}
     case 'ch-save-page':saveChapterFromPage();break;
     case 'ch-del-from-editor':{var nid2=(novelOf(id)||{}).id;armDelete(el,function(){commit(function(d){d.chapters=d.chapters.filter(function(c){return c.id!==id});d.novels.forEach(function(n){n.chapterIds=(n.chapterIds||[]).filter(function(x){return x!==id})})},'Bab dihapus').then(function(ok){if(ok)go(nid2?'n-'+nid2:'baca')})});break}
@@ -1918,6 +1965,8 @@ document.addEventListener('click',function(ev){
     case 'img-wrap':{if(!ieImg)break;ieImg.setAttribute('data-wrap',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
     case 'img-shadow':{if(!ieImg)break;ieImg.setAttribute('data-shadow',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
     case 'img-clear':{modalImg='';var pv=document.getElementById('if-prev');if(pv)pv.hidden=true;break}
+    case 'logo-reset':window.hnLogoTemp='';var lp=document.getElementById('logo-preview');if(lp)lp.src=LOGO;break;
+    case 'logo-save':{var lu=window.hnLogoTemp||'';commit(function(d){d.site.logo=lu},'Logo Hollow Night diperbarui').then(function(ok){if(ok){closeModal();render({keep:true});toast('Logo diperbarui di seluruh website.')}});break}
     case 'pf-clear':{commit(function(d){d.site.avatar=''},'Foto profil dihapus').then(function(){profileModal()});break}
     case 'm-close':closeModal();break;
     case 'm-save':if(modalCtx&&modalCtx.save)modalCtx.save();break;
@@ -1965,6 +2014,9 @@ document.addEventListener('change',function(ev){
       if(u.length>2200000){toast('Gambar masih terlalu besar. Pakai gambar yang lebih kecil.');return}
       modalImg=u;var pv=document.getElementById('if-prev');if(pv){pv.src=u;pv.hidden=false}
     }).catch(function(){toast('Gambar tidak bisa dibaca.')});
+  }
+  if(t.id==='logo-file'&&t.files[0]){
+    readImage(t.files[0],1800,.9).then(function(u){if(u.length>2200000){toast('Logo terlalu besar. Pilih gambar lebih kecil.');return}window.hnLogoTemp=u;var lp=document.getElementById('logo-preview');if(lp)lp.src=u}).catch(function(){toast('Gambar tidak bisa dibaca.')});
   }
   if(t.id==='pf-file'&&t.files[0]){
     readImage(t.files[0],512,.85).then(function(u){
