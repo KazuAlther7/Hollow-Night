@@ -282,6 +282,10 @@ select.in{appearance:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .ff{opacity:.7}
 }
+
+.reader .body figure,.rt-area figure{margin:1.4em 0;text-align:center}
+.reader .body img,.rt-area img{max-width:100%;height:auto;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.rtb[data-cmd=image]{padding:0 10px;font-size:.78rem}
 </style>
 <div id="app"></div>
 <script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": ""}, "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTYwIj48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZmlsbD0iI0U4Q0Y5QiIvPjxyZWN0IHg9IjEwIiB5PSIxMCIgd2lkdGg9Ijc4MCIgaGVpZ2h0PSI1NDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzdBNTYzNCIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtZGFzaGFycmF5PSIxNCA4Ii8+PHBhdGggZD0iTTQ3MCAzMzBjNDAtNjAgMTQwLTcwIDE5MC0yMHMzMCAxMzAtNDAgMTUwLTE1MCAwLTE3MC02MCAwLTQwIDIwLTcweiIgZmlsbD0iIzdGQjFBNSIgc3Ryb2tlPSIjM0U2RjY2IiBzdHJva2Utd2lkdGg9IjQiLz48cGF0aCBkPSJNNjAgNDcwYzEyMC00MCAxNzAtMTIwIDI2MC0xMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzdBNTYzNCIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtZGFzaGFycmF5PSIzIDEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cG9seWdvbiBwb2ludHM9IjUxLDIyNiA2NiwyNjMgMzcsMjYzIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjExNCwyMzkgMTI0LDI2NSAxMDMsMjY1IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjQwLDExOCA1MCwxNDQgMjksMTQ0IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjcwOCwzODMgNzE4LDQwOCA2OTgsNDA4IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjYyMCw3NSA2MzMsMTA3IDYwNywxMDciIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMTI0LDUgMTM4LDQxIDEwOSw0MSIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSIxODUsMTA2IDIwMCwxNDMgMTcwLDE0MyIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSI2NzYsMTQxIDY5MSwxNzkgNjYxLDE3OSIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSI0MjksMzQwIDQzOSwzNjUgNDE5LDM2NSIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSI3MjYsMzM0IDc0MSwzNzIgNzExLDM3MiIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSI2OTEsMTU2IDcwMiwxODMgNjgwLDE4MyIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTMsODcgMTYyLDExMCAxNDQsMTEwIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjI1MywzMDcgMjYyLDMyOSAyNDQsMzI5IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjUzMiwxNzUgNTQyLDIwMiA1MjEsMjAyIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjYzNiwyNDQgNjQ3LDI3MSA2MjUsMjcxIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjM4NiwzNTUgMzk1LDM3OCAzNzcsMzc4IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9Ijc1MiwxNyA3NjUsNTEgNzM4LDUxIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjY1NSwxNCA2NjksNDkgNjQxLDQ5IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjMwMSwyOTYgMzEwLDMxOCAyOTIsMzE4IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjY1LDkwIDc5LDEyNyA1MCwxMjciIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMTc1LDM2NiAxOTAsNDAzIDE2MSw0MDMiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNzI3LDE3OCA3MzgsMjA1IDcxNiwyMDUiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNDE4LDM4OSA0MjgsNDEyIDQwOSw0MTIiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNjY2LDIwIDY4MSw1OCA2NTEsNTgiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iOTcsMTcyIDExMCwyMDQgODUsMjA0IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjcwOSwxNjYgNzI0LDIwMyA2OTUsMjAzIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjQzMywxNjMgNDQ0LDE5MCA0MjMsMTkwIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjE2MSw1MyAxNzEsNzggMTUyLDc4IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjU0MCw0OTQgNTUwLDUxOCA1MzAsNTE4IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjY2LDQ4MyA3OCw1MTQgNTQsNTE0IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjMzMCwxMjIgMzQzLDE1NCAzMTgsMTU0IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjY0MSwyMzAgNjUzLDI1OSA2MzAsMjU5IiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjcxLDQ1NyA4MCw0ODAgNjIsNDgwIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjM5NSw0MTggNDA1LDQ0MiAzODYsNDQyIiBmaWxsPSIjM0Y3QTVDIiBvcGFjaXR5PSIuODUiLz48cG9seWdvbiBwb2ludHM9IjEwOSwyMjQgMTE5LDI0OSA5OSwyNDkiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNjU1LDE1MiA2NjcsMTgyIDY0MywxODIiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNzY5LDQxMSA3ODUsNDQ5IDc1NCw0NDkiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMzY2LDI0MSAzNzksMjc0IDM1MiwyNzQiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMzg0LDE1MSAzOTYsMTgwIDM3MywxODAiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMTM4LDE4MyAxNTQsMjIxIDEyMywyMjEiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNzQwLDMxMSA3NTIsMzQxIDcyOCwzNDEiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMjgwLDU2IDI5MSw4MyAyNzAsODMiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMjk3LDM4MyAzMTEsNDE3IDI4NCw0MTciIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNTkyLDE4MSA2MDUsMjE0IDU3OSwyMTQiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMjM4LDIzOSAyNTIsMjczIDIyNCwyNzMiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNTQxLDE0NCA1NTYsMTgxIDUyNiwxODEiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMzksMjc3IDQ5LDMwMyAyOCwzMDMiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNTI3LDIyNyA1NDEsMjYyIDUxMywyNjIiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMjg3LDMxNSAzMDEsMzQ5IDI3NCwzNDkiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNjQzLDE3MyA2NTcsMjA4IDYyOSwyMDgiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNzUyLDQ2OSA3NjQsNDk5IDc0MCw0OTkiIGZpbGw9IiMzRjdBNUMiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iNDIyLDg0IDQzNiwxMjAgNDA4LDEyMCIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSI3MjQsMjM2IDczNywyNjkgNzEwLDI2OSIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSIxNTcsMzgzIDE3MCw0MTUgMTQ1LDQxNSIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSI1MjMsMjEwIDUzNSwyNDIgNTEwLDI0MiIgZmlsbD0iIzNGN0E1QyIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSI1NjAsMCA2NTAsOTAgNDcwLDkwIiBmaWxsPSIjQTg4QjYyIiBzdHJva2U9IiM1RTQ0MjYiIHN0cm9rZS13aWR0aD0iMyIvPjxwb2x5Z29uIHBvaW50cz0iNTYwLDAgNTg1LDM0IDU1MSw1MCIgZmlsbD0iI0Y0RUJENiIvPjxwb2x5Z29uIHBvaW50cz0iNjQwLDUwIDcxMCwxMjAgNTcwLDEyMCIgZmlsbD0iI0E4OEI2MiIgc3Ryb2tlPSIjNUU0NDI2IiBzdHJva2Utd2lkdGg9IjMiLz48cG9seWdvbiBwb2ludHM9IjY0MCw1MCA2NjAsNzcgNjMzLDg4IiBmaWxsPSIjRjRFQkQ2Ii8+PHBvbHlnb24gcG9pbnRzPSI0OTAsNTAgNTUwLDExMCA0MzAsMTEwIiBmaWxsPSIjQTg4QjYyIiBzdHJva2U9IiM1RTQ0MjYiIHN0cm9rZS13aWR0aD0iMyIvPjxwb2x5Z29uIHBvaW50cz0iNDkwLDUwIDUwNyw3MyA0ODQsODMiIGZpbGw9IiNGNEVCRDYiLz48dGV4dCB4PSI2MCIgeT0iNzAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjNUU0NDI2IiBmb250LXN0eWxlPSJpdGFsaWMiPlBldGEgY29udG9oPC90ZXh0Pjwvc3ZnPg==", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
@@ -567,7 +571,7 @@ function slugFor(t){return (makeSlug(t)||'bab')+'-'+Math.random().toString(36).s
 function rowToCh(r){
   var raw=String(r.content||'');
   var body=/<(p|h2|h3|blockquote|hr|br|div)\b/i.test(raw)?cleanHtml(raw):textToHtml(raw);
-  return {id:r.id,slug:r.slug,n:r.chapter_number==null?0:r.chapter_number,vol:r.volume||'',title:r.title,body:body,status:r.status==='published'?'published':'draft',t:Date.parse(r.created_at)||0};
+  return {id:String(r.id),slug:r.slug,n:r.chapter_number==null?0:r.chapter_number,vol:r.volume||'',title:r.title,body:body,status:r.status==='published'?'published':'draft',t:Date.parse(r.created_at)||0};
 }
 function notify(){try{document.dispatchEvent(new CustomEvent('hn-state'))}catch(e){}}
 async function loadContent(){
@@ -604,7 +608,7 @@ async function persist(next){
       row.slug=slugFor(c.title);
       var ins=await db.from('chapters').insert(row).select('id,slug').single();
       if(ins.error)throw ins.error;
-      c.id=ins.data.id;c.slug=ins.data.slug;dbIds[c.id]=1;
+      c.id=String(ins.data.id);c.slug=ins.data.slug;dbIds[c.id]=1;
     }else{
       var old=S.chapters.find(function(x){return x.id===c.id});
       if(!old||old.title!==c.title||(old.vol||'')!==(c.vol||'')||old.n!==c.n||old.body!==c.body||(old.status||'published')!==(c.status||'published')){
@@ -628,7 +632,8 @@ async function persist(next){
 async function commit(fn,okMsg){
   if(!db||!canEdit){toast('Masuk sebagai Author dulu lewat tombol AUTHOR ACCESS.');return false}
   if(!dbLoaded){toast('Data belum termuat dari database. Muat ulang halaman, lalu coba lagi.');return false}
-  var next=clone(S);fn(next);
+  var next=clone(S);
+  try{fn(next)}catch(err){console.error(err);toast('Perubahan gagal diproses: '+(err&&err.message||err));return false}
   if(JSON.stringify({site:next.site,lore:next.lore}).length>6000000){toast('Data terlalu besar. Kecilkan gambar atau hapus beberapa.');return false}
   busy(true,'Menyimpan ke database...');
   try{
@@ -638,7 +643,7 @@ async function commit(fn,okMsg){
   }catch(e){
     console.error(e);busy(false);
     var m=String((e&&e.message)||e);
-    toast(m==='ditolak'||(e&&e.code==='42501')?'Ditolak database. Pastikan kamu masih login sebagai Author dan aturan RLS sudah dipasang.':'Gagal menyimpan: '+m);
+    toast(m==='ditolak'||(e&&e.code==='42501')?'Ditolak database ('+(e&&e.code||'RLS')+'). Pastikan masih login sebagai Author dan SQL izin sudah dijalankan.':'Gagal menyimpan: '+m);
     await loadContent();
     return false;
   }
@@ -665,6 +670,11 @@ function inlineNode(c){
   return inner;
 }
 function inlineChildren(n){var o='';for(var i=0;i<n.childNodes.length;i++)o+=inlineNode(n.childNodes[i]);return o}
+function safeImg(src){
+  src=String(src||'').trim();
+  if(!(/^https:\/\//i.test(src)||/^data:image\/(png|jpe?g|webp|gif);base64,/i.test(src)))return '';
+  return '<figure><img src="'+esc(src)+'" alt="" loading="lazy"></figure>';
+}
 function blank(h){return !h.replace(/<br>|&nbsp;|\s/g,'')}
 function blocksOf(node,out){
   var buf='';
@@ -674,7 +684,10 @@ function blocksOf(node,out){
     if(c.nodeType===3){buf+=esc(c.nodeValue.replace(/ /g,' '));continue}
     if(c.nodeType!==1)continue;
     var tg=c.tagName;
+    if(tg==='IMG'){flush();var im=safeImg(c.getAttribute('src'));if(im)out.push(im);continue}
+    if(tg==='FIGURE'&&c.querySelector('img')){flush();var ims=c.querySelectorAll('img');for(var m=0;m<ims.length;m++){var fi=safeImg(ims[m].getAttribute('src'));if(fi)out.push(fi)}continue}
     if(SKIP[tg])continue;
+    if(tg==='P'&&c.querySelector('img')){flush();blocksOf(c,out);continue}
     if(tg==='P'){flush();var h=inlineChildren(c).trim();if(!blank(h))out.push('<p>'+h+'</p>')}
     else if(/^H[1-6]$/.test(tg)){flush();var hh=inlineChildren(c).replace(/<\/?(strong|em|u)>/g,'').trim();if(!blank(hh)){var k=(tg==='H1'||tg==='H2')?'h2':'h3';out.push('<'+k+'>'+hh+'</'+k+'>')}}
     else if(tg==='BLOCKQUOTE'){flush();var q=[];blocksOf(c,q);if(q.length)out.push('<blockquote>'+q.join('')+'</blockquote>')}
@@ -792,10 +805,39 @@ async function fileToChunks(file){
 /* ---------- editors ---------- */
 function field(label,inner,id){return '<div class="f"><label'+(id?' for="'+id+'"':' class="lb"')+'>'+label+'</label>'+inner+'</div>'}
 function richBox(id,html){
-  var b=[['bold','B','Tebal'],['italic','I','Miring'],['h2','H','Judul bagian'],['quote','”','Kutipan'],['hr','—','Pemisah adegan'],['clear','Tx','Hapus format']];
+  var b=[['bold','B','Tebal'],['italic','I','Miring'],['h2','H','Judul bagian'],['quote','”','Kutipan'],['hr','—','Pemisah adegan'],['image','Gambar','Sisipkan gambar'],['clear','Tx','Hapus format']];
   return '<div class="rt"><div class="rt-bar">'+b.map(function(x){return '<button type="button" class="rtb" data-act="rt" data-cmd="'+x[0]+'" title="'+x[2]+'" aria-label="'+x[2]+'">'+x[1]+'</button>'}).join('')+'</div><div class="rt-area" id="'+id+'" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Isi">'+(html||'<p><br></p>')+'</div></div>';
 }
 function readRich(id){var a=document.getElementById(id);return a?cleanHtml(a.innerHTML):''}
+var imgRange=null;
+async function uploadImage(file){
+  if(!db||!canEdit)throw new Error('login');
+  var data=await readImage(file,1600,.82);
+  var blob=await (await fetch(data)).blob();
+  var ext=blob.type==='image/svg+xml'?'svg':(blob.type==='image/png'?'png':'jpg');
+  var path='chapters/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.'+ext;
+  var up=await db.storage.from('chapter-images').upload(path,blob,{contentType:blob.type,upsert:false});
+  if(up.error)throw up.error;
+  return db.storage.from('chapter-images').getPublicUrl(path).data.publicUrl;
+}
+async function insertImage(file,area){
+  if(!area){toast('Klik di dalam isi bab dulu.');return}
+  if(file.size>15*1024*1024){toast('Gambar terlalu besar (maksimal 15 MB).');return}
+  busy(true,'Mengunggah gambar...');
+  try{
+    var url=await uploadImage(file);
+    area.focus();
+    var sel=window.getSelection();
+    if(imgRange&&area.contains(imgRange.commonAncestorContainer)){sel.removeAllRanges();sel.addRange(imgRange)}
+    else{var r=document.createRange();r.selectNodeContents(area);r.collapse(false);sel.removeAllRanges();sel.addRange(r)}
+    document.execCommand('insertHTML',false,'<figure><img src="'+esc(url)+'" alt=""></figure><p><br></p>');
+    busy(false);toast('Gambar ditambahkan. Tekan Simpan bab untuk menyimpan.');
+  }catch(e){
+    busy(false);console.error(e);
+    var m=String((e&&e.message)||e);
+    toast(/bucket/i.test(m)?'Bucket chapter-images belum dibuat. Jalankan SQL tahap 2 di Supabase.':/row-level|policy|permission|unauthor/i.test(m)?'Upload ditolak. Pastikan masih login dan SQL tahap 2 sudah dijalankan.':'Gagal mengunggah gambar: '+m);
+  }
+}
 function rtCmd(cmd){
   var a=document.querySelector('.rt-area');if(a)a.focus();
   if(cmd==='bold')document.execCommand('bold');
@@ -803,6 +845,13 @@ function rtCmd(cmd){
   else if(cmd==='h2'){var sel=window.getSelection(),n=sel&&sel.anchorNode;while(n&&n.nodeType!==1)n=n.parentNode;document.execCommand('formatBlock',false,(n&&n.closest&&n.closest('h2'))?'p':'h2')}
   else if(cmd==='quote')document.execCommand('formatBlock',false,'blockquote');
   else if(cmd==='hr')document.execCommand('insertHorizontalRule');
+  else if(cmd==='image'){
+    var sl=window.getSelection();
+    imgRange=(sl&&sl.rangeCount&&a&&a.contains(sl.anchorNode))?sl.getRangeAt(0).cloneRange():null;
+    var inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+    inp.onchange=function(){if(inp.files&&inp.files[0])insertImage(inp.files[0],a)};
+    inp.click();
+  }
   else if(cmd==='clear'){document.execCommand('removeFormat');document.execCommand('formatBlock',false,'p')}
 }
 function modalHead(t,hint){return '<h2>'+t+'</h2>'+(hint?'<p class="hint">'+hint+'</p>':'')}
@@ -839,10 +888,10 @@ function importDialog(){
       rows.forEach(function(r){
         if(!r.querySelector('[data-k=on]').checked)return;
         var i=+r.getAttribute('data-i'),c=impChunks[i],n=parseInt(r.querySelector('[data-k=n]').value,10);
-        add.push({id:uid('c'),title:(r.querySelector('[data-k=t]').value.trim()||c.title),n:isNaN(n)?0:n,vol:vol,body:c.html,t:Date.now()+i});
+        add.push({id:uid('c'),title:(r.querySelector('[data-k=t]').value.trim()||c.title),n:isNaN(n)?0:n,vol:vol,body:c.html,status:'draft',t:Date.now()+i});
       });
       if(!add.length){toast('Centang minimal satu bab.');return}
-      commit(function(d){add.forEach(function(a){d.chapters.push(a)})},add.length+' bab ditambahkan');
+      commit(function(d){add.forEach(function(a){d.chapters.push(a)})},add.length+' bab ditambahkan sebagai draft');
     }});
 }
 async function handleImport(files){
