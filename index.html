@@ -1083,6 +1083,66 @@ window.addEventListener('hashchange',function(){var h=location.hash.slice(1);if(
   font-size: 13px;
   line-height: 1.6;
 }
+
+/* Writer Studio: tambahan agar dashboard muat dan terbaca */
+#hn-author-modal {
+  overflow-y: auto;
+  align-items: start;
+}
+
+.hn-author-card:has(#hn-author-dashboard:not([hidden])) {
+  width: min(100%, 640px);
+  margin: auto;
+}
+
+.hn-author-card textarea {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 8px 0 14px;
+  padding: 12px;
+  border: 1px solid #D3A96C;
+  border-radius: 4px;
+  background: #FFF7E3;
+  color: #2A1B12;
+  font: inherit;
+  resize: vertical;
+}
+
+.hn-writer-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.hn-writer-stats div {
+  padding: 10px;
+  border: 1px solid #D3A96C;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.hn-writer-stats span {
+  display: block;
+  font-size: 11px;
+}
+
+.hn-writer-stats strong {
+  font-size: 22px;
+}
+
+.hn-chapter-card {
+  margin-bottom: 10px;
+  padding: 12px;
+  border: 1px solid #D3A96C;
+  border-radius: 4px;
+  background: #FFF7E3;
+}
+
+.hn-chapter-card h4,
+.hn-chapter-card p {
+  margin: 0 0 4px;
+}
 </style>
 
 <button data-keep id="hn-author-access" type="button">
@@ -1119,10 +1179,102 @@ window.addEventListener('hashchange',function(){var h=location.hash.slice(1);if(
 
     <p id="hn-author-message" role="status" aria-live="polite"></p>
     <div id="hn-author-dashboard" hidden>
-      <h3>Author Access Granted</h3>
-      <p>Authentication successful.</p>
-      <p>Writer Studio will be connected in the next step.</p>
-      <button type="button" id="hn-author-logout">SIGN OUT</button>
+
+      <div class="hn-writer-header">
+        <p>HOLLOW NIGHT // WRITER STUDIO</p>
+        <h2>Author's Archive</h2>
+        <p>Manage the stories hidden within Daltons.</p>
+      </div>
+
+      <div class="hn-writer-stats">
+
+        <div>
+          <span>Total Chapters</span>
+          <strong id="hn-stat-total">0</strong>
+        </div>
+
+        <div>
+          <span>Drafts</span>
+          <strong id="hn-stat-drafts">0</strong>
+        </div>
+
+        <div>
+          <span>Published</span>
+          <strong id="hn-stat-published">0</strong>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <h3>WRITE A NEW CHAPTER</h3>
+
+      <form id="hn-chapter-form">
+
+        <label for="hn-chapter-title">Chapter Title</label>
+
+        <input
+          id="hn-chapter-title"
+          type="text"
+          placeholder="The Heist Into Chaos"
+          required
+          maxlength="200"
+        >
+
+        <label for="hn-chapter-volume">Volume</label>
+
+        <input
+          id="hn-chapter-volume"
+          type="text"
+          placeholder="Volume I: The Beginning"
+          maxlength="150"
+        >
+
+        <label for="hn-chapter-number">Chapter Number</label>
+
+        <input
+          id="hn-chapter-number"
+          type="number"
+          min="1"
+          step="1"
+          placeholder="1"
+        >
+
+        <label for="hn-chapter-content">Story Content</label>
+
+        <textarea
+          id="hn-chapter-content"
+          rows="14"
+          placeholder="The story begins..."
+          required
+        ></textarea>
+
+        <div class="hn-author-actions">
+          <button type="submit" id="hn-chapter-save">
+            SAVE AS DRAFT
+          </button>
+        </div>
+
+      </form>
+
+      <p
+        id="hn-chapter-message"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+      <hr>
+
+      <h3>CHAPTER ARCHIVE</h3>
+
+      <div id="hn-chapter-list">
+        <p>Chapter archive will appear here.</p>
+      </div>
+
+      <button type="button" id="hn-author-logout">
+        SIGN OUT
+      </button>
+
     </div>
   </section>
 </div>
@@ -1172,6 +1324,8 @@ window.addEventListener('hashchange',function(){var h=location.hash.slice(1);if(
       subtitle.textContent = "IDENTITY VERIFIED";
       button.textContent = "AUTHOR STUDIO";
       message.textContent = "Akun Author berhasil diverifikasi.";
+
+      await loadWriterStudio();
     } else {
       showLoggedOut();
     }
@@ -1235,6 +1389,180 @@ window.addEventListener('hashchange',function(){var h=location.hash.slice(1);if(
       showLoggedOut();
       message.textContent = "Kamu sudah keluar dari Author Archive.";
     });
+
+  // ========================================
+  // HOLLOW NIGHT — WRITER STUDIO
+  // ========================================
+
+  const chapterForm = document.getElementById("hn-chapter-form");
+  const chapterTitle = document.getElementById("hn-chapter-title");
+  const chapterVolume = document.getElementById("hn-chapter-volume");
+  const chapterNumber = document.getElementById("hn-chapter-number");
+  const chapterContent = document.getElementById("hn-chapter-content");
+  const chapterSaveButton = document.getElementById("hn-chapter-save");
+  const chapterMessage = document.getElementById("hn-chapter-message");
+  const chapterList = document.getElementById("hn-chapter-list");
+
+  function makeSlug(value) {
+    return value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 150);
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  // Memuat chapter dari database
+  async function loadWriterStudio() {
+    chapterList.innerHTML = "<p>Loading chapter archive...</p>";
+
+    const { data, error } = await db
+      .from("chapters")
+      .select("id, title, slug, volume, chapter_number, status, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      chapterList.innerHTML =
+        "<p>Gagal memuat chapter. Periksa koneksi database dan RLS.</p>";
+
+      chapterMessage.textContent =
+        "Database error: " + error.message;
+
+      return;
+    }
+
+    const chapters = data || [];
+
+    document.getElementById("hn-stat-total").textContent =
+      chapters.length;
+
+    document.getElementById("hn-stat-drafts").textContent =
+      chapters.filter(chapter => chapter.status === "draft").length;
+
+    document.getElementById("hn-stat-published").textContent =
+      chapters.filter(chapter => chapter.status === "published").length;
+
+    if (chapters.length === 0) {
+      chapterList.innerHTML =
+        "<p>Belum ada chapter. Tulis chapter pertamamu di atas!</p>";
+
+      return;
+    }
+
+    chapterList.innerHTML = chapters.map(chapter => `
+      <article class="hn-chapter-card">
+        <h4>${escapeHTML(chapter.title)}</h4>
+
+        <p>
+          ${escapeHTML(chapter.volume || "No volume")}
+          ${chapter.chapter_number
+            ? " — Chapter " + escapeHTML(chapter.chapter_number)
+            : ""}
+        </p>
+
+        <p>
+          Status:
+          <strong>${escapeHTML(chapter.status)}</strong>
+        </p>
+
+        <p>Slug: ${escapeHTML(chapter.slug)}</p>
+      </article>
+    `).join("");
+  }
+
+  // Menyimpan chapter baru sebagai draft
+  chapterForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const title = chapterTitle.value.trim();
+    const content = chapterContent.value.trim();
+    const volume = chapterVolume.value.trim();
+    const numberValue = chapterNumber.value.trim();
+
+    if (!title || !content) {
+      chapterMessage.textContent =
+        "Judul dan isi chapter wajib diisi.";
+
+      return;
+    }
+
+    const slug = makeSlug(title);
+
+    if (!slug) {
+      chapterMessage.textContent =
+        "Judul tidak bisa digunakan untuk membuat slug.";
+
+      return;
+    }
+
+    const parsedNumber = numberValue
+      ? Number(numberValue)
+      : null;
+
+    if (
+      parsedNumber !== null &&
+      (!Number.isSafeInteger(parsedNumber) || parsedNumber < 1)
+    ) {
+      chapterMessage.textContent =
+        "Nomor chapter harus berupa bilangan bulat positif.";
+
+      return;
+    }
+
+    chapterSaveButton.disabled = true;
+    chapterMessage.textContent = "Menyimpan draft...";
+
+    try {
+      const { error } = await db
+        .from("chapters")
+        .insert({
+          title,
+          slug,
+          volume: volume || null,
+          chapter_number: parsedNumber,
+          content,
+          status: "draft"
+        });
+
+      if (error) {
+        if (error.code === "23505") {
+          chapterMessage.textContent =
+            "Slug sudah digunakan. Coba judul yang berbeda.";
+        } else {
+          chapterMessage.textContent =
+            "Gagal menyimpan: " + error.message;
+        }
+
+        return;
+      }
+
+      chapterMessage.textContent =
+        "Draft berhasil disimpan ke Supabase!";
+
+      chapterForm.reset();
+
+      await loadWriterStudio();
+
+    } catch (error) {
+      chapterMessage.textContent =
+        "Terjadi kesalahan saat menyimpan draft.";
+
+    } finally {
+      chapterSaveButton.disabled = false;
+    }
+  });
 
   db.auth.onAuthStateChange((_event, session) => {
     if (session && session.user.id !== AUTHOR_UID) {
