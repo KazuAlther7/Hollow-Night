@@ -5,7 +5,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&family=Metamorphous&family=Nunito:wght@400;600;700;800&display=swap">
 <style id="hn-style">
-/* Layout: a journal desk. A floating night-blue tab bar sits over a tan desk; the home page opens on a pine-forest night scene with the logo, inner pages are paper sheets taped to the desk. */
 :root{
   --bg:#E9BE82; --paper:#F7E6C2; --paper-edge:#D3A96C; --field:#FFF7E3;
   --ink:#2A1B12; --ink-soft:#684931; --line:rgba(42,27,18,.2);
@@ -48,6 +47,17 @@ body{
   background-attachment:fixed;
 }
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:var(--bg-scene,none);
+  background-size:cover;background-position:center bottom;background-repeat:no-repeat;
+  opacity:.13;transition:opacity .5s;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) body::after{opacity:.3}
+}
+:root[data-theme="dark"] body::after{opacity:.3}
+:root[data-theme="light"] body::after{opacity:.13}
 a{color:inherit}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
@@ -58,7 +68,6 @@ p{margin:0}
 .kicker{font:800 .72rem/1 var(--f-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
 .num{font-variant-numeric:tabular-nums}
 
-/* top bar */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;padding-top:12px;max-width:1120px;margin:0 auto}
 .bar{position:relative;display:flex;align-items:center;gap:8px;background:var(--night);color:var(--night-ink);border-radius:16px;padding:6px 10px;box-shadow:var(--shadow);overflow:visible}
 .brand{display:block;flex:none;padding:4px 6px}
@@ -72,6 +81,8 @@ p{margin:0}
 .adm{flex:none;display:flex;align-items:center;gap:6px;border:1.5px solid rgba(235,217,180,.4);background:transparent;color:var(--night-ink);border-radius:999px;padding:7px 12px;font:800 .78rem/1 var(--f-ui)}
 .adm svg{width:16px;height:16px}
 .adm[aria-pressed="true"]{background:var(--gold);color:#1B1208;border-color:var(--gold)}
+.adm.saveall{background:var(--gold);color:#1B1208;border-color:var(--gold);animation:hnGlow 2s ease-in-out infinite}
+@keyframes hnGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,193,78,.5)}50%{box-shadow:0 0 0 6px rgba(242,193,78,0)}}
 .prog{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);width:0;border-radius:0 0 16px 16px}
 @media (max-width:760px){
   .bar{flex-wrap:wrap}
@@ -79,8 +90,20 @@ p{margin:0}
   .brand{margin-right:auto}
   .brand img{height:32px}
 }
+.save-light{
+  display:inline-block;width:11px;height:11px;border-radius:50%;
+  background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.75);
+  flex:none;margin:0 4px;transition:background .35s,box-shadow .35s;
+  position:relative;
+}
+.save-light::after{
+  content:"";position:absolute;inset:-3px;border-radius:50%;
+  border:1px solid rgba(74,222,128,.35);
+}
+.save-light.dirty{background:#ef4444;box-shadow:0 0 10px rgba(239,68,68,.85);animation:hnPulseLight 1.6s ease-in-out infinite}
+.save-light.dirty::after{border-color:rgba(239,68,68,.45)}
+@keyframes hnPulseLight{0%,100%{opacity:1}50%{opacity:.45}}
 
-/* dropdown menu (three dots) */
 .menu-wrap{position:relative;flex:none}
 .menu-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:transparent;border:0;color:var(--night-ink);cursor:pointer;transition:background .15s}
 .menu-btn:hover{background:rgba(255,255,255,.08)}
@@ -99,7 +122,6 @@ p{margin:0}
 
 main.shell{padding-block:22px 28px}
 
-/* generic */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 18px;border-radius:10px;border:2px solid transparent;font:800 .92rem/1.1 var(--f-ui);text-decoration:none;background:var(--red);color:var(--on-red);box-shadow:0 3px 0 rgba(0,0,0,.28);transition:transform .12s,box-shadow .12s}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.28)}
@@ -125,7 +147,6 @@ main.shell{padding-block:22px 28px}
 .filters .in{max-width:280px}
 button.chip{background:transparent}
 
-/* hero */
 .hero{position:relative;overflow:hidden;border-radius:22px;background:var(--night);color:var(--night-ink);box-shadow:var(--shadow);isolation:isolate}
 .scene{position:absolute;inset:0;z-index:-1}
 .scn{width:100%;height:100%;display:block}
@@ -143,7 +164,6 @@ button.chip{background:transparent}
 .d20.spin{animation:spin .7s ease}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* home sections */
 .cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:26px;margin-top:34px;align-items:start}
 @media (max-width:860px){.cols{grid-template-columns:minmax(0,1fr)}}
 .sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
@@ -159,7 +179,6 @@ button.chip{background:transparent}
 .desk{margin-top:26px;border-style:dashed}
 .desk h2{font-size:1.25rem;margin-bottom:6px}
 
-/* toc */
 .vol{margin:26px 0 8px;font:400 1.2rem/1 var(--f-display);display:flex;align-items:center;gap:12px}
 .vol::after{content:"";flex:1;border-top:2px dotted var(--ink-soft)}
 .toc{background:var(--paper);border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow)}
@@ -174,7 +193,6 @@ button.chip{background:transparent}
 .rowact{display:flex;gap:6px;padding-right:12px;flex-wrap:wrap}
 @media (max-width:520px){.row{flex-wrap:wrap}.rowact{padding:0 16px 12px}}
 
-/* reader */
 .rd-wrap{max-width:720px;margin:0 auto}
 .rd-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:18px}
 .reader{background:var(--paper);border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow);padding:clamp(22px,5vw,52px) clamp(18px,5vw,56px)}
@@ -192,7 +210,6 @@ button.chip{background:transparent}
 .body ul,.body ol{padding-left:1.4em;margin:0 0 1.05em}
 .rd-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:26px}
 
-/* lore cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
 .card{position:relative;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow);text-decoration:none;overflow:hidden;transition:transform .15s}
 .grid>.card:nth-child(3n+1){transform:rotate(-.5deg)}
@@ -225,7 +242,6 @@ button.chip{background:transparent}
 .secret.on .sc{filter:none;user-select:auto}
 .secret.on .sl{display:none}
 
-/* entry detail */
 .det{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 .det-hero{width:100%;max-height:420px;object-fit:cover;border-radius:6px;border:1px solid var(--paper-edge);display:block}
 .det h1{font-size:clamp(1.9rem,5vw,2.7rem)}
@@ -248,7 +264,6 @@ button.chip{background:transparent}
 .lg b{font:400 1.05rem/1.2 var(--f-display);display:block}
 .lg small{display:block;color:var(--ink-soft);font-size:.9rem;margin-top:2px}
 
-/* timeline & glossary */
 .tl{position:relative;padding-left:34px;max-width:760px}
 .tl::before{content:"";position:absolute;left:11px;top:6px;bottom:6px;border-left:3px solid var(--ink)}
 .ev{position:relative;margin-bottom:22px;background:var(--paper);border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow);padding:16px 18px}
@@ -261,7 +276,6 @@ button.chip{background:transparent}
 .gi b{font:400 1.15rem/1.2 var(--f-display)}
 .gi p{color:var(--ink);margin-top:3px}
 
-/* forms & modal */
 .in{width:100%;background:var(--field);color:var(--ink);border:1.5px solid var(--paper-edge);border-radius:8px;padding:10px 12px;font:600 1rem/1.4 var(--f-ui);min-height:42px}
 textarea.in{resize:vertical;min-height:96px;font-weight:500}
 select.in{appearance:auto}
@@ -311,7 +325,6 @@ select.in{appearance:auto}
 .rt-area figure img{float:none!important;display:block;margin:8px auto!important}
 .rt-area a{color:var(--red);text-decoration:underline}
 
-/* image edit panel */
 .img-edit-panel{background:var(--paper);color:var(--ink);width:min(600px,100%);border:1px solid var(--paper-edge);border-radius:12px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .img-edit-panel h2{font-size:1.35rem;margin-bottom:4px}
 .img-edit-panel .hint{color:var(--ink-soft);font-size:.9rem;margin-bottom:16px}
@@ -349,18 +362,18 @@ select.in{appearance:auto}
 .reader .body img,.rt-area img{max-width:100%;height:auto;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
 .rtb[data-cmd=image]{padding:0 10px;font-size:.78rem}
 .rtb[data-cmd=link]{padding:0 10px}
+.profile-avatar{width:120px;height:120px;margin:0 auto 14px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);background:var(--night);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.profile-avatar .initials{font:400 2.8rem/1 var(--f-display);color:var(--gold)}
 </style>
 <div id="app"></div>
-<script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": ""}, "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
+<script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": "", "avatar": ""}, "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
 <script id="hn-app">
 (function(){
 'use strict';
-/* ---------- Logo (SVG, gaya "HOLLOW NIGHT" serif dengan nyala api) ---------- */
 var LOGO_SVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400"><g fill="none" stroke="#F2C14E" stroke-width="3" stroke-linecap="round"><path d="M100 120 H370"/><path d="M530 120 H800"/><path d="M100 320 H260"/><path d="M640 320 H800"/></g><g font-family="Georgia,\'Times New Roman\',serif" font-weight="700" fill="#EBD9B4" text-anchor="middle"><text x="450" y="200" font-size="165" letter-spacing="8">HOLLOW</text><text x="450" y="385" font-size="165" letter-spacing="8">NIGHT</text></g><path d="M425 60 C414 86 398 94 398 114 A22 22 0 0 0 442 114 C442 94 426 86 425 60 Z" fill="#F2C14E"/><path d="M395 375 C390 388 382 392 382 402 A11 11 0 0 0 404 402 C404 392 396 388 395 375 Z" fill="#F2C14E"/><path d="M505 375 C500 388 492 392 492 402 A11 11 0 0 0 514 402 C514 392 506 388 505 375 Z" fill="#F2C14E"/><circle cx="425" cy="48" r="4" fill="#F2C14E"/><circle cx="444" cy="40" r="2.5" fill="#F2C14E"/></svg>';
 var LOGO='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(LOGO_SVG);
 var APP=document.getElementById('app');
-
-/* ---------- helpers ---------- */
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}}
@@ -371,13 +384,10 @@ function wordCount(html){var t=textOf(html).trim();return t?t.split(/\s+/).lengt
 function fmt(n){return n.toLocaleString('id-ID')}
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 function paras(t){return String(t||'').split(/\n{2,}/).map(function(s){return s.trim()}).filter(Boolean)}
-
-/* ---------- data ---------- */
 var S;
 try{S=JSON.parse(document.getElementById('hn-data').textContent)}catch(e){S=null}
-if(!S||!S.chapters){S={v:1,site:{tagline:'',synopsis:'',author:''},chapters:[],lore:[]}}
-S.site=S.site||{};S.lore=S.lore||[];
-
+if(!S||!S.chapters){S={v:1,site:{tagline:'',synopsis:'',author:'',avatar:''},chapters:[],lore:[]}}
+S.site=S.site||{};S.site.avatar=S.site.avatar||'';S.lore=S.lore||[];
 var TYPES={
   world:{tab:'dunia',label:'Dunia',single:'entri lore',cats:['Wilayah','Sejarah','Magis & Aturan','Makhluk','Faksi','Budaya','Lainnya'],note:'Segala hal tentang dunia Hollow Night'},
   char:{tab:'tokoh',label:'Tokoh',single:'tokoh',note:'Lembar karakter ala petualang'},
@@ -388,11 +398,11 @@ var TYPES={
 var TABMAP={dunia:'world',tokoh:'char',peta:'map',lini:'time',istilah:'gloss'};
 var ALIGN=['','Lawful Good','Neutral Good','Chaotic Good','Lawful Neutral','True Neutral','Chaotic Neutral','Lawful Evil','Neutral Evil','Chaotic Evil'];
 var STATK=['STR','DEX','CON','INT','WIS','CHA'];
-
 var canEdit=false,admin=false,db=null,authState=null,dbLoaded=false,dbIds={};
 var AUTHOR_UID='6c3958f1-ee85-47e6-836a-f1db260bc3cc';
 var route='home',pinMode=false,selPin=-1,modalCtx=null,impChunks=[];
-
+var autoSave = lsGet('hn-autosave') !== '0';
+var pendingSave = false;
 function chapters(){return S.chapters.slice().sort(function(a,b){return (a.n-b.n)||((a.t||0)-(b.t||0))})}
 function chById(id){return S.chapters.find(function(c){return c.id===id})}
 function entry(id){return S.lore.find(function(e){return e.id===id})}
@@ -400,8 +410,6 @@ function ofType(t){return S.lore.filter(function(e){return e.type===t})}
 function readSet(){try{return JSON.parse(lsGet('hn-read')||'[]')}catch(e){return []}}
 function markRead(id){var r=readSet();if(r.indexOf(id)<0){r.push(id);lsSet('hn-read',JSON.stringify(r))}}
 function allVolumes(){var seen={},out=[];chapters().forEach(function(c){var v=(c.vol||'').trim();if(v&&!seen[v]){seen[v]=1;out.push(v)}});return out}
-
-/* ---------- icons ---------- */
 var IC={
   home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
   book:'<path d="M12 6c-2-1.6-5-2-8-1.5V19c3-.5 6-.1 8 1.5 2-1.6 5-2 8-1.5V4.5C17 4 14 4.4 12 6z"/><path d="M12 6v14"/>',
@@ -425,13 +433,12 @@ var IC={
   twitter:'<path d="M4 4l7 9-7 7h3l6-6 5 6h4l-7-9 6-7h-3l-5 5-5-5H4z"/>',
   discord:'<path d="M8 4c-2 0-3.5 1-4 2.5C3.4 8.5 3 10.5 3 12.5c0 3 1 5.5 3 6.5 1 .5 2 .8 3 .8l1-1.5c.3 0 .7.2 1 .2s.7-.1 1-.2l1 1.5c1 0 2-.3 3-.8 2-1 3-3.5 3-6.5 0-2-.4-4-1-6C17.5 5 16 4 14 4l-.7 1.6c-1-.2-1.6-.3-2.3-.3s-1.3.1-2.3.3L8 4z"/>',
   youtube:'<rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/>',
-  copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/>'
+  copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/>',
+  external:'<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/>'
 };
 function icon(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>'}
 var D20='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><polygon points="32,4 58,19 58,45 32,60 6,45 6,19"/><polygon points="32,18 46,42 18,42"/><path d="M32 4v14M58 19L46 42M6 19l12 23M32 60L18 42M32 60l14-18M58 45L46 42M6 45l12-3"/></svg>';
 var ORN='<svg class="orn" viewBox="0 0 150 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 7h54M94 7h54"/><path d="M75 1l5 6-5 6-5-6z" fill="currentColor"/><circle cx="62" cy="7" r="2" fill="currentColor"/><circle cx="88" cy="7" r="2" fill="currentColor"/></svg>';
-
-/* ---------- hero scene ---------- */
 function scene(){
   var s=11;function r(){s=(s*16807)%2147483647;return s/2147483647}
   var o='<svg class="scn" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax slice" focusable="false"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sky1)"/><stop offset="1" style="stop-color:var(--sky2)"/></linearGradient><radialGradient id="mg"><stop offset="0" stop-color="#FFF1C9" stop-opacity=".5"/><stop offset="1" stop-color="#FFF1C9" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="420" fill="url(#sk)"/>';
@@ -445,8 +452,51 @@ function scene(){
   var f='';for(var k=0;k<16;k++){f+='<span class="ff" style="--x:'+(4+r()*92).toFixed(0)+'%;--y:'+(30+r()*60).toFixed(0)+'%;--t:'+(4+r()*5).toFixed(1)+'s;--d:-'+(r()*6).toFixed(1)+'s"></span>'}
   return o+f;
 }
-
-/* ---------- routing ---------- */
+function bgScene(){
+  var s=73;function r(){s=(s*16807)%2147483647;return s/2147483647}
+  var sky='<linearGradient id="bgsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1520"/><stop offset=".45" stop-color="#142838"/><stop offset="1" stop-color="#1e3d4a"/></linearGradient>';
+  var hz='<linearGradient id="bghz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a4a58" stop-opacity="0"/><stop offset="1" stop-color="#2a4a58" stop-opacity=".7"/></linearGradient>';
+  var o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"><defs>'+sky+hz+'</defs><rect width="1600" height="900" fill="url(#bgsky)"/>';
+  for(var i=0;i<120;i++){o+='<circle cx="'+(r()*1600).toFixed(0)+'" cy="'+(r()*420).toFixed(0)+'" r="'+(0.4+r()*1.2).toFixed(1)+'" fill="#fff" opacity="'+(0.2+r()*0.55).toFixed(2)+'"/>'}
+  o+='<circle cx="1290" cy="150" r="90" fill="#f5ecd0" opacity=".14"/><circle cx="1290" cy="150" r="52" fill="#f7efd6" opacity=".9"/><circle cx="1272" cy="140" r="9" fill="#d9cba3" opacity=".55"/><circle cx="1302" cy="165" r="6" fill="#d9cba3" opacity=".55"/><circle cx="1306" cy="132" r="4" fill="#d9cba3" opacity=".55"/>';
+  function ridge(baseY,amp,color,opacity,segs){
+    var d='M0,'+baseY,px=0;
+    for(var i=0;i<segs;i++){
+      var nx=1600/segs*(i+1);
+      var peak=baseY-(r()*amp*0.75+amp*0.25);
+      var px2=1600/segs*i+1600/segs*0.5;
+      d+=' L'+px2.toFixed(0)+','+peak.toFixed(0)+' L'+nx.toFixed(0)+','+(baseY-r()*amp*0.15).toFixed(0);
+    }
+    d+=' L1600,900 L0,900 Z';
+    return '<path d="'+d+'" fill="'+color+'" opacity="'+opacity+'"/>';
+  }
+  o+=ridge(520,180,'#26404d',0.55,5);
+  o+=ridge(600,150,'#1c3340',0.7,7);
+  o+=ridge(670,120,'#14262f',0.85,9);
+  o+='<rect y="600" width="1600" height="180" fill="url(#bghz)"/>';
+  function pineTree(cx,baseY,h,w,color,op){
+    var p=[[0,-h],[.30,-.60*h],[.12,-.60*h],[.42,-.28*h],[.16,-.28*h],[.5,0],[-.5,0],[-.16,-.28*h],[-.42,-.28*h],[-.12,-.60*h],[-.30,-.60*h]];
+    var pts=p.map(function(q){return (cx+q[0]*w).toFixed(1)+','+(baseY+q[1]).toFixed(1)}).join(' ');
+    return '<polygon points="'+pts+'" fill="'+color+'" opacity="'+op+'"/>';
+  }
+  var layers=[
+    {color:'#0f2a2a',op:.65,step:70,baseY:800,hMin:180,hMax:300,wMin:60,wMax:90},
+    {color:'#0a2020',op:.8,step:100,baseY:850,hMin:230,hMax:380,wMin:80,wMax:120},
+    {color:'#06161a',op:.95,step:150,baseY:900,hMin:280,hMax:460,wMin:100,wMax:150}
+  ];
+  layers.forEach(function(L){
+    for(var x=-60;x<1660;x+=L.step){
+      var hh=L.hMin+r()*(L.hMax-L.hMin);
+      var ww=L.wMin+r()*(L.wMax-L.wMin);
+      o+=pineTree(x+r()*30,L.baseY,hh,ww,L.color,L.op);
+    }
+  });
+  o+='<rect y="880" width="1600" height="20" fill="#06161a"/>';
+  o+='</svg>';
+  return 'url("data:image/svg+xml;charset=utf-8,'+encodeURIComponent(o)+'")';
+}
+var BG_SCENE=bgScene();
+function applyBgScene(){document.documentElement.style.setProperty('--bg-scene',BG_SCENE)}
 var TABS=[['home','Beranda','home'],['baca','Baca','book'],['dunia','Dunia','globe'],['tokoh','Tokoh','person'],['peta','Peta','map'],['lini','Lini Masa','hour'],['istilah','Istilah','scroll']];
 function valid(r){
   if(TABS.some(function(t){return t[0]===r}))return true;
@@ -465,13 +515,17 @@ function curTab(){
   if(route.indexOf('e-')===0){var e=entry(route.slice(2));return e?TYPES[e.type].tab:'home'}
   return route;
 }
-
-/* ---------- views ---------- */
 function topbar(){
   var tab=curTab(),h='<header class="top"><div class="bar"><a class="brand" href="#home" data-go="home" aria-label="Hollow Night, beranda"><img src="'+LOGO+'" alt="Hollow Night"></a><nav class="tabs" aria-label="Menu utama">';
   TABS.forEach(function(t){h+='<a class="tab" href="#'+t[0]+'" data-go="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'>'+icon(t[2])+'<span>'+t[1]+'</span></a>'});
   h+='</nav>';
-  if(canEdit)h+='<button class="adm" type="button" data-act="admin" aria-pressed="'+admin+'" title="Tampilkan alat penulis">'+icon('quill')+'<span>Mode Penulis</span></button>';
+  if(canEdit){
+    if(pendingSave){
+      h+='<button class="adm saveall" type="button" data-act="save-now" title="Ada perubahan belum disimpan. Klik untuk menyimpan sekarang">'+icon('upload')+'<span class="save-light dirty" aria-hidden="true"></span><span>Simpan</span></button>';
+    }else{
+      h+='<button class="adm" type="button" data-act="save-now" title="Semua perubahan tersimpan" style="opacity:.9">'+icon('quill')+'<span class="save-light" aria-hidden="true"></span><span>Mode Penulis</span></button>';
+    }
+  }
   h+=moreMenu();
   if(route.indexOf('b-')===0)h+='<div class="prog" id="prog"></div>';
   return h+'</div></header>';
@@ -483,7 +537,7 @@ function moreMenu(){
     ['help','Bantuan','Cara menulis & mengimpor bab',"#",'help'],
     ['info','Tentang Hollow Night','Info web dan versi',"#",'about'],
     ['mail','Kontak','Kirim pesan & masukan',"#",'contact'],
-    ['gear','Pengaturan','Preferensi tampilan',"#",'settings']
+    ['gear','Pengaturan','Preferensi tampilan & penyimpanan',"#",'settings']
   ];
   var h='<div class="menu-wrap"><button class="menu-btn" type="button" data-act="menu" aria-label="Menu lainnya" aria-expanded="false" aria-haspopup="true">'+icon('dots')+'</button><div class="menu-pop" id="menu-pop" hidden role="menu"><div class="menu-head"><b>Hollow Night</b><small>Menu tambahan & informasi</small></div>';
   items.forEach(function(x,i){
@@ -498,7 +552,6 @@ function footer(){
   return '<footer class="foot shell"><button class="cipher" type="button" data-act="cipher" data-enc="'+esc(enc)+'" data-dec="'+esc(msg)+'" aria-label="Pesan rahasia, klik untuk memecahkan kode"><span id="cx">'+esc(enc)+'</span><small>Kode rahasia. Klik untuk memecahkannya.</small></button><span>'+(S.site.author?esc(S.site.author)+' &middot; ':'')+'Hollow Night</span></footer>';
 }
 function caesar(s,k){return s.replace(/[a-z]/gi,function(c){var b=c<='Z'?65:97;return String.fromCharCode((c.charCodeAt(0)-b+k+26)%26+b)})}
-
 function view(){
   if(route==='home')return vHome();
   if(route==='baca')return vToc();
@@ -510,7 +563,6 @@ function view(){
   return vLore(t);
 }
 function exStamp(x){return x.example?'<span class="stamp">CONTOH</span>':(x.status==='draft'?'<span class="stamp">DRAFT</span>':'')}
-
 function vHome(){
   var chs=chapters(),last=lsGet('hn-last'),lc=last&&chById(last),first=chs[0];
   var cta='';
@@ -532,7 +584,10 @@ function vHome(){
 }
 function deskPanel(){
   var ex=S.chapters.some(function(c){return c.example})||S.lore.some(function(e){return e.example});
-  return '<section class="sheet desk"><h2>Meja penulis</h2><p style="color:var(--ink-soft);margin-bottom:14px">Setiap perubahan langsung disimpan ke database setelah kamu menekan Simpan. Bab berstatus Draft hanya terlihat olehmu.</p><div class="acts"><button class="btn sm" type="button" data-act="ch-new">'+icon('plus')+'Tulis bab baru</button><button class="btn sm gold" type="button" data-act="import">'+icon('upload')+'Impor dari PDF / Word</button><button class="btn sm ghost" type="button" data-act="site-edit">Ubah sinopsis & tagline</button>'+(ex?'<button class="btn sm ghost" type="button" data-act="clear-ex">Hapus semua contoh</button>':'')+'</div></section>';
+  var saveState = pendingSave
+    ? '<span class="save-light dirty" aria-hidden="true"></span> <b style="color:var(--red)">Ada perubahan belum disimpan</b>'
+    : '<span class="save-light" aria-hidden="true"></span> <b style="color:var(--pine)">Semua tersimpan</b>';
+  return '<section class="sheet desk"><h2>Meja penulis</h2><p style="color:var(--ink-soft);margin-bottom:6px">'+saveState+'</p><p style="color:var(--ink-soft);margin-bottom:14px">Auto-save: <b>'+(autoSave?'AKTIF':'NONAKTIF')+'</b> (atur di Pengaturan). '+(autoSave?'Perubahan langsung disimpan ke database.':'Perubahan akan ditahan sampai kamu menekan tombol Simpan.')+'</p><div class="acts"><button class="btn sm" type="button" data-act="ch-new">'+icon('plus')+'Tulis bab baru</button><button class="btn sm gold" type="button" data-act="import">'+icon('upload')+'Impor dari PDF / Word</button><button class="btn sm ghost" type="button" data-act="site-edit">Ubah sinopsis & tagline</button>'+(pendingSave?'<button class="btn sm" type="button" data-act="save-now">'+icon('upload')+'Simpan sekarang</button>':'')+(ex?'<button class="btn sm ghost" type="button" data-act="clear-ex">Hapus semua contoh</button>':'')+'</div></section>';
 }
 function chRow(c,adm){
   var wc=wordCount(c.body),mins=Math.max(1,Math.round(wc/200)),rd=readSet().indexOf(c.id)>=0;
@@ -556,7 +611,6 @@ function vReader(id){
   function nav(){return '<div class="rd-nav">'+(prev?'<a class="btn ghost" href="#b-'+prev.id+'" data-go="b-'+prev.id+'">'+icon('back')+'Bab '+esc(prev.n)+'</a>':'<span></span>')+(next?'<a class="btn" href="#b-'+next.id+'" data-go="b-'+next.id+'">Bab '+esc(next.n)+'</a>':'<a class="btn ghost" href="#baca" data-go="baca">Daftar isi</a>')+'</div>'}
   return '<div class="rd-wrap"><div class="rd-tools"><a class="back" href="#baca" data-go="baca">'+icon('back').replace('<svg','<svg width="16" height="16"')+'Daftar isi</a><div class="acts"><button class="btn ghost sm" type="button" data-act="fs" data-d="-1" aria-label="Perkecil huruf">A-</button><button class="btn ghost sm" type="button" data-act="fs" data-d="1" aria-label="Perbesar huruf">A+</button>'+(admin?'<button class="btn sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah bab</button>':'')+'</div></div><article class="reader" id="reader"><header><div class="kicker">'+(c.vol?esc(c.vol)+' &middot; ':'')+'Bab '+esc(c.n)+' '+exStamp(c)+'</div><h1>'+esc(c.title)+'</h1>'+ORN+'</header><div class="body" style="--fs:'+fs+'px">'+c.body+'</div></article>'+nav()+'</div>';
 }
-
 function pageHead(t,extra){
   var T=TYPES[t];
   return '<div class="ph"><div><div class="kicker">Buku catatan</div><h1>'+T.label+'</h1><p class="sub">'+T.note+'</p></div>'+(admin?'<div class="acts"><button class="btn sm" type="button" data-act="lore-new" data-t="'+t+'">'+icon('plus')+'Tambah '+T.single+'</button></div>':'')+'</div>';
@@ -623,8 +677,6 @@ function vGloss(){
     h+='<div class="gi" data-s="'+esc((e.title+' '+(e.summary||'')).toLowerCase())+'"><div><b>'+esc(e.title)+'</b> '+exStamp(e)+'<p>'+esc(e.summary||'')+'</p></div>'+(admin?'<div class="acts"><button class="btn ghost sm" type="button" data-act="lore-edit" data-id="'+e.id+'">Ubah</button><button class="btn ghost sm" type="button" data-act="lore-del" data-id="'+e.id+'">Hapus</button></div>':'')+'</div>'});
   return h+'</div>';
 }
-
-/* ---------- render ---------- */
 function render(opts){
   opts=opts||{};var y=window.scrollY;
   var body;
@@ -640,8 +692,6 @@ function updateProg(){
   pg.style.width=(p*100).toFixed(1)+'%';
   if(p>.92&&route.indexOf('b-')===0)markRead(route.slice(2));
 }
-
-/* ---------- modal / toast ---------- */
 function toast(m){
   var t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=m;document.body.appendChild(t);
   setTimeout(function(){t.remove()},3600);
@@ -659,8 +709,6 @@ function busy(on,msg){
   if(!b){b=document.createElement('div');b.id='busy';b.className='busy';document.body.appendChild(b)}
   b.textContent=msg||'Menyimpan...';
 }
-
-/* ---------- database (Supabase) ---------- */
 function makeSlug(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,120)}
 function slugFor(t){return (makeSlug(t)||'bab')+'-'+Math.random().toString(36).slice(2,6)}
 function rowToCh(r){
@@ -679,7 +727,7 @@ async function loadContent(){
     if(sq.error)console.warn('hn_site:',sq.error.message);
     if(cq.error)console.warn('chapters:',cq.error.message);
     var hasRow=!!(sq.data&&sq.data.data);
-    if(hasRow){var d=sq.data.data;S.site=d.site||{tagline:'',synopsis:'',author:''};S.lore=d.lore||[]}
+    if(hasRow){var d=sq.data.data;S.site=d.site||{tagline:'',synopsis:'',author:'',avatar:''};S.site.avatar=S.site.avatar||'';S.lore=d.lore||[]}
     if(!cq.error){
       var rows=cq.data||[];dbIds={};rows.forEach(function(r){dbIds[r.id]=1});
       if(rows.length||hasRow)S.chapters=rows.map(rowToCh);
@@ -724,27 +772,46 @@ async function persist(next){
   }
   next.chapters=next.chapters.filter(function(c){return c.example||keep[c.id]});
 }
-async function commit(fn,okMsg){
-  if(!db||!canEdit){toast('Masuk sebagai Author dulu lewat tombol AUTHOR ACCESS.');return false}
-  if(!dbLoaded){toast('Data belum termuat dari database. Muat ulang halaman, lalu coba lagi.');return false}
-  var next=clone(S);
-  try{fn(next)}catch(err){console.error(err);toast('Perubahan gagal diproses: '+(err&&err.message||err));return false}
-  if(JSON.stringify({site:next.site,lore:next.lore}).length>6000000){toast('Data terlalu besar. Kecilkan gambar atau hapus beberapa.');return false}
+async function persistNow(){
+  if(!db||!canEdit)return false;
   busy(true,'Menyimpan ke database...');
   try{
-    await persist(next);
-    S=next;closeModal();busy(false);render({keep:true});notify();toast(okMsg||'Tersimpan');
+    await persist(S);
+    pendingSave=false;
+    busy(false);render({keep:true});notify();
+    toast('Perubahan tersimpan');
     return true;
   }catch(e){
-    console.error(e);busy(false);
+    busy(false);
+    console.error(e);
     var m=String((e&&e.message)||e);
-    toast(m==='ditolak'||(e&&e.code==='42501')?'Ditolak database ('+(e&&e.code||'RLS')+'). Pastikan masih login sebagai Author dan SQL izin sudah dijalankan.':'Gagal menyimpan: '+m);
-    await loadContent();
+    toast(m==='ditolak'||(e&&e.code==='42501')?'Ditolak database ('+(e&&e.code||'RLS')+').':'Gagal menyimpan: '+m);
     return false;
   }
 }
-
-/* ---------- content cleaning ---------- */
+function stageOrCommit(fn,okMsg){
+  var next=clone(S);
+  try{fn(next)}catch(err){console.error(err);toast('Perubahan gagal diproses: '+(err&&err.message||err));return Promise.resolve(false)}
+  if(JSON.stringify({site:next.site,lore:next.lore}).length>6000000){toast('Data terlalu besar. Kecilkan gambar atau hapus beberapa.');return Promise.resolve(false)}
+  S=next;
+  if(autoSave){
+    return persistNow().then(function(ok){
+      if(ok){closeModal();render({keep:true});notify();toast(okMsg||'Tersimpan')}
+      else{render({keep:true});notify()}
+      return ok;
+    });
+  }else{
+    pendingSave=true;
+    closeModal();render({keep:true});notify();
+    toast((okMsg||'Perubahan disiapkan')+' — jangan lupa tekan Simpan');
+    return Promise.resolve(true);
+  }
+}
+function commit(fn,okMsg){
+  if(!db||!canEdit){toast('Masuk sebagai Author dulu lewat tombol AUTHOR ACCESS.');return Promise.resolve(false)}
+  if(!dbLoaded){toast('Data belum termuat dari database. Muat ulang halaman, lalu coba lagi.');return Promise.resolve(false)}
+  return stageOrCommit(fn,okMsg);
+}
 var FLAT={DIV:1,SECTION:1,ARTICLE:1,BODY:1,TABLE:1,TBODY:1,THEAD:1,TFOOT:1,TR:1,TD:1,TH:1,FIGURE:1,MAIN:1,CENTER:1,HEADER:1,FOOTER:1,ASIDE:1,NAV:1,DL:1,DD:1,DT:1};
 var SKIP={SCRIPT:1,STYLE:1,IMG:1,SVG:1,IFRAME:1,OBJECT:1,EMBED:1,NOSCRIPT:1,CANVAS:1,VIDEO:1,AUDIO:1,HEAD:1,TITLE:1,META:1,LINK:1};
 function inlineNode(c){
@@ -815,8 +882,6 @@ function textToHtml(t){
     return '<p>'+heads(wrapped?b.replace(/\s*\n\s*/g,' '):b)+'</p>';
   }).join('');
 }
-
-/* ---------- chapter splitting ---------- */
 var HEADRE=/^\s*((bab|chapter|bagian|part)\s+(\d+|[ivxlcdm]+)\b|(prolog|prologue|epilog|epilogue|interlude|intermezzo)\b)/i;
 function splitChapters(html,fallback){
   var d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),kids=[].slice.call(d.body.children);
@@ -839,8 +904,6 @@ function splitChapters(html,fallback){
   res.forEach(function(c){var m=c.title.match(/(?:bab|chapter)\s*(\d+)/i);if(m)c.n=+m[1];c.title=c.title.replace(/^\s*(?:bab|chapter)\s*\d+\s*[:.\-–—]?\s*/i,'').trim()||c.title});
   return res;
 }
-
-/* ---------- libraries & file parsing ---------- */
 var LIBS={mammoth:'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js',pdf:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'},LIBP={};
 function loadLib(k){
   if(LIBP[k])return LIBP[k];
@@ -900,8 +963,6 @@ async function fileToChunks(file){
   else throw new Error('type');
   return splitChapters(html,base);
 }
-
-/* ---------- rich editor toolbar (ala Google Docs) ---------- */
 var FONT_OPTS=[
   ['inherit','Default'],
   ['Literata,Georgia,serif','Literata'],
@@ -1035,8 +1096,6 @@ function applyStyleToSelection(prop,value){
   sel.removeAllRanges();var r=document.createRange();r.selectNodeContents(span);sel.addRange(r);
 }
 function propToCamel(p){return p.replace(/-([a-z])/g,function(m,c){return c.toUpperCase()})}
-
-/* ---------- image editor ---------- */
 var ieImg=null,ieState=null;
 function openImageEditor(img){
   ieImg=img;
@@ -1055,48 +1114,39 @@ function openImageEditor(img){
   var src=img.getAttribute('src')||'';
   var h='<h2>Atur Gambar</h2><p class="hint">Klik dan atur tampilan gambar di dalam bab. Semua pengaturan ikut tersimpan saat kamu menekan Simpan bab.</p>';
   h+='<div class="ie-preview"><img id="ie-prev" src="'+esc(src)+'" alt=""></div>';
-  // Size presets
   h+='<div class="ie-row"><label>Ukuran cepat</label><div class="ie-btns">';
   [['25%','Kecil'],['50%','Sedang'],['75%','Besar'],['100%','Penuh'],['','Asli']].forEach(function(s){
     h+='<button type="button" data-ie="size" data-v="'+s[0]+'"'+(st.width===s[0]?' class="on"':'')+'>'+s[1]+'</button>';
   });
   h+='</div></div>';
-  // Custom width slider
   var w0=st.width.indexOf('%')>-1?parseInt(st.width):100;
   h+='<div class="ie-row"><label>Lebar (%)</label><div class="ie-slider"><input type="range" id="ie-w" min="10" max="100" value="'+w0+'"><output id="ie-wo">'+w0+'%</output></div></div>';
-  // Align
   h+='<div class="ie-row"><label>Posisi</label><div class="ie-btns">';
   [['left','Kiri'],['center','Tengah'],['right','Kanan']].forEach(function(a){
     h+='<button type="button" data-ie="align" data-v="'+a[0]+'"'+(st.align===a[0]?' class="on"':'')+'>'+a[1]+'</button>';
   });
   h+='</div></div>';
-  // Wrap
   h+='<div class="ie-row"><label>Mode teks</label><div class="ie-btns">';
   [['none','Baris baru'],['wrap','Teks mengelilingi']].forEach(function(w){
     h+='<button type="button" data-ie="wrap" data-v="'+w[0]+'"'+(st.wrap===w[0]?' class="on"':'')+'>'+w[1]+'</button>';
   });
   h+='</div></div>';
-  // Border / stroke
   h+='<div class="ie-row"><label>Bingkai (stroke)</label><div class="ie-btns">';
   [['0','Tidak'],['2','Tipis'],['4','Sedang'],['8','Tebal']].forEach(function(b){
     h+='<button type="button" data-ie="border" data-v="'+b[0]+'"'+(st.border===b[0]?' class="on"':'')+'>'+b[1]+'</button>';
   });
   h+='</div></div>';
-  // Roundness
   h+='<div class="ie-row"><label>Sudut membulat</label><div class="ie-btns">';
   [['0','Tajam'],['6','Kecil'],['16','Sedang'],['32','Bulat'],['999','Lingkaran']].forEach(function(r){
     h+='<button type="button" data-ie="round" data-v="'+r[0]+'"'+(st.round===r[0]?' class="on"':'')+'>'+r[1]+'</button>';
   });
   h+='</div></div>';
-  // Shadow
   h+='<div class="ie-row"><label>Bayangan</label><div class="ie-btns">';
   [['0','Tanpa'],['1','Halus'],['2','Kuat']].forEach(function(s){
     h+='<button type="button" data-ie="shadow" data-v="'+s[0]+'"'+(st.shadow===s[0]?' class="on"':'')+'>'+s[1]+'</button>';
   });
   h+='</div></div>';
-  // Opacity
   h+='<div class="ie-row"><label>Kecerahan (opacity)</label><div class="ie-slider"><input type="range" id="ie-o" min="20" max="100" value="'+Math.round(parseFloat(st.opacity)*100)+'"><output id="ie-oo">'+Math.round(parseFloat(st.opacity)*100)+'%</output></div></div>';
-  // Alt
   h+='<div class="ie-row"><label>Teks alternatif (untuk pembaca layar)</label><input class="in" id="ie-alt" value="'+esc(st.alt)+'" maxlength="200" placeholder="Deskripsi singkat gambar"></div>';
   h+='<div class="mfoot"><button class="btn ghost" type="button" data-act="ie-del">Hapus gambar</button><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="ie-apply">Terapkan</button></div>';
   openModal(h,{save:applyImageEdit});
@@ -1124,14 +1174,12 @@ function applyImageEdit(){
   ieImg.setAttribute('data-round',ieState.round);
   ieImg.setAttribute('data-shadow',ieState.shadow);
   ieImg.alt=ieState.alt||'';
-  // Apply visual style
   var border=ieState.border!=='0'?ieState.border+'px solid #B3372B':'none';
   var radius=ieState.round==='999'?'50%':ieState.round+'px';
   var shadow=ieState.shadow==='1'?'0 4px 12px rgba(0,0,0,.25)':ieState.shadow==='2'?'0 10px 30px rgba(0,0,0,.5)':'';
   ieImg.style.border=border;
   ieImg.style.borderRadius=radius;
   ieImg.style.boxShadow=shadow;
-  // Replace float figure parent styling for wrap
   var fig=ieImg.closest('figure');
   if(fig){
     if(ieState.wrap==='wrap'){
@@ -1149,13 +1197,10 @@ function applyImageEdit(){
   closeModal();
   toast('Gambar diperbarui. Tekan Simpan bab untuk menyimpan.');
 }
-
-/* ---------- editors ---------- */
 function field(label,inner,id){return '<div class="f"><label'+(id?' for="'+id+'"':' class="lb"')+'>'+label+'</label>'+inner+'</div>'}
 function modalHead(t,hint){return '<h2>'+t+'</h2>'+(hint?'<p class="hint">'+hint+'</p>':'')}
 function modalFoot(label,extra){return '<div class="mfoot">'+(extra||'')+'<button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="m-save">'+label+'</button></div>'}
 function val(id){var e=document.getElementById(id);return e?e.value:''}
-
 function nextNum(){return S.chapters.reduce(function(m,c){return Math.max(m,+c.n||0)},0)+1}
 function chapterEditor(id){
   var c=id?chById(id):null;
@@ -1217,13 +1262,11 @@ async function handleImport(files){
   out.innerHTML=h+'</div><p class="hint">Ditemukan '+impChunks.length+' bab. Ubah judul atau nomor sebelum menambahkan.</p>';
   save.hidden=false;
 }
-
 function siteEditor(){
-  openModal(modalHead('Sinopsis & tagline')+field('Tagline di beranda','<input class="in" id="se-t" value="'+esc(S.site.tagline||'')+'" maxlength="120">','se-t')+field('Sinopsis (pisahkan paragraf dengan baris kosong)','<textarea class="in" id="se-s" rows="8">'+esc(S.site.synopsis||'')+'</textarea>','se-s')+field('Nama penulis (opsional)','<input class="in" id="se-a" value="'+esc(S.site.author||'')+'" maxlength="80">','se-a')+modalFoot('Simpan'),{
+  openModal(modalHead('Sinopsis, tagline & profil')+field('Tagline di beranda','<input class="in" id="se-t" value="'+esc(S.site.tagline||'')+'" maxlength="120">','se-t')+field('Sinopsis (pisahkan paragraf dengan baris kosong)','<textarea class="in" id="se-s" rows="8">'+esc(S.site.synopsis||'')+'</textarea>','se-s')+field('Nama penulis (opsional)','<input class="in" id="se-a" value="'+esc(S.site.author||'')+'" maxlength="80">','se-a')+modalFoot('Simpan'),{
     save:function(){var t=val('se-t').trim(),s=val('se-s').trim(),a=val('se-a').trim();commit(function(d){d.site.tagline=t;d.site.synopsis=s;d.site.author=a},'Sinopsis tersimpan')}
   });
 }
-
 var modalImg='';
 function imgField(cur){
   modalImg=cur||'';
@@ -1277,40 +1320,60 @@ function pinEditor(entryId,i,x,y){
     commit(function(d){var en=d.lore.find(function(q){return q.id===entryId});en.pins=en.pins||[];if(i>=0){en.pins[i].t=t;en.pins[i].d=dd}else en.pins.push({x:x,y:y,t:t,d:dd})},'Pin tersimpan');
   }});
 }
-
-/* ---------- static info modals ---------- */
 function profileModal(){
-  openModal(modalHead('Profil Penulis')+'<p class="hint">Halaman ini bisa kamu isi dengan identitas penulis. Untuk mengubah nama yang muncul di footer, buka Mode Penulis → Ubah sinopsis & tagline.</p>'
+  var av=S.site.avatar;
+  var initials=(S.site.author||'HN').split(/\s+/).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase();
+  var avatarHtml='<div class="profile-avatar" id="pv-avatar">'+(av?'<img src="'+esc(av)+'" alt="Foto profil">':'<span class="initials">'+esc(initials)+'</span>')+'</div>';
+  var h=modalHead('Profil Penulis','Identitas penulis yang tampil di web.')
+    +avatarHtml
+    +(admin?'<div class="acts" style="justify-content:center;margin-bottom:14px"><label class="btn ghost sm" style="cursor:pointer"><input id="pf-file" type="file" accept="image/*" hidden>Ganti foto profil</label>'+(av?'<button class="btn ghost sm" type="button" data-act="pf-clear">Hapus foto</button>':'')+'</div>':'')
     +'<p style="margin-bottom:10px"><b>Nama:</b> '+esc(S.site.author||'—')+'</p>'
     +'<p>Hollow Night adalah ruang untuk membangun dunia ceritamu: novel, catatan lore, peta, lini masa, dan glosarium dalam satu tempat.</p>'
-    +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
+    +(admin?'<p class="hint" style="margin-top:12px">Untuk mengubah nama yang muncul di footer, buka Mode Penulis → Ubah sinopsis & tagline.</p>':'')
+    +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>';
+  openModal(h);
 }
 function socialModal(){
   var items=[
-    ['Instagram','@hollownight','instagram'],
-    ['Discord','Hollow Night Guild','discord'],
-    ['Twitter / X','@hollownight','twitter'],
-    ['YouTube','Hollow Night Channel','youtube']
+    ['Instagram','@kazu.png_','instagram','https://www.instagram.com/kazu.png_?mdxt=MWExd3R6amJkajUzbg=='],
+    ['YouTube','@kazualther','youtube','https://youtube.com/@kazualther?si=7oh8F3xHHhXNjBWB'],
+    ['Twitter / X','@KazuAltr','twitter','https://x.com/KazuAltr'],
+    ['Discord','Hollow Night Guild','discord','https://discord.gg/wkRNd4mAUG']
   ];
   openModal(modalHead('Media Sosial','Kanal resmi Hollow Night. Klik untuk mengunjungi.')
-    +items.map(function(x){return '<a class="menu-item" style="text-decoration:none;color:inherit;border:1px solid var(--line);margin-bottom:8px" href="#" onclick="return false">'+icon(x[2])+'<span>'+x[0]+'<small>'+x[1]+'</small></span></a>'}).join('')
+    +items.map(function(x){
+      return '<a class="menu-item" style="text-decoration:none;color:inherit;border:1px solid var(--line);margin-bottom:8px" href="'+esc(x[3])+'" target="_blank" rel="noopener noreferrer">'+icon(x[2])+'<span>'+x[0]+'<small>'+x[1]+'</small></span>'+icon('external')+'</a>';
+    }).join('')
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function helpModal(){
-  openModal(modalHead('Bantuan','Panduan singkat untuk penulis baru.')
+  var mail='juliandoniel07@gmail.com';
+  openModal(modalHead('Bantuan','Panduan singkat untuk penulis & pembaca.')
     +'<h3 style="margin:14px 0 6px">Menulis bab</h3>'
     +'<p>Klik <b>Mode Penulis → Tulis bab baru</b>. Toolbar di atas editor mirip Google Docs: pilih font, ukuran, perataan, bullet, nomor, inden, warna, dan lainnya.</p>'
     +'<h3 style="margin:14px 0 6px">Menambahkan gambar</h3>'
     +'<p>Klik ikon 🖼 di toolbar. Setelah gambar muncul di editor, klik gambarnya untuk membuka panel <b>Atur Gambar</b>. Kamu bisa mengatur ukuran, posisi (kiri/tengah/kanan), mode wrap teks, bingkai, sudut membulat, bayangan, dan kecerahan.</p>'
     +'<h3 style="margin:14px 0 6px">Impor dari PDF / Word</h3>'
     +'<p>Buka <b>Impor dari PDF / Word</b> di Meja Penulis. Pilih file .docx / .pdf / .txt. Bab-bab akan dipecah otomatis dari judul seperti "Bab 1". Kamu juga bisa memilih volume yang sudah ada dari daftar.</p>'
-    +'<h3 style="margin:14px 0 6px">Konten contoh</h3>'
-    +'<p>Semua bab dan catatan bertanda <b>CONTOH</b> bisa dihapus sekali klik lewat tombol di Meja Penulis.</p>'
+    +'<h3 style="margin:14px 0 6px">Simpan otomatis & manual</h3>'
+    +'<p>Lampu hijau di tombol Mode Penulis berarti semua perubahan sudah tersimpan. Lampu merah berarti ada perubahan yang belum disimpan. Atur <b>Auto-save ON/OFF</b> di <b>Pengaturan</b> (menu titik tiga). Kalau Auto-save OFF, tekan tombol <b>Simpan</b> di bar atas untuk menyimpan semua perubahan sekaligus. Shortcut: <b>Ctrl+S / Cmd+S</b>.</p>'
+    +'<h3 style="margin:14px 0 6px">Fitur di Hollow Night</h3>'
+    +'<p><b>Bab:</b> daftar isi bervolume, pengingat bab terakhir, pengatur ukuran huruf, draft/pratinjau.<br>'
+    +'<b>Dunia:</b> catatan lore dengan kategori (Wilayah, Sejarah, Magis & Aturan, Makhluk, Faksi, Budaya).<br>'
+    +'<b>Tokoh:</b> lembar karakter ala DnD dengan statistik, alignment, dan rahasia tersembunyi.<br>'
+    +'<b>Peta:</b> unggah gambar dan tandai lokasi dengan pin bernomor.<br>'
+    +'<b>Lini Masa:</b> urutkan peristiwa bersejarah dunia ceritamu.<br>'
+    +'<b>Istilah:</b> glosarium otomatis berurut abjad & bisa dicari.<br>'
+    +'<b>Konten contoh:</b> semua bab & catatan bertanda CONTOH bisa dihapus sekali klik dari Meja Penulis.</p>'
+    +'<h3 style="margin:14px 0 6px">Ada Masalah?/Masukan?</h3>'
+    +'<p>Kalau menemukan bug, punya ide, atau ingin memberi masukan, kirim email ke '
+    +'<a href="mailto:'+esc(mail)+'" style="color:var(--red);font-weight:800;text-decoration:underline">'+esc(mail)+'</a>. '
+    +'Sertakan tangkapan layar kalau memungkinkan supaya bisa lebih cepat ditangani.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function aboutModal(){
   openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel statis yang menyimpan konten di Supabase. Fitur utamanya: daftar bab, mode penulis, impor dokumen, editor kaya, image editor, peta lokasi, lini masa, glosarium, dan lore dunia.</p>'
-    +'<p style="margin-top:10px">Versi 1.2 &middot; dibuat untuk para pencerita.</p>'
+    +'<p style="margin-top:10px">Versi 1.3 &middot; dibuat untuk para pencerita.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function contactModal(){
@@ -1318,17 +1381,18 @@ function contactModal(){
     +field('Nama','<input class="in" id="ct-n" maxlength="80">','ct-n')
     +field('Email','<input class="in" id="ct-e" type="email" maxlength="120">','ct-e')
     +field('Pesan','<textarea class="in" id="ct-m" rows="5" placeholder="Tulis pesanmu di sini..."></textarea>','ct-m')
+    +'<p class="hint" style="margin-top:6px">Atau langsung kirim ke <a href="mailto:juliandoniel07@gmail.com" style="color:var(--red);font-weight:800">juliandoniel07@gmail.com</a></p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="ct-send">Kirim</button></div>');
 }
 function settingsModal(){
   var theme=lsGet('hn-theme')||'auto';
-  openModal(modalHead('Pengaturan','Sesuaikan tampilan web.')
+  var as=autoSave?'on':'off';
+  openModal(modalHead('Pengaturan','Sesuaikan tampilan web dan cara penyimpanan.')
     +field('Tema','<select class="in" id="st-theme"><option value="auto"'+(theme==='auto'?' selected':'')+'>Ikuti sistem</option><option value="light"'+(theme==='light'?' selected':'')+'>Terang</option><option value="dark"'+(theme==='dark'?' selected':'')+'>Gelap</option></select>','st-theme')
     +field('Ukuran huruf pembaca (px)','<input class="in" id="st-fs" type="number" min="15" max="26" value="'+(lsGet('hn-fs')||'18')+'">','st-fs')
+    +'<div class="f"><label for="st-as">Auto-save (Mode Penulis)</label><select class="in" id="st-as"><option value="on"'+(as==='on'?' selected':'')+'>AKTIF — simpan otomatis setiap perubahan</option><option value="off"'+(as==='off'?' selected':'')+'>NONAKTIF — simpan hanya saat menekan tombol Simpan</option></select><p class="hint" style="margin:6px 0 0">Indikator lampu di tombol Mode Penulis: <span class="save-light" style="vertical-align:middle"></span> hijau = tersimpan, <span class="save-light dirty" style="vertical-align:middle"></span> merah = ada perubahan belum tersimpan.</p></div>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="st-save">Simpan</button></div>');
 }
-
-/* ---------- d20 ---------- */
 function roll(){
   var chs=chapters();if(!chs.length)return;
   var n=1+Math.floor(Math.random()*20),pick=n===20?chs[chs.length-1]:chs[Math.floor(Math.random()*chs.length)];
@@ -1337,8 +1401,6 @@ function roll(){
   if(d){d.classList.remove('spin');void d.offsetWidth;d.classList.add('spin')}
   if(o)o.innerHTML='<b>'+n+'</b> '+esc(msg)+' <a href="#b-'+pick.id+'" data-go="b-'+pick.id+'" style="color:var(--gold)">Baca Bab '+esc(pick.n)+'</a>';
 }
-
-/* ---------- events ---------- */
 var armed=null;
 function armDelete(btn,fn){
   if(armed&&armed.btn===btn){clearTimeout(armed.t);armed=null;fn();return}
@@ -1349,12 +1411,19 @@ function armDelete(btn,fn){
 function closeMenu(){var p=document.getElementById('menu-pop');if(p)p.hidden=true;var b=document.querySelector('.menu-btn');if(b)b.setAttribute('aria-expanded','false')}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest('[data-go]');
-  if(a&&!ev.target.closest('[data-act]')){ev.preventDefault();closeModal();closeMenu();go(a.getAttribute('data-go'));return}
+  if(a&&!ev.target.closest('[data-act]')){
+    if(pendingSave&&!autoSave){
+      if(!confirm('Ada perubahan belum disimpan. Tinggalkan halaman ini?')){ev.preventDefault();return}
+      pendingSave=false;
+    }
+    ev.preventDefault();closeModal();closeMenu();go(a.getAttribute('data-go'));return
+  }
   var el=ev.target.closest('[data-act]');
   if(!el){if(ev.target.id==='ov')closeModal();else if(!ev.target.closest('.menu-wrap'))closeMenu();return}
   var act=el.getAttribute('data-act'),id=el.getAttribute('data-id');
   switch(act){
     case 'admin':admin=!admin;lsSet('hn-admin',admin?'1':'0');pinMode=false;render({keep:true});notify();break;
+    case 'save-now':if(pendingSave){persistNow()}else{toast('Semua perubahan sudah tersimpan.')}break;
     case 'roll':roll();break;
     case 'cipher':{var cx=document.getElementById('cx'),on=el.getAttribute('data-on')==='1';cx.textContent=on?el.getAttribute('data-enc'):el.getAttribute('data-dec');el.setAttribute('data-on',on?'0':'1');break}
     case 'fs':{var f=clamp((parseInt(lsGet('hn-fs')||'18',10)||18)+(+el.getAttribute('data-d'))*1,15,26);lsSet('hn-fs',String(f));var b=document.querySelector('.reader .body');if(b)b.style.setProperty('--fs',f+'px');updateProg();break}
@@ -1379,15 +1448,15 @@ document.addEventListener('click',function(ev){
     case 'img-clear':{modalImg='';var pv=document.getElementById('if-prev');if(pv)pv.hidden=true;break}
     case 'ie-apply':applyImageEdit();break;
     case 'ie-del':{if(ieImg){var fig=ieImg.closest('figure');if(fig)fig.remove();else ieImg.remove();closeModal();toast('Gambar dihapus. Tekan Simpan bab untuk menyimpan.')}break}
+    case 'pf-clear':{commit(function(d){d.site.avatar=''},'Foto profil dihapus').then(function(){profileModal()});break}
     case 'm-close':closeModal();break;
     case 'm-save':if(modalCtx&&modalCtx.save)modalCtx.save();break;
     case 'menu':{var mp=document.getElementById('menu-pop'),open=el.getAttribute('aria-expanded')==='true';closeMenu();if(!open){mp.hidden=false;el.setAttribute('aria-expanded','true')}break}
     case 'menu-item':{var m=el.getAttribute('data-m');closeMenu();if(m==='profile')profileModal();else if(m==='social')socialModal();else if(m==='help')helpModal();else if(m==='about')aboutModal();else if(m==='contact')contactModal();else if(m==='settings')settingsModal();break}
     case 'ct-send':{var n=val('ct-n').trim(),em=val('ct-e').trim(),msg=val('ct-m').trim();if(!em||!msg){toast('Isi email dan pesan dulu.');return}closeModal();toast('Pesanmu tercatat. Terima kasih!');break}
-    case 'st-save':{var th=val('st-theme');lsSet('hn-theme',th);if(th==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',th);var fs=clamp(parseInt(val('st-fs'),10)||18,15,26);lsSet('hn-fs',String(fs));var rbody=document.querySelector('.reader .body');if(rbody)rbody.style.setProperty('--fs',fs+'px');closeModal();toast('Pengaturan tersimpan');break}
+    case 'st-save':{var th=val('st-theme');lsSet('hn-theme',th);if(th==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',th);var fs=clamp(parseInt(val('st-fs'),10)||18,15,26);lsSet('hn-fs',String(fs));var rbody=document.querySelector('.reader .body');if(rbody)rbody.style.setProperty('--fs',fs+'px');var asv=val('st-as');autoSave=(asv!=='off');lsSet('hn-autosave',autoSave?'1':'0');closeModal();render({keep:true});toast('Pengaturan tersimpan. Auto-save: '+(autoSave?'AKTIF':'NONAKTIF'));break}
   }
 });
-// Image click inside editor
 document.addEventListener('click',function(ev){
   var img=ev.target.closest('.rt-area img');
   if(!img)return;
@@ -1396,7 +1465,6 @@ document.addEventListener('click',function(ev){
   img.classList.add('sel');
   openImageEditor(img);
 },true);
-// color pickers
 document.addEventListener('input',function(ev){
   var t=ev.target;
   if(t.matches('[data-act="rt-color"]')){
@@ -1406,7 +1474,6 @@ document.addEventListener('input',function(ev){
     document.execCommand(cmd,false,col);
   }
   if(t.id==='q')filterLore();
-  // image editor sliders
   if(t.id==='ie-w'&&ieState){ieState.width=t.value+'%';var o=document.getElementById('ie-wo');if(o)o.textContent=t.value+'%';ieUpdatePreview()}
   if(t.id==='ie-o'&&ieState){ieState.opacity=(t.value/100).toString();var o2=document.getElementById('ie-oo');if(o2)o2.textContent=t.value+'%';ieUpdatePreview()}
   if(t.id==='ie-alt'&&ieState){ieState.alt=t.value}
@@ -1421,9 +1488,19 @@ document.addEventListener('change',function(ev){
       modalImg=u;var pv=document.getElementById('if-prev');if(pv){pv.src=u;pv.hidden=false}
     }).catch(function(){toast('Gambar tidak bisa dibaca.')});
   }
+  if(t.id==='pf-file'&&t.files[0]){
+    readImage(t.files[0],512,.85).then(function(u){
+      commit(function(d){d.site.avatar=u},'Foto profil diperbarui').then(function(){profileModal()});
+    }).catch(function(){toast('Gambar tidak bisa dibaca.')});
+  }
 });
 document.addEventListener('mousedown',function(ev){if(ev.target.closest('.rtb'))ev.preventDefault()});
-document.addEventListener('keydown',function(ev){if(ev.key==='Escape'){closeModal();closeMenu()}});
+document.addEventListener('keydown',function(ev){
+  if(ev.key==='Escape'){closeModal();closeMenu()}
+  if((ev.ctrlKey||ev.metaKey)&&(ev.key==='s'||ev.key==='S')){
+    if(canEdit&&(pendingSave||autoSave===false)){ev.preventDefault();persistNow()}
+  }
+});
 document.addEventListener('paste',function(ev){
   var a=ev.target.closest&&ev.target.closest('.rt-area');if(!a)return;
   ev.preventDefault();
@@ -1432,13 +1509,11 @@ document.addEventListener('paste',function(ev){
   if(!out)out=textToHtml(t);
   document.execCommand('insertHTML',false,out);
 });
-// image editor button clicks
 document.addEventListener('click',function(ev){
   var b=ev.target.closest('[data-ie]');if(!b)return;
   var k=b.getAttribute('data-ie'),v=b.getAttribute('data-v');
   if(!ieState)return;
   ieState[k]=v;
-  // toggle visual on group
   b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});
   if(k==='size'){var w=document.getElementById('ie-w');if(w&&v){w.value=parseInt(v);var o=document.getElementById('ie-wo');if(o)o.textContent=v}}
   ieUpdatePreview();
@@ -1456,9 +1531,19 @@ function filterLore(){
 }
 var tick=false;
 window.addEventListener('scroll',function(){if(tick)return;tick=true;requestAnimationFrame(function(){tick=false;updateProg()})},{passive:true});
-window.addEventListener('hashchange',function(){var h=location.hash.slice(1);if(h&&h!==route&&valid(h)){pinMode=false;selPin=-1;route=h;render()}});
-
-/* ---------- boot ---------- */
+window.addEventListener('hashchange',function(){
+  var h=location.hash.slice(1);
+  if(h&&h!==route&&valid(h)){
+    if(pendingSave&&!autoSave){
+      if(!confirm('Ada perubahan belum disimpan. Tinggalkan halaman ini?')){location.hash=route;return}
+      pendingSave=false;
+    }
+    pinMode=false;selPin=-1;route=h;render();
+  }
+});
+window.addEventListener('beforeunload',function(ev){
+  if(pendingSave&&!autoSave){ev.preventDefault();ev.returnValue='';return ''}
+});
 function applySession(session){
   var a=!!(session&&session.user&&session.user.id===AUTHOR_UID);
   if(session&&!a){db.auth.signOut();return}
@@ -1480,13 +1565,16 @@ window.hnApp={
   edit:function(id){if(canEdit&&chById(id))chapterEditor(id)},
   togglePublish:function(id){var c=chById(id);if(!c||!canEdit)return;var ns=c.status==='draft'?'published':'draft';commit(function(d){d.chapters.find(function(x){return x.id===id}).status=ns},ns==='published'?'Bab diterbitkan':'Bab dijadikan draft')},
   remove:function(id){if(!canEdit)return;commit(function(d){d.chapters=d.chapters.filter(function(c){return c.id!==id})},'Bab dihapus')},
-  toggleAdmin:function(){admin=!admin;lsSet('hn-admin',admin?'1':'0');pinMode=false;render({keep:true});notify();return admin}
+  toggleAdmin:function(){admin=!admin;lsSet('hn-admin',admin?'1':'0');pinMode=false;render({keep:true});notify();return admin},
+  save:function(){return persistNow()},
+  hasPending:function(){return pendingSave},
+  autoSave:function(v){if(v===undefined)return autoSave;autoSave=!!v;lsSet('hn-autosave',autoSave?'1':'0');render({keep:true});return autoSave}
 };
 (function(){
   var h=(location.hash||'').slice(1);
   route=h&&valid(h)?h:'home';
-  // apply saved theme
   var th=lsGet('hn-theme');if(th&&th!=='auto')document.documentElement.setAttribute('data-theme',th);
+  applyBgScene();
   render();
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initDb);else initDb();
 })();
@@ -1498,228 +1586,73 @@ window.hnApp={
 (() => {
   const SUPABASE_URL = "https://yqqwfbapngombihknhck.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_eUTPTPmBTcTtrQ3EMYp3Xw_mcol8bNj";
-
   if (!window.supabase?.createClient) {
     console.error("Supabase library gagal dimuat.");
     return;
   }
-
-  window.hnSupabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-
+  window.hnSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
   console.log("Hollow Night: Supabase client initialized.");
 })();
 </script>
 
 <style data-keep>
-#hn-author-access {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 9999;
-  padding: 12px 16px;
-  border: 1px solid #F2C14E;
-  border-radius: 6px;
-  background: #14232A;
-  color: #EBD9B4;
-  font: 700 12px Nunito, sans-serif;
-  letter-spacing: 1px;
-  cursor: pointer;
-  box-shadow: 0 4px 16px #0003;
-}
-
-#hn-author-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  background: #071116df;
-  font-family: Nunito, sans-serif;
-}
-
-#hn-author-modal[hidden] {
-  display: none;
-}
-
-.hn-author-card {
-  box-sizing: border-box;
-  width: min(100%, 390px);
-  padding: 28px;
-  border: 1px solid #B99A61;
-  border-radius: 8px;
-  background: #F7E6C2;
-  color: #2A1B12;
-  box-shadow: 0 18px 60px #0008;
-}
-
-.hn-author-card h2 {
-  margin-top: 0;
-  font-family: Metamorphous, Georgia, serif;
-}
-
-.hn-author-card input {
-  box-sizing: border-box;
-  width: 100%;
-  margin: 8px 0 14px;
-  padding: 12px;
-  border: 1px solid #D3A96C;
-  border-radius: 4px;
-  background: #FFF7E3;
-  color: #2A1B12;
-  font: inherit;
-}
-
-.hn-author-card button {
-  padding: 11px 14px;
-  border: 0;
-  border-radius: 4px;
-  background: #14232A;
-  color: #EBD9B4;
-  font: inherit;
-  cursor: pointer;
-}
-
-.hn-author-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-#hn-author-message {
-  overflow-wrap: anywhere;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-#hn-author-modal {
-  overflow-y: auto;
-  align-items: start;
-}
-
-.hn-author-card:has(#hn-author-dashboard:not([hidden])) {
-  width: min(100%, 640px);
-  margin: auto;
-}
-
-.hn-author-card textarea {
-  box-sizing: border-box;
-  width: 100%;
-  margin: 8px 0 14px;
-  padding: 12px;
-  border: 1px solid #D3A96C;
-  border-radius: 4px;
-  background: #FFF7E3;
-  color: #2A1B12;
-  font: inherit;
-  resize: vertical;
-}
-
-.hn-writer-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin: 14px 0;
-}
-
-.hn-writer-stats div {
-  padding: 10px;
-  border: 1px solid #D3A96C;
-  border-radius: 4px;
-  text-align: center;
-}
-
-.hn-writer-stats span {
-  display: block;
-  font-size: 11px;
-}
-
-.hn-writer-stats strong {
-  font-size: 22px;
-}
-
-.hn-chapter-card {
-  margin-bottom: 10px;
-  padding: 12px;
-  border: 1px solid #D3A96C;
-  border-radius: 4px;
-  background: #FFF7E3;
-}
-
-.hn-chapter-card h4,
-.hn-chapter-card p {
-  margin: 0 0 4px;
-}
+#hn-author-access {position: fixed;right: 16px;bottom: 16px;z-index: 9999;padding: 12px 16px;border: 1px solid #F2C14E;border-radius: 6px;background: #14232A;color: #EBD9B4;font: 700 12px Nunito, sans-serif;letter-spacing: 1px;cursor: pointer;box-shadow: 0 4px 16px #0003;}
+#hn-author-modal {position: fixed;inset: 0;z-index: 10000;display: grid;place-items: center;padding: 20px;background: #071116df;font-family: Nunito, sans-serif;}
+#hn-author-modal[hidden] {display: none;}
+.hn-author-card {box-sizing: border-box;width: min(100%, 390px);padding: 28px;border: 1px solid #B99A61;border-radius: 8px;background: #F7E6C2;color: #2A1B12;box-shadow: 0 18px 60px #0008;}
+.hn-author-card h2 {margin-top: 0;font-family: Metamorphous, Georgia, serif;}
+.hn-author-card input {box-sizing: border-box;width: 100%;margin: 8px 0 14px;padding: 12px;border: 1px solid #D3A96C;border-radius: 4px;background: #FFF7E3;color: #2A1B12;font: inherit;}
+.hn-author-card button {padding: 11px 14px;border: 0;border-radius: 4px;background: #14232A;color: #EBD9B4;font: inherit;cursor: pointer;}
+.hn-author-actions {display: flex;flex-wrap: wrap;gap: 8px;}
+#hn-author-message {overflow-wrap: anywhere;font-size: 13px;line-height: 1.6;}
+#hn-author-modal {overflow-y: auto;align-items: start;}
+.hn-author-card:has(#hn-author-dashboard:not([hidden])) {width: min(100%, 640px);margin: auto;}
+.hn-author-card textarea {box-sizing: border-box;width: 100%;margin: 8px 0 14px;padding: 12px;border: 1px solid #D3A96C;border-radius: 4px;background: #FFF7E3;color: #2A1B12;font: inherit;resize: vertical;}
+.hn-writer-stats {display: grid;grid-template-columns: repeat(3, 1fr);gap: 8px;margin: 14px 0;}
+.hn-writer-stats div {padding: 10px;border: 1px solid #D3A96C;border-radius: 4px;text-align: center;}
+.hn-writer-stats span {display: block;font-size: 11px;}
+.hn-writer-stats strong {font-size: 22px;}
+.hn-chapter-card {margin-bottom: 10px;padding: 12px;border: 1px solid #D3A96C;border-radius: 4px;background: #FFF7E3;}
+.hn-chapter-card h4,.hn-chapter-card p {margin: 0 0 4px;}
 </style>
 
-<button data-keep id="hn-author-access" type="button">
-  AUTHOR ACCESS
-</button>
+<button data-keep id="hn-author-access" type="button">AUTHOR ACCESS</button>
 
 <div data-keep id="hn-author-modal" hidden>
   <section class="hn-author-card">
     <h2>Hollow Night</h2>
     <p id="hn-author-subtitle">AUTHOR ARCHIVE // RESTRICTED ACCESS</p>
-
     <form id="hn-author-form">
       <label for="hn-author-email">Author Email</label>
-      <input
-        id="hn-author-email"
-        type="email"
-        autocomplete="username"
-        required
-      >
-
+      <input id="hn-author-email" type="email" autocomplete="username" required>
       <label for="hn-author-password">Password</label>
-      <input
-        id="hn-author-password"
-        type="password"
-        autocomplete="current-password"
-        required
-      >
-
+      <input id="hn-author-password" type="password" autocomplete="current-password" required>
       <div class="hn-author-actions">
         <button type="submit">ENTER ARCHIVE</button>
         <button type="button" id="hn-author-close">CLOSE</button>
       </div>
     </form>
-
     <p id="hn-author-message" role="status" aria-live="polite"></p>
     <div id="hn-author-dashboard" hidden>
-
       <div class="hn-writer-header">
         <p>HOLLOW NIGHT // AUTHOR MODE</p>
         <h2>Author's Archive</h2>
         <p>Edit langsung dari tiap halaman. Di sini kamu mengatur daftar chapter dan status terbitnya.</p>
       </div>
-
       <div class="hn-writer-stats">
         <div><span>Total Chapters</span><strong id="hn-stat-total">0</strong></div>
         <div><span>Drafts</span><strong id="hn-stat-drafts">0</strong></div>
         <div><span>Published</span><strong id="hn-stat-published">0</strong></div>
       </div>
-
       <div class="hn-author-actions">
         <button type="button" id="hn-author-newchapter">NEW CHAPTER</button>
         <button type="button" id="hn-author-modetoggle">EDIT TOOLS: ON</button>
       </div>
-
       <hr>
-
       <h3>CHAPTER ARCHIVE</h3>
       <p id="hn-chapter-message" role="status" aria-live="polite"></p>
-
-      <div id="hn-chapter-list">
-        <p>Chapter archive will appear here.</p>
-      </div>
-
-      <button type="button" id="hn-author-logout">
-        SIGN OUT
-      </button>
-
+      <div id="hn-chapter-list"><p>Chapter archive will appear here.</p></div>
+      <button type="button" id="hn-author-logout">SIGN OUT</button>
     </div>
   </section>
 </div>
@@ -1728,7 +1661,6 @@ window.hnApp={
 (() => {
   const AUTHOR_UID = "6c3958f1-ee85-47e6-836a-f1db260bc3cc";
   const db = window.hnSupabase;
-
   const button = document.getElementById("hn-author-access");
   const modal = document.getElementById("hn-author-modal");
   const form = document.getElementById("hn-author-form");
@@ -1739,54 +1671,31 @@ window.hnApp={
   const passwordInput = document.getElementById("hn-author-password");
   const chapterList = document.getElementById("hn-chapter-list");
   const toggleBtn = document.getElementById("hn-author-modetoggle");
-
   if (!db) {
-    button.addEventListener("click", () => {
-      alert("Supabase belum siap. Periksa koneksi dan urutan script.");
-    });
+    button.addEventListener("click", () => { alert("Supabase belum siap. Periksa koneksi dan urutan script."); });
     return;
   }
-
   const api = () => window.hnApp;
-
   function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-    })[char]);
+    return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   }
-
   function syncToggle() {
     const on = api() && api().isAdmin();
     toggleBtn.textContent = on ? "EDIT TOOLS: ON" : "EDIT TOOLS: OFF";
   }
-
   function renderArchive() {
     const app = api();
-    if (!app) {
-      chapterList.innerHTML = "<p>Memuat chapter...</p>";
-      return;
-    }
+    if (!app) { chapterList.innerHTML = "<p>Memuat chapter...</p>"; return; }
     const chapters = app.chapters();
     document.getElementById("hn-stat-total").textContent = chapters.length;
-    document.getElementById("hn-stat-drafts").textContent =
-      chapters.filter(c => c.status === "draft").length;
-    document.getElementById("hn-stat-published").textContent =
-      chapters.filter(c => c.status === "published").length;
+    document.getElementById("hn-stat-drafts").textContent = chapters.filter(c => c.status === "draft").length;
+    document.getElementById("hn-stat-published").textContent = chapters.filter(c => c.status === "published").length;
     syncToggle();
-
-    if (!chapters.length) {
-      chapterList.innerHTML =
-        "<p>Belum ada chapter. Tekan NEW CHAPTER untuk mulai menulis.</p>";
-      return;
-    }
-
+    if (!chapters.length) { chapterList.innerHTML = "<p>Belum ada chapter. Tekan NEW CHAPTER untuk mulai menulis.</p>"; return; }
     chapterList.innerHTML = chapters.map(c => `
       <article class="hn-chapter-card">
         <h4>${escapeHTML(c.title)}</h4>
-        <p>
-          ${escapeHTML(c.vol || "No volume")}
-          ${c.n ? " — Chapter " + escapeHTML(c.n) : ""}
-        </p>
+        <p>${escapeHTML(c.vol || "No volume")}${c.n ? " — Chapter " + escapeHTML(c.n) : ""}</p>
         <p>Status: <strong>${c.status === "draft" ? "draft" : "published"}</strong></p>
         <div class="hn-author-actions">
           <button type="button" data-hn-act="edit" data-id="${escapeHTML(c.id)}">EDIT</button>
@@ -1796,125 +1705,62 @@ window.hnApp={
       </article>
     `).join("");
   }
-
   function showLoggedOut() {
-    form.hidden = false;
-    dashboard.hidden = true;
+    form.hidden = false; dashboard.hidden = true;
     subtitle.textContent = "AUTHOR ARCHIVE // RESTRICTED ACCESS";
     button.textContent = "AUTHOR ACCESS";
     passwordInput.value = "";
   }
-
   async function updateSessionUI() {
     const { data, error } = await db.auth.getSession();
-
-    if (error) {
-      message.textContent = "Gagal memeriksa sesi. Silakan coba lagi.";
-      return;
-    }
-
+    if (error) { message.textContent = "Gagal memeriksa sesi. Silakan coba lagi."; return; }
     const user = data.session?.user;
-
     if (user && user.id === AUTHOR_UID) {
-      form.hidden = true;
-      dashboard.hidden = false;
+      form.hidden = true; dashboard.hidden = false;
       subtitle.textContent = "IDENTITY VERIFIED";
       button.textContent = "AUTHOR MODE";
       message.textContent = "Akun Author berhasil diverifikasi.";
       renderArchive();
-    } else {
-      showLoggedOut();
-    }
+    } else { showLoggedOut(); }
   }
-
-  button.addEventListener("click", async () => {
-    modal.hidden = false;
-    await updateSessionUI();
-  });
-
-  document.getElementById("hn-author-close")
-    .addEventListener("click", () => { modal.hidden = true; });
-
-  modal.addEventListener("click", event => {
-    if (event.target === modal) modal.hidden = true;
-  });
-
+  button.addEventListener("click", async () => { modal.hidden = false; await updateSessionUI(); });
+  document.getElementById("hn-author-close").addEventListener("click", () => { modal.hidden = true; });
+  modal.addEventListener("click", event => { if (event.target === modal) modal.hidden = true; });
   form.addEventListener("submit", async event => {
     event.preventDefault();
-
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-
     message.textContent = "Memverifikasi identitas...";
-
     const { data, error } = await db.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      message.textContent =
-        "Login gagal. Periksa email, password, dan konfigurasi Auth.";
-      return;
-    }
-
+    if (error) { message.textContent = "Login gagal. Periksa email, password, dan konfigurasi Auth."; return; }
     if (data.user?.id !== AUTHOR_UID) {
-      await db.auth.signOut();
-      showLoggedOut();
+      await db.auth.signOut(); showLoggedOut();
       message.textContent = "Akses ditolak. Akun ini bukan Author Hollow Night.";
       return;
     }
-
     passwordInput.value = "";
     message.textContent = "Identitas berhasil diverifikasi.";
     await updateSessionUI();
   });
-
-  document.getElementById("hn-author-logout")
-    .addEventListener("click", async () => {
-      message.textContent = "Keluar...";
-
-      try {
-        const { error } = await db.auth.signOut({ scope: "local" });
-        if (error) console.warn("signOut:", error.message);
-      } catch (err) {
-        console.warn("signOut gagal:", err);
-      }
-
-      try {
-        Object.keys(localStorage)
-          .filter(k => /^sb-.*-auth-token/.test(k))
-          .forEach(k => localStorage.removeItem(k));
-      } catch (err) {}
-
-      showLoggedOut();
-      message.textContent = "Kamu sudah keluar dari Author Archive.";
-      location.reload();
-    });
-
-  document.getElementById("hn-author-newchapter")
-    .addEventListener("click", () => {
-      modal.hidden = true;
-      api()?.create();
-    });
-
-  toggleBtn.addEventListener("click", () => {
-    api()?.toggleAdmin();
-    syncToggle();
+  document.getElementById("hn-author-logout").addEventListener("click", async () => {
+    message.textContent = "Keluar...";
+    try { const { error } = await db.auth.signOut({ scope: "local" }); if (error) console.warn("signOut:", error.message); } catch (err) { console.warn("signOut gagal:", err); }
+    try { Object.keys(localStorage).filter(k => /^sb-.*-auth-token/.test(k)).forEach(k => localStorage.removeItem(k)); } catch (err) {}
+    showLoggedOut();
+    message.textContent = "Kamu sudah keluar dari Author Archive.";
+    location.reload();
   });
-
+  document.getElementById("hn-author-newchapter").addEventListener("click", () => { modal.hidden = true; api()?.create(); });
+  toggleBtn.addEventListener("click", () => { api()?.toggleAdmin(); syncToggle(); });
   chapterList.addEventListener("click", event => {
     const b = event.target.closest("[data-hn-act]");
     if (!b || !api()) return;
     const id = b.dataset.id;
     const act = b.dataset.hnAct;
-    if (act === "edit") {
-      modal.hidden = true;
-      api().edit(id);
-    } else if (act === "pub") {
-      api().togglePublish(id);
-    } else if (act === "del") {
-      if (confirm("Hapus chapter ini secara permanen?")) api().remove(id);
-    }
+    if (act === "edit") { modal.hidden = true; api().edit(id); }
+    else if (act === "pub") { api().togglePublish(id); }
+    else if (act === "del") { if (confirm("Hapus chapter ini secara permanen?")) api().remove(id); }
   });
-
   document.addEventListener("hn-state", () => {
     const isAuthor = !!(api() && api().isAuthor());
     button.textContent = isAuthor ? "AUTHOR MODE" : "AUTHOR ACCESS";
