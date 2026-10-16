@@ -570,7 +570,8 @@ function buildDoc(data){
   for(var i=0;i<st.length;i++){var t=st[i].textContent;if(t.indexOf('safe-area-inset')>-1&&t.indexOf('color-scheme')>-1){reset=t;break}}
   var vpEl=document.querySelector('meta[name=viewport]'),vp=vpEl?vpEl.getAttribute('content'):'width=device-width,initial-scale=1,viewport-fit=cover';
   var json=JSON.stringify(data).replace(/</g,'\\u003c');
-  var page='<title>Hollow Night</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="'+FONTS+'">\n<style id="hn-style">'+css+'</style>\n<div id="app"></div>\n<script type="application/json" id="hn-data">'+json+'<\/script>\n<script id="hn-app">'+app+'<\/script>';
+  var keep='';document.querySelectorAll('script[data-keep]').forEach(function(x){keep+='\n'+x.outerHTML});
+  var page='<title>Hollow Night</title>\n<meta name="claude:viewport-fit-sides" content="cover">\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="'+FONTS+'">\n<style id="hn-style">'+css+'</style>\n<div id="app"></div>\n<script type="application/json" id="hn-data">'+json+'<\/script>\n<script id="hn-app">'+app+'<\/script>'+keep;
   return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="'+vp+'"><style>'+reset+'</style></head><body>'+page+'</body></html>';
 }
 async function commit(fn,okMsg){
@@ -978,6 +979,26 @@ window.addEventListener('hashchange',function(){var h=location.hash.slice(1);if(
     }catch(e){}
   })();
 })();
+})();
+</script>
+
+<script data-keep src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
+<script data-keep>
+(() => {
+  const SUPABASE_URL = "https://yqqwfbapngombihknhck.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_eUTPTPmBTcTtrQ3EMYp3Xw_mcol8bNj";
+
+  if (!window.supabase?.createClient) {
+    console.error("Supabase library gagal dimuat.");
+    return;
+  }
+
+  window.hnSupabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  console.log("Hollow Night: Supabase client initialized.");
 })();
 </script>
 
