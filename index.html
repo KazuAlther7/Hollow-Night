@@ -53,9 +53,7 @@ body::after{
   background-size:cover;background-position:center bottom;background-repeat:no-repeat;
   opacity:.13;transition:opacity .5s;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]) body::after{opacity:.3}
-}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body::after{opacity:.3}}
 :root[data-theme="dark"] body::after{opacity:.3}
 :root[data-theme="light"] body::after{opacity:.13}
 a{color:inherit}
@@ -70,8 +68,8 @@ p{margin:0}
 
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;padding-top:12px;max-width:1120px;margin:0 auto}
 .bar{position:relative;display:flex;align-items:center;gap:8px;background:var(--night);color:var(--night-ink);border-radius:16px;padding:6px 10px;box-shadow:var(--shadow);overflow:visible}
-.brand{display:block;flex:none;padding:4px 6px}
-.brand img{display:block;height:38px;width:auto}
+.brand{display:block;flex:none;padding:4px 6px;display:flex;align-items:center}
+.brand img{display:block;height:38px;width:auto;max-width:170px;object-fit:contain}
 .tabs{display:flex;gap:2px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none;padding:2px}
 .tabs::-webkit-scrollbar{display:none}
 .tab{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:10px;color:var(--night-ink);text-decoration:none;font:700 .88rem/1 var(--f-ui);white-space:nowrap;transition:background .15s}
@@ -84,31 +82,13 @@ p{margin:0}
 .adm.saveall{background:var(--gold);color:#1B1208;border-color:var(--gold);animation:hnGlow 2s ease-in-out infinite}
 @keyframes hnGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,193,78,.5)}50%{box-shadow:0 0 0 6px rgba(242,193,78,0)}}
 .prog{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);width:0;border-radius:0 0 16px 16px}
-@media (max-width:760px){
-  .bar{flex-wrap:wrap}
-  .tabs{order:3;flex:1 0 100%}
-  .brand{margin-right:auto}
-  .brand img{height:32px}
-}
-.save-indicator{
-  flex:none;display:flex;align-items:center;justify-content:center;
-  min-height:38px;padding:0 10px;border-radius:999px;
-  background:rgba(0,0,0,.18);border:1.5px solid rgba(235,217,180,.18);
-}
+@media (max-width:760px){.bar{flex-wrap:wrap}.tabs{order:3;flex:1 0 100%}.brand{margin-right:auto}.brand img{height:32px;max-width:120px}}
+.save-indicator{flex:none;display:flex;align-items:center;justify-content:center;min-height:38px;padding:0 10px;border-radius:999px;background:rgba(0,0,0,.18);border:1.5px solid rgba(235,217,180,.18)}
 .save-indicator .save-light{margin:0}
 .adm.mode-btn{transition:background .18s,color .18s,border-color .18s}
 .adm.mode-btn:hover{background:rgba(242,193,78,.16);border-color:rgba(242,193,78,.55)}
-
-.save-light{
-  display:inline-block;width:11px;height:11px;border-radius:50%;
-  background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.75);
-  flex:none;margin:0 4px;transition:background .35s,box-shadow .35s;
-  position:relative;
-}
-.save-light::after{
-  content:"";position:absolute;inset:-3px;border-radius:50%;
-  border:1px solid rgba(74,222,128,.35);
-}
+.save-light{display:inline-block;width:11px;height:11px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.75);flex:none;margin:0 4px;transition:background .35s,box-shadow .35s;position:relative}
+.save-light::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:1px solid rgba(74,222,128,.35)}
 .save-light.dirty{background:#ef4444;box-shadow:0 0 10px rgba(239,68,68,.85);animation:hnPulseLight 1.6s ease-in-out infinite}
 .save-light.dirty::after{border-color:rgba(239,68,68,.45)}
 @keyframes hnPulseLight{0%,100%{opacity:1}50%{opacity:.45}}
@@ -130,7 +110,6 @@ p{margin:0}
 .menu-sep{height:1px;margin:6px 8px;background:var(--line)}
 
 main.shell{padding-block:22px 28px}
-
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 18px;border-radius:10px;border:2px solid transparent;font:800 .92rem/1.1 var(--f-ui);text-decoration:none;background:var(--red);color:var(--on-red);box-shadow:0 3px 0 rgba(0,0,0,.28);transition:transform .12s,box-shadow .12s}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.28)}
@@ -164,7 +143,7 @@ button.chip{background:transparent}
 .ff{position:absolute;left:var(--x);top:var(--y);width:5px;height:5px;border-radius:50%;background:#FFE58A;box-shadow:0 0 10px 3px rgba(255,229,138,.7);animation:drift var(--t) ease-in-out var(--d) infinite}
 @keyframes drift{0%,100%{transform:translate(0,0);opacity:.15}50%{transform:translate(16px,-22px);opacity:1}}
 .hero-in{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:38px 18px 110px}
-.logo-big{width:min(560px,88%);height:auto;display:block;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
+.logo-big{width:min(560px,88%);height:auto;display:block;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55));max-height:280px;object-fit:contain}
 .tag{font:700 clamp(1.3rem,3.4vw,1.8rem)/1.15 var(--f-hand);color:var(--gold);max-width:36ch}
 .cta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:4px}
 .rollout{min-height:2.4em;font:700 1.15rem/1.2 var(--f-hand);color:var(--night-ink);max-width:40ch}
@@ -199,7 +178,7 @@ button.chip{background:transparent}
 .rt-title{font:400 1.12rem/1.2 var(--f-display)}
 .rt-meta{font:600 .82rem/1.3 var(--f-ui);color:var(--ink-soft);margin-top:3px}
 .done{font:700 1.05rem/1 var(--f-hand);color:var(--pine)}
-.rowact{display:flex;gap:6px;padding-right:12px;flex-wrap:wrap}
+.rowact{display:flex;gap:6px;padding-right:12px;flex-wrap:wrap;align-items:center}
 @media (max-width:520px){.row{flex-wrap:wrap}.rowact{padding:0 16px 12px}}
 
 .rd-wrap{max-width:720px;margin:0 auto}
@@ -298,9 +277,64 @@ select.in{appearance:auto}
 .md h2{font-size:1.5rem;margin-bottom:4px}
 .md .hint{color:var(--ink-soft);font-size:.92rem;margin-bottom:16px}
 .mfoot{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:8px}
-.rt{border:1.5px solid var(--paper-edge);border-radius:8px;background:var(--field);overflow:hidden}
-.rt-bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--paper-edge);background:var(--paper);align-items:center;position:sticky;top:0;z-index:2;transition:background .2s}
-.rt-bar[data-mode="image"]{background:linear-gradient(180deg,rgba(242,193,78,.28),var(--paper));border-bottom-color:var(--gold)}
+
+/* =============== v1.8 Editor layout =============== */
+.rt{overflow:visible}
+.rt-toolbar-slot{position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px);z-index:11;margin:0 0 22px;border:1.5px solid var(--paper-edge);border-radius:10px;background:var(--paper);box-shadow:0 6px 18px -8px rgba(42,27,18,.4)}
+.rt-bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;align-items:center;transition:background .2s}
+.rt-bar[data-mode="image"]{background:linear-gradient(180deg,rgba(242,193,78,.28),var(--paper));border-radius:10px}
+.rt-area-wrap{background:var(--paper);border:1px solid var(--paper-edge);border-radius:6px;box-shadow:var(--shadow);padding:0}
+.rt-area{min-height:420px;max-height:none;overflow-y:visible;padding:34px clamp(20px,4vw,54px);font-family:var(--f-read);font-size:1.02rem;line-height:1.85;outline:0;position:relative}
+.rt-area:focus{background:rgba(255,255,255,.28)}
+.rt-area p{margin:0 0 .9em}
+.rt-area h1{font-size:1.9rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
+.rt-area h2{font-size:1.5rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
+.rt-area h3{font-size:1.25rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
+.rt-area h4{font-size:1.1rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
+.rt-area blockquote{margin:1em 0;padding:.2em 0 .2em 1.1em;border-left:4px solid var(--red);font-style:italic;color:var(--ink-soft)}
+.rt-area ul,.rt-area ol{padding-left:1.6em;margin:0 0 1em}
+.rt-area hr{border:0;height:1.5em;text-align:center;margin:1em 0}
+.rt-area hr::after{content:"* * *";letter-spacing:.3em;color:var(--red)}
+.rt-area figure{margin:1em 0;display:block;position:relative}
+.rt-area img{cursor:grab;transition:outline .15s;max-width:100%;height:auto;border-radius:6px;vertical-align:middle;user-select:none;-webkit-user-drag:none}
+.rt-area img:hover{outline:2px solid var(--gold);outline-offset:2px}
+.rt-area img.sel{outline:3px solid var(--red);outline-offset:2px;cursor:grab}
+.rt-area img.sel.dragging{cursor:grabbing;outline-color:var(--gold)}
+.rt-area a{color:var(--red);text-decoration:underline}
+
+/* Wrap modes (Google Docs / Word style) */
+.rt-area img[data-wrap="inline"]{display:inline-block!important;vertical-align:middle;margin:0 8px!important;float:none!important}
+.rt-area figure[data-wrap="inline"]{display:inline-block;margin:.2em .4em}
+.rt-area img[data-wrap="square"][data-align="left"]{float:left;margin:6px 16px 10px 0}
+.rt-area img[data-wrap="square"][data-align="right"]{float:right;margin:6px 0 10px 16px}
+.rt-area img[data-wrap="square"][data-align="center"]{float:none;display:block;margin:14px auto}
+.rt-area img[data-wrap="tight"][data-align="left"]{float:left;margin:4px 8px 6px 0;shape-outside:margin-box}
+.rt-area img[data-wrap="tight"][data-align="right"]{float:right;margin:4px 0 6px 8px;shape-outside:margin-box}
+.rt-area img[data-wrap="tight"][data-align="center"]{float:none;display:block;margin:12px auto}
+.rt-area img[data-wrap="through"][data-align="left"]{float:left;margin:2px 6px 4px 0}
+.rt-area img[data-wrap="through"][data-align="right"]{float:right;margin:2px 0 4px 6px}
+.rt-area img[data-wrap="through"][data-align="center"]{float:none;display:block;margin:10px auto}
+.rt-area img[data-wrap="topbottom"]{display:block;float:none}
+.rt-area img[data-wrap="topbottom"][data-align="left"]{margin:14px auto 14px 0}
+.rt-area img[data-wrap="topbottom"][data-align="right"]{margin:14px 0 14px auto}
+.rt-area img[data-wrap="topbottom"][data-align="center"]{margin:14px auto}
+.rt-area figure[data-wrap="behind"],.rt-area figure[data-wrap="front"]{min-height:200px;position:relative;display:block;margin:1.6em 0}
+.rt-area img[data-wrap="behind"]{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:-1;margin:0}
+.rt-area img[data-wrap="front"]{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:8;margin:0}
+
+.reader .body img[data-wrap="inline"]{display:inline-block!important;vertical-align:middle;margin:0 8px!important;float:none!important}
+.reader .body img[data-wrap="square"][data-align="left"]{float:left;margin:6px 16px 10px 0}
+.reader .body img[data-wrap="square"][data-align="right"]{float:right;margin:6px 0 10px 16px}
+.reader .body img[data-wrap="square"][data-align="center"]{display:block;margin:14px auto;float:none}
+.reader .body img[data-wrap="tight"][data-align="left"]{float:left;margin:4px 8px 6px 0}
+.reader .body img[data-wrap="tight"][data-align="right"]{float:right;margin:4px 0 6px 8px}
+.reader .body img[data-wrap="through"][data-align="left"]{float:left;margin:2px 6px 4px 0}
+.reader .body img[data-wrap="through"][data-align="right"]{float:right;margin:2px 0 4px 6px}
+.reader .body img[data-wrap="topbottom"]{display:block;float:none;margin:14px auto}
+.reader .body figure[data-wrap="behind"],.reader .body figure[data-wrap="front"]{min-height:180px;position:relative;display:block}
+.reader .body img[data-wrap="behind"]{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:-1}
+.reader .body img[data-wrap="front"]{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:8}
+
 .rtb{min-width:34px;min-height:34px;padding:0 8px;border:1.5px solid transparent;background:transparent;border-radius:6px;font:700 .85rem/1 var(--f-ui);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);transition:background .12s}
 .rtb:hover{background:rgba(42,27,18,.08)}
 .rtb.on{background:var(--ink);color:var(--paper)}
@@ -316,47 +350,27 @@ select.in{appearance:auto}
 .rt-color-btn input[type=color]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
 .rt-color-btn .sw{display:inline-flex;flex-direction:column;align-items:center;line-height:1;gap:0}
 .rt-color-btn .sw::after{content:"";width:16px;height:3px;background:var(--sw,#B3372B);border-radius:2px;margin-top:1px}
-.rt-area{min-height:280px;max-height:65vh;overflow-y:auto;padding:16px 18px;font-family:var(--f-read);font-size:1.02rem;line-height:1.75;outline:0;position:relative}
-.rt-area:focus{background:rgba(255,255,255,.3)}
-.rt-area p{margin:0 0 .9em}
-.rt-area h1{font-size:1.9rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
-.rt-area h2{font-size:1.5rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
-.rt-area h3{font-size:1.25rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
-.rt-area h4{font-size:1.1rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
-.rt-area blockquote{margin:1em 0;padding:.2em 0 .2em 1.1em;border-left:4px solid var(--red);font-style:italic;color:var(--ink-soft)}
-.rt-area ul,.rt-area ol{padding-left:1.6em;margin:0 0 1em}
-.rt-area hr{border:0;height:1.5em;text-align:center;margin:1em 0}
-.rt-area hr::after{content:"* * *";letter-spacing:.3em;color:var(--red)}
-.rt-area figure{margin:1em 0;display:block;position:relative}
-.rt-area img{cursor:grab;transition:outline .15s;max-width:100%;height:auto;border-radius:6px;vertical-align:middle;user-select:none;-webkit-user-drag:none}
-.rt-area img:hover{outline:2px solid var(--gold);outline-offset:2px}
-.rt-area img.sel{outline:3px solid var(--red);outline-offset:2px;cursor:grab}
-.rt-area img.sel.dragging{cursor:grabbing;outline-color:var(--gold)}
-.rt-area img[data-align=left]{float:left;margin:6px 16px 10px 0}
-.rt-area img[data-align=right]{float:right;margin:6px 0 10px 16px}
-.rt-area img[data-wrap=none]{float:none!important;display:block;margin:14px auto}
-.rt-area img[data-wrap=none][data-align=left]{margin-left:0}
-.rt-area img[data-wrap=none][data-align=right]{margin-right:0}
-.rt-area figure img{float:none!important;display:block;margin:8px auto!important}
-.rt-area a{color:var(--red);text-decoration:underline}
-.img-handle-bar{position:absolute;left:50%;bottom:-34px;transform:translateX(-50%);display:flex;gap:4px;background:rgba(20,35,42,.92);border-radius:8px;padding:4px;pointer-events:auto;z-index:5;box-shadow:0 4px 12px rgba(0,0,0,.4)}
-.img-handle-bar button{width:30px;height:30px;border:0;background:transparent;color:#EBD9B4;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font:700 .8rem/1 var(--f-ui)}
-.img-handle-bar button:hover{background:rgba(242,193,78,.24);color:var(--gold)}
-.img-handle-bar button svg{width:15px;height:15px}
 
-/* Image tools panel v1.7 — gdocs/word style sliders */
-.rt-bar .img-tools-wrap{display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%}
-.img-group{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.5);border:1px solid var(--paper-edge);border-radius:6px;padding:3px 8px;height:38px}
+.img-tools-wrap{display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%}
+.img-group{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.5);border:1px solid var(--paper-edge);border-radius:6px;padding:3px 8px;min-height:38px}
 .img-group>label{font:700 .7rem/1 var(--f-ui);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;padding-right:4px}
 .img-slider{display:flex;align-items:center;gap:6px}
-.img-slider input[type=range]{width:110px;accent-color:var(--red);cursor:pointer}
+.img-slider input[type=range]{width:100px;accent-color:var(--red);cursor:pointer}
 .img-slider output{font:700 .74rem/1 var(--f-ui);min-width:40px;text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
-.img-btn-group{display:flex;gap:2px}
-.img-btn-group button{min-width:32px;height:30px;border:1.5px solid transparent;background:transparent;border-radius:5px;cursor:pointer;color:var(--ink);font:700 .8rem/1 var(--f-ui);display:flex;align-items:center;justify-content:center;padding:0 6px}
+.img-btn-group{display:flex;gap:2px;flex-wrap:wrap}
+.img-btn-group button{min-width:32px;height:32px;border:1.5px solid transparent;background:transparent;border-radius:5px;cursor:pointer;color:var(--ink);font:700 .8rem/1 var(--f-ui);display:flex;align-items:center;justify-content:center;padding:0 6px}
 .img-btn-group button:hover{background:rgba(42,27,18,.08)}
 .img-btn-group button.on{background:var(--ink);color:var(--paper)}
-.img-btn-group button svg{width:15px;height:15px}
+.img-btn-group button svg{width:18px;height:18px}
 .img-tools-help{font:600 .74rem/1.4 var(--f-ui);color:var(--ink-soft);width:100%;margin-top:2px}
+
+.chip-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;border:1.5px solid var(--paper-edge);background:var(--field);color:var(--ink);font:700 .8rem/1 var(--f-ui);cursor:pointer}
+.chip-btn:hover{background:rgba(42,27,18,.06)}
+.chip-btn.primary{background:var(--gold);color:#1B1208;border-color:#c8a342}
+.chip-btn svg{width:14px;height:14px}
+
+.logo-preview{display:grid;place-items:center;background:var(--night);border:1px solid var(--paper-edge);border-radius:8px;padding:14px;margin-bottom:12px;min-height:120px}
+.logo-preview img{max-width:80%;max-height:140px;object-fit:contain;display:block}
 
 .imgf{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .imgf img{width:96px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--paper-edge);background:var(--night)}
@@ -371,18 +385,10 @@ select.in{appearance:auto}
 .foot{max-width:1120px;margin:30px auto 24px;padding-top:18px;border-top:2px solid var(--ink);display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;color:var(--ink-soft);font-weight:600;font-size:.9rem}
 .cipher{background:transparent;border:1.5px dashed var(--ink-soft);border-radius:8px;padding:8px 12px;text-align:left;font:700 1.1rem/1.2 var(--f-hand);letter-spacing:.06em;color:var(--red);max-width:100%;overflow-wrap:anywhere}
 .cipher small{display:block;font:700 .7rem/1.3 var(--f-ui);letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;margin-top:3px}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .ff{opacity:.7}
-}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ff{opacity:.7}}
 
 .reader .body figure,.rt-area figure{margin:1.4em 0;text-align:center}
 .reader .body img,.rt-area img{max-width:100%;height:auto;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
-.reader .body img[data-align=left]{float:left;margin:6px 16px 10px 0}
-.reader .body img[data-align=right]{float:right;margin:6px 0 10px 16px}
-.reader .body img[data-wrap=none]{float:none!important;display:block;margin:14px auto}
-.reader .body img[data-wrap=none][data-align=left]{margin-left:0}
-.reader .body img[data-wrap=none][data-align=right]{margin-right:0}
 .rtb[data-cmd=image]{padding:0 10px;font-size:.78rem}
 .rtb[data-cmd=link]{padding:0 10px}
 .profile-avatar{width:120px;height:120px;margin:0 auto 14px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);background:var(--night);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.3)}
@@ -399,7 +405,6 @@ select.in{appearance:auto}
 .novel-author{font:600 .82rem var(--f-ui);color:var(--ink-soft)}
 .novel-sum{font-size:.85rem;color:var(--ink-soft);line-height:1.4;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .novel-stats{font:700 .76rem var(--f-ui);color:var(--ink-soft);margin-top:auto}
-
 .novel-hero{display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:start;margin-bottom:26px;padding:22px;background:var(--paper);border:1px solid var(--paper-edge);border-radius:8px;box-shadow:var(--shadow)}
 .novel-hero-cover{aspect-ratio:2/3;background:linear-gradient(135deg,var(--night),var(--p2));display:grid;place-items:center;color:var(--gold);font:400 4rem/1 var(--f-display);border-radius:6px;overflow:hidden}
 .novel-hero-cover img{width:100%;height:100%;object-fit:cover;display:block}
@@ -407,16 +412,17 @@ select.in{appearance:auto}
 .novel-hero-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 @media(max-width:680px){.novel-hero{grid-template-columns:1fr}.novel-hero-cover{max-width:180px;margin:0 auto}}
 
-.editor-page{max-width:900px;margin:0 auto}
-.editor-page .rd-tools{position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px);z-index:10;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line)}
+.editor-page{max-width:940px;margin:0 auto;padding-bottom:40px}
+.editor-page .back{margin-top:4px}
+.editor-page h1{font-size:1.9rem;margin:8px 0 18px;padding:0}
 </style>
 <div id="app"></div>
-<script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": "", "avatar": ""}, "novels": [], "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
+<script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": "", "avatar": "", "logo": ""}, "novels": [], "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
 <script id="hn-app">
 (function(){
 'use strict';
 var LOGO_SVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400"><g fill="none" stroke="#F2C14E" stroke-width="3" stroke-linecap="round"><path d="M100 120 H370"/><path d="M530 120 H800"/><path d="M100 320 H260"/><path d="M640 320 H800"/></g><g font-family="Georgia,\'Times New Roman\',serif" font-weight="700" fill="#EBD9B4" text-anchor="middle"><text x="450" y="200" font-size="165" letter-spacing="8">HOLLOW</text><text x="450" y="385" font-size="165" letter-spacing="8">NIGHT</text></g><path d="M425 60 C414 86 398 94 398 114 A22 22 0 0 0 442 114 C442 94 426 86 425 60 Z" fill="#F2C14E"/><path d="M395 375 C390 388 382 392 382 402 A11 11 0 0 0 404 402 C404 392 396 388 395 375 Z" fill="#F2C14E"/><path d="M505 375 C500 388 492 392 492 402 A11 11 0 0 0 514 402 C514 392 506 388 505 375 Z" fill="#F2C14E"/><circle cx="425" cy="48" r="4" fill="#F2C14E"/><circle cx="444" cy="40" r="2.5" fill="#F2C14E"/></svg>';
-var LOGO='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(LOGO_SVG);
+var DEFAULT_LOGO='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(LOGO_SVG);
 var APP=document.getElementById('app');
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
@@ -430,28 +436,24 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 function paras(t){return String(t||'').split(/\n{2,}/).map(function(s){return s.trim()}).filter(Boolean)}
 var S;
 try{S=JSON.parse(document.getElementById('hn-data').textContent)}catch(e){S=null}
-if(!S||!S.chapters){S={v:1,site:{tagline:'',synopsis:'',author:'',avatar:''},novels:[],chapters:[],lore:[]}}
-S.site=S.site||{};S.site.avatar=S.site.avatar||'';S.lore=S.lore||[];S.novels=S.novels||[];
+if(!S||!S.chapters){S={v:1,site:{tagline:'',synopsis:'',author:'',avatar:'',logo:''},novels:[],chapters:[],lore:[]}}
+S.site=S.site||{};S.site.avatar=S.site.avatar||'';S.site.logo=S.site.logo||'';S.lore=S.lore||[];S.novels=S.novels||[];
 function migrateNovels(){
   if(!S.novels.length && S.chapters.length){
-    S.novels.push({
-      id: uid('n'), title: 'Hollow Night',
-      author: S.site.author || '', synopsis: S.site.synopsis || '',
-      cover: '', genre: '', status: '', tagline: '',
-      chapterIds: S.chapters.map(function(c){return c.id}),
-      t: 0
-    });
+    S.novels.push({id: uid('n'), title: 'Hollow Night', author: S.site.author || '', synopsis: S.site.synopsis || '', cover: '', genre: '', status: '', tagline: '', chapterIds: S.chapters.map(function(c){return c.id}), t: 0});
   }
-  var inNovel = {};
-  S.novels.forEach(function(n){(n.chapterIds||[]).forEach(function(id){inNovel[id]=1})});
+  var inNovel = {};S.novels.forEach(function(n){(n.chapterIds||[]).forEach(function(id){inNovel[id]=1})});
   var orphans = S.chapters.filter(function(c){return !inNovel[c.id]});
-  if(orphans.length && S.novels.length){
-    S.novels[0].chapterIds = (S.novels[0].chapterIds||[]).concat(orphans.map(function(c){return c.id}));
-  }
+  if(orphans.length && S.novels.length){S.novels[0].chapterIds = (S.novels[0].chapterIds||[]).concat(orphans.map(function(c){return c.id}))}
   var chapIds = {};S.chapters.forEach(function(c){chapIds[c.id]=1});
   S.novels.forEach(function(n){n.chapterIds=(n.chapterIds||[]).filter(function(id){return chapIds[id]})});
 }
 migrateNovels();
+function currentLogo(){
+  if(S.site.logo) return S.site.logo;
+  var cached=lsGet('hn-logo-cache');if(cached) return cached;
+  return DEFAULT_LOGO;
+}
 
 var TYPES={
   world:{tab:'dunia',label:'Dunia',single:'entri lore',cats:['Wilayah','Sejarah','Magis & Aturan','Makhluk','Faksi','Budaya','Lainnya'],note:'Segala hal tentang dunia Hollow Night'},
@@ -508,27 +510,33 @@ var IC={
   twitter:'<path d="M4 4l7 9-7 7h3l6-6 5 6h4l-7-9 6-7h-3l-5 5-5-5H4z"/>',
   discord:'<path d="M8 4c-2 0-3.5 1-4 2.5C3.4 8.5 3 10.5 3 12.5c0 3 1 5.5 3 6.5 1 .5 2 .8 3 .8l1-1.5c.3 0 .7.2 1 .2s.7-.1 1-.2l1 1.5c1 0 2-.3 3-.8 2-1 3-3.5 3-6.5 0-2-.4-4-1-6C17.5 5 16 4 14 4l-.7 1.6c-1-.2-1.6-.3-2.3-.3s-1.3.1-2.3.3L8 4z"/>',
   youtube:'<rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/>',
-  copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/>',
   external:'<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h5"/>',
   image:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 17l-5-5-9 8"/>',
   check:'<path d="M4 12l5 5L20 6"/>',
   trash:'<path d="M3 6h18"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>',
-  alignLeft:'<path d="M3 6h18M3 12h12M3 18h18"/>',
-  alignCenter:'<path d="M3 6h18M6 12h12M3 18h18"/>',
-  alignRight:'<path d="M3 6h18M9 12h12M3 18h18"/>',
-  move:'<path d="M12 3v18M3 12h18"/><path d="M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/>',
+  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>',
   reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4"/>'
 };
 function icon(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>'}
+
+var WRAP_ICONS={
+  inline:'<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="5" width="8" height="8" rx="1"/><path d="M4 17h14"/><path d="M4 15v4M18 15v4"/></svg>',
+  square:'<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="6" width="8" height="8" rx="1"/><path d="M2 3h18M2 19h18M2 10h3M17 10h3M2 13h3M17 13h3"/></svg>',
+  tight:'<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3l4 3 4-3M7 19l4-3 4 3" stroke-linejoin="round"/><rect x="7" y="6" width="8" height="8" rx="1"/><path d="M2 8h3M2 14h3M17 8h3M17 14h3"/></svg>',
+  through:'<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="6" width="10" height="10" rx="1"/><path d="M2 8h18M2 14h18"/></svg>',
+  topbottom:'<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="8" width="10" height="6" rx="1"/><path d="M2 3h18M2 19h18"/></svg>',
+  behind:'<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="7" width="10" height="8" rx="1" fill="currentColor" opacity=".3"/><path d="M2 5h18M2 17h18M2 11h4M16 11h4"/></svg>',
+  front:'<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5h18M2 17h18M2 11h6M14 11h6"/><rect x="6" y="7" width="10" height="8" rx="1" fill="currentColor"/></svg>'
+};
+
 var D20='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><polygon points="32,4 58,19 58,45 32,60 6,45 6,19"/><polygon points="32,18 46,42 18,42"/><path d="M32 4v14M58 19L46 42M6 19l12 23M32 60L18 42M32 60l14-18M58 45L46 42M6 45l12-3"/></svg>';
 var ORN='<svg class="orn" viewBox="0 0 150 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 7h54M94 7h54"/><path d="M75 1l5 6-5 6-5-6z" fill="currentColor"/><circle cx="62" cy="7" r="2" fill="currentColor"/><circle cx="88" cy="7" r="2" fill="currentColor"/></svg>';
 function scene(){
   var s=11;function r(){s=(s*16807)%2147483647;return s/2147483647}
   var o='<svg class="scn" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax slice" focusable="false"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sky1)"/><stop offset="1" style="stop-color:var(--sky2)"/></linearGradient><radialGradient id="mg"><stop offset="0" stop-color="#FFF1C9" stop-opacity=".5"/><stop offset="1" stop-color="#FFF1C9" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="420" fill="url(#sk)"/>';
   for(var i=0;i<70;i++){o+='<circle cx="'+(r()*1200).toFixed(0)+'" cy="'+(r()*230).toFixed(0)+'" r="'+(0.6+r()*1.4).toFixed(1)+'" fill="#FFF4D6" opacity="'+(0.3+r()*0.6).toFixed(2)+'"/>'}
-  o+='<circle cx="960" cy="92" r="120" fill="url(#mg)"/><circle cx="960" cy="92" r="34" fill="#FFF1C9"/><circle cx="950" cy="84" r="7" fill="#E6D3A0" opacity=".6"/><circle cx="972" cy="104" r="5" fill="#E6D3A0" opacity=".6"/><circle cx="966" cy="78" r="3.5" fill="#E6D3A0" opacity=".6"/>';
-  function pine(cx,by,h,w,c){var p=[[0,-h],[.28,-.62*h],[.14,-.62*h],[.38,-.3*h],[.2,-.3*h],[.5,0],[-.5,0],[-.2,-.3*h],[-.38,-.3*h],[-.14,-.62*h],[-.28,-.62*h]];
-    return '<polygon class="'+c+'" points="'+p.map(function(q){return (cx+(q[0]*w)).toFixed(0)+','+(by+q[1]).toFixed(0)}).join(' ')+'"/>'}
+  o+='<circle cx="960" cy="92" r="120" fill="url(#mg)"/><circle cx="960" cy="92" r="34" fill="#FFF1C9"/>';
+  function pine(cx,by,h,w,c){var p=[[0,-h],[.28,-.62*h],[.14,-.62*h],[.38,-.3*h],[.2,-.3*h],[.5,0],[-.5,0],[-.2,-.3*h],[-.38,-.3*h],[-.14,-.62*h],[-.28,-.62*h]];return '<polygon class="'+c+'" points="'+p.map(function(q){return (cx+(q[0]*w)).toFixed(0)+','+(by+q[1]).toFixed(0)}).join(' ')+'"/>'}
   var x,L=[{c:'l3',step:44,h:[110,180],w:[70,90],skip:0},{c:'l2',step:66,h:[150,240],w:[84,112],skip:0},{c:'l1',step:96,h:[200,330],w:[104,140],skip:1}];
   L.forEach(function(l){for(x=-20;x<1240;x+=l.step){if(l.skip&&x>400&&x<800)continue;var h=l.h[0]+r()*(l.h[1]-l.h[0]),w=l.w[0]+r()*(l.w[1]-l.w[0]);o+=pine(x+r()*20,426,h,w,l.c)}});
   o+='<rect class="gnd" y="404" width="1200" height="16"/></svg>';
@@ -541,41 +549,14 @@ function bgScene(){
   var hz='<linearGradient id="bghz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a4a58" stop-opacity="0"/><stop offset="1" stop-color="#2a4a58" stop-opacity=".7"/></linearGradient>';
   var o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"><defs>'+sky+hz+'</defs><rect width="1600" height="900" fill="url(#bgsky)"/>';
   for(var i=0;i<120;i++){o+='<circle cx="'+(r()*1600).toFixed(0)+'" cy="'+(r()*420).toFixed(0)+'" r="'+(0.4+r()*1.2).toFixed(1)+'" fill="#fff" opacity="'+(0.2+r()*0.55).toFixed(2)+'"/>'}
-  o+='<circle cx="1290" cy="150" r="90" fill="#f5ecd0" opacity=".14"/><circle cx="1290" cy="150" r="52" fill="#f7efd6" opacity=".9"/><circle cx="1272" cy="140" r="9" fill="#d9cba3" opacity=".55"/><circle cx="1302" cy="165" r="6" fill="#d9cba3" opacity=".55"/><circle cx="1306" cy="132" r="4" fill="#d9cba3" opacity=".55"/>';
-  function ridge(baseY,amp,color,opacity,segs){
-    var d='M0,'+baseY;
-    for(var i=0;i<segs;i++){
-      var nx=1600/segs*(i+1);
-      var peak=baseY-(r()*amp*0.75+amp*0.25);
-      var px2=1600/segs*i+1600/segs*0.5;
-      d+=' L'+px2.toFixed(0)+','+peak.toFixed(0)+' L'+nx.toFixed(0)+','+(baseY-r()*amp*0.15).toFixed(0);
-    }
-    d+=' L1600,900 L0,900 Z';
-    return '<path d="'+d+'" fill="'+color+'" opacity="'+opacity+'"/>';
-  }
-  o+=ridge(520,180,'#26404d',0.55,5);
-  o+=ridge(600,150,'#1c3340',0.7,7);
-  o+=ridge(670,120,'#14262f',0.85,9);
+  o+='<circle cx="1290" cy="150" r="90" fill="#f5ecd0" opacity=".14"/><circle cx="1290" cy="150" r="52" fill="#f7efd6" opacity=".9"/>';
+  function ridge(baseY,amp,color,opacity,segs){var d='M0,'+baseY;for(var i=0;i<segs;i++){var nx=1600/segs*(i+1);var peak=baseY-(r()*amp*0.75+amp*0.25);var px2=1600/segs*i+1600/segs*0.5;d+=' L'+px2.toFixed(0)+','+peak.toFixed(0)+' L'+nx.toFixed(0)+','+(baseY-r()*amp*0.15).toFixed(0)}d+=' L1600,900 L0,900 Z';return '<path d="'+d+'" fill="'+color+'" opacity="'+opacity+'"/>'}
+  o+=ridge(520,180,'#26404d',0.55,5);o+=ridge(600,150,'#1c3340',0.7,7);o+=ridge(670,120,'#14262f',0.85,9);
   o+='<rect y="600" width="1600" height="180" fill="url(#bghz)"/>';
-  function pineTree(cx,baseY,h,w,color,op){
-    var p=[[0,-h],[.30,-.60*h],[.12,-.60*h],[.42,-.28*h],[.16,-.28*h],[.5,0],[-.5,0],[-.16,-.28*h],[-.42,-.28*h],[-.12,-.60*h],[-.30,-.60*h]];
-    var pts=p.map(function(q){return (cx+q[0]*w).toFixed(1)+','+(baseY+q[1]).toFixed(1)}).join(' ');
-    return '<polygon points="'+pts+'" fill="'+color+'" opacity="'+op+'"/>';
-  }
-  var layers=[
-    {color:'#0f2a2a',op:.65,step:70,baseY:800,hMin:180,hMax:300,wMin:60,wMax:90},
-    {color:'#0a2020',op:.8,step:100,baseY:850,hMin:230,hMax:380,wMin:80,wMax:120},
-    {color:'#06161a',op:.95,step:150,baseY:900,hMin:280,hMax:460,wMin:100,wMax:150}
-  ];
-  layers.forEach(function(L){
-    for(var x=-60;x<1660;x+=L.step){
-      var hh=L.hMin+r()*(L.hMax-L.hMin);
-      var ww=L.wMin+r()*(L.wMax-L.wMin);
-      o+=pineTree(x+r()*30,L.baseY,hh,ww,L.color,L.op);
-    }
-  });
-  o+='<rect y="880" width="1600" height="20" fill="#06161a"/>';
-  o+='</svg>';
+  function pineTree(cx,baseY,h,w,color,op){var p=[[0,-h],[.30,-.60*h],[.12,-.60*h],[.42,-.28*h],[.16,-.28*h],[.5,0],[-.5,0],[-.16,-.28*h],[-.42,-.28*h],[-.12,-.60*h],[-.30,-.60*h]];var pts=p.map(function(q){return (cx+q[0]*w).toFixed(1)+','+(baseY+q[1]).toFixed(1)}).join(' ');return '<polygon points="'+pts+'" fill="'+color+'" opacity="'+op+'"/>'}
+  var layers=[{color:'#0f2a2a',op:.65,step:70,baseY:800,hMin:180,hMax:300,wMin:60,wMax:90},{color:'#0a2020',op:.8,step:100,baseY:850,hMin:230,hMax:380,wMin:80,wMax:120},{color:'#06161a',op:.95,step:150,baseY:900,hMin:280,hMax:460,wMin:100,wMax:150}];
+  layers.forEach(function(L){for(var x=-60;x<1660;x+=L.step){var hh=L.hMin+r()*(L.hMax-L.hMin);var ww=L.wMin+r()*(L.wMax-L.wMin);o+=pineTree(x+r()*30,L.baseY,hh,ww,L.color,L.op)}});
+  o+='<rect y="880" width="1600" height="20" fill="#06161a"/></svg>';
   return 'url("data:image/svg+xml;charset=utf-8,'+encodeURIComponent(o)+'")';
 }
 var BG_SCENE=bgScene();
@@ -592,13 +573,7 @@ function valid(r){
   if(/^e-[A-Za-z0-9_-]+$/.test(r))return S.lore.some(function(e){return 'e-'+e.id===r});
   return false;
 }
-function go(r){
-  if(!valid(r))r='home';
-  pinMode=false;selPin=-1;
-  ieImg=null;
-  try{if(location.hash.slice(1)!==r)location.hash=r}catch(e){}
-  route=r;render();
-}
+function go(r){if(!valid(r))r='home';pinMode=false;selPin=-1;ieImg=null;try{if(location.hash.slice(1)!==r)location.hash=r}catch(e){}route=r;render()}
 function curTab(){
   if(route.indexOf('b-')===0)return 'baca';
   if(route.indexOf('n-')===0||route.indexOf('nubah-')===0||route==='nbaru')return 'baca';
@@ -607,7 +582,7 @@ function curTab(){
   return route;
 }
 function topbar(){
-  var tab=curTab(),h='<header class="top"><div class="bar"><a class="brand" href="#home" data-go="home" aria-label="Hollow Night, beranda"><img src="'+LOGO+'" alt="Hollow Night"></a><nav class="tabs" aria-label="Menu utama">';
+  var tab=curTab(),h='<header class="top"><div class="bar"><a class="brand" href="#home" data-go="home" aria-label="Hollow Night, beranda"><img src="'+esc(currentLogo())+'" alt="Hollow Night"></a><nav class="tabs" aria-label="Menu utama">';
   TABS.forEach(function(t){h+='<a class="tab" href="#'+t[0]+'" data-go="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'>'+icon(t[2])+'<span>'+t[1]+'</span></a>'});
   h+='</nav>';
   if(canEdit){
@@ -615,9 +590,7 @@ function topbar(){
     var lightTitle = pendingSave ? 'Ada perubahan belum disimpan' : 'Semua perubahan tersimpan';
     h+='<span class="save-indicator" title="'+lightTitle+'" aria-label="'+lightTitle+'"><span class="'+lightCls+'" aria-hidden="true"></span></span>';
     h+='<button class="adm mode-btn" type="button" data-act="toggle-admin" aria-pressed="'+(admin?'true':'false')+'" title="Aktif/nonaktifkan alat edit">'+icon('quill')+'<span>Mode Penulis</span></button>';
-    if(pendingSave){
-      h+='<button class="adm saveall" type="button" data-act="save-now" title="Simpan semua perubahan sekarang">'+icon('upload')+'<span>Simpan</span></button>';
-    }
+    if(pendingSave){h+='<button class="adm saveall" type="button" data-act="save-now" title="Simpan semua perubahan sekarang">'+icon('upload')+'<span>Simpan</span></button>'}
   }
   h+=moreMenu();
   if(route.indexOf('b-')===0)h+='<div class="prog" id="prog"></div>';
@@ -633,10 +606,8 @@ function moreMenu(){
     ['gear','Pengaturan','Preferensi tampilan & penyimpanan',"#",'settings']
   ];
   var h='<div class="menu-wrap"><button class="menu-btn" type="button" data-act="menu" aria-label="Menu lainnya" aria-expanded="false" aria-haspopup="true">'+icon('dots')+'</button><div class="menu-pop" id="menu-pop" hidden role="menu"><div class="menu-head"><b>Hollow Night</b><small>Menu tambahan & informasi</small></div>';
-  items.forEach(function(x,i){
-    if(i===2||i===4)h+='<div class="menu-sep"></div>';
-    h+='<button class="menu-item" type="button" role="menuitem" data-act="menu-item" data-m="'+x[4]+'">'+icon(x[0])+'<span>'+x[1]+'<small>'+x[2]+'</small></span></button>';
-  });
+  items.forEach(function(x,i){if(i===2||i===4)h+='<div class="menu-sep"></div>';h+='<button class="menu-item" type="button" role="menuitem" data-act="menu-item" data-m="'+x[4]+'">'+icon(x[0])+'<span>'+x[1]+'<small>'+x[2]+'</small></span></button>'});
+  if(admin){h+='<div class="menu-sep"></div><button class="menu-item" type="button" role="menuitem" data-act="logo-settings"><span>'+icon('image')+'</span><span>Logo Hollow Night<small>Khusus Author — ganti logo di seluruh situs</small></span></button>'}
   return h+'</div></div>';
 }
 function footer(){
@@ -651,8 +622,8 @@ function view(){
   if(route==='nbaru')return vNovelEditor(null);
   if(route.indexOf('nubah-')===0)return vNovelEditor(route.slice(6));
   if(route.indexOf('n-')===0)return vNovel(route.slice(2));
-  if(route==='tulis')return vChapterEditor(null);
-  if(route.indexOf('tulis-')===0)return vChapterEditor(route.slice(6));
+  if(route==='tulis')return vChapterBodyEditor(null);
+  if(route.indexOf('tulis-')===0)return vChapterBodyEditor(route.slice(6));
   if(route.indexOf('b-')===0)return vReader(route.slice(2));
   if(route.indexOf('e-')===0)return vEntry(route.slice(2));
   var t=TABMAP[route];
@@ -669,7 +640,7 @@ function vHome(){
   else cta+='<a class="btn gold" href="#baca" data-go="baca">'+icon('book')+'Buka perpustakaan</a>';
   cta+='<button class="btn nightghost" type="button" data-act="roll"><span class="d20" id="d20" style="display:inline-flex;width:22px;height:22px">'+D20+'</span>Lempar d20</button>';
   var syn=paras(S.site.synopsis).map(function(p){return '<p>'+esc(p)+'</p>'}).join('')||'<p>Sinopsis belum ditulis.</p>';
-  var h='<section class="hero"><div class="scene" aria-hidden="true">'+scene()+'</div><div class="hero-in"><img class="logo-big" src="'+LOGO+'" alt="Hollow Night"><p class="tag">'+esc(S.site.tagline||'')+'</p><div class="cta">'+cta+'</div><div class="rollout" id="rollout" aria-live="polite"></div></div></section>';
+  var h='<section class="hero"><div class="scene" aria-hidden="true">'+scene()+'</div><div class="hero-in"><img class="logo-big" src="'+esc(currentLogo())+'" alt="Hollow Night"><p class="tag">'+esc(S.site.tagline||'')+'</p><div class="cta">'+cta+'</div><div class="rollout" id="rollout" aria-live="polite"></div></div></section>';
   if(admin)h+=deskPanel();
   h+='<div class="cols"><section class="sheet taped syn"><div class="sec-h"><h2>Sinopsis</h2>'+(admin?'<button class="btn ghost sm" type="button" data-act="site-edit">Ubah</button>':'')+'</div>'+syn+'</section>';
   h+='<section><div class="sec-h"><h2>Novel terbaru</h2><a class="kicker" href="#baca" data-go="baca">Semua novel</a></div>';
@@ -677,8 +648,7 @@ function vHome(){
   if(ns.length){h+='<div class="toc">'+ns.slice(-3).reverse().map(function(n){var cn=chaptersOf(n.id).length;return '<div class="row"><a class="rowlink" href="#n-'+n.id+'" data-go="n-'+n.id+'"><span class="hex">'+icon('book').replace('<svg','<svg width="20" height="20"')+'</span><span><span class="rt-title">'+esc(n.title)+'</span><div class="rt-meta">'+cn+' bab'+(n.author?' &middot; '+esc(n.author):'')+'</div></span></a></div>'}).join('')+'</div>'}
   else h+='<div class="sheet empty"><p class="hand">Belum ada novel.</p></div>';
   h+='</section></div><div class="nb">';
-  Object.keys(TYPES).forEach(function(k){var t=TYPES[k];var ic={world:'globe',char:'person',map:'map',time:'hour',gloss:'scroll'}[k];
-    h+='<a class="nbi" href="#'+t.tab+'" data-go="'+t.tab+'">'+icon(ic)+'<b>'+t.label+'</b><span>'+ofType(k).length+' catatan</span></a>'});
+  Object.keys(TYPES).forEach(function(k){var t=TYPES[k];var ic={world:'globe',char:'person',map:'map',time:'hour',gloss:'scroll'}[k];h+='<a class="nbi" href="#'+t.tab+'" data-go="'+t.tab+'">'+icon(ic)+'<b>'+t.label+'</b><span>'+ofType(k).length+' catatan</span></a>'});
   return h+'</div>';
 }
 function deskPanel(){
@@ -686,39 +656,33 @@ function deskPanel(){
   var saveState = pendingSave
     ? '<span class="save-light dirty" aria-hidden="true"></span> <b style="color:var(--red)">Ada perubahan belum disimpan</b>'
     : '<span class="save-light" aria-hidden="true"></span> <b style="color:var(--pine)">Semua tersimpan</b>';
-  return '<section class="sheet desk"><h2>Meja penulis</h2><p style="color:var(--ink-soft);margin-bottom:6px">'+saveState+'</p><p style="color:var(--ink-soft);margin-bottom:14px">Auto-save: <b>'+(autoSave?'AKTIF':'NONAKTIF')+'</b> (atur di Pengaturan). '+(autoSave?'Perubahan langsung disimpan ke database.':'Perubahan akan ditahan sampai kamu menekan tombol Simpan.')+'</p><div class="acts"><button class="btn sm" type="button" data-act="novel-new">'+icon('plus')+'Buat Novel</button><button class="btn sm" type="button" data-act="ch-new">'+icon('plus')+'Tulis bab baru</button><button class="btn sm gold" type="button" data-act="import">'+icon('upload')+'Impor dari PDF / Word</button><button class="btn sm ghost" type="button" data-act="site-edit">Ubah sinopsis & tagline</button>'+(pendingSave?'<button class="btn sm" type="button" data-act="save-now">'+icon('upload')+'Simpan sekarang</button>':'')+(ex?'<button class="btn sm ghost" type="button" data-act="clear-ex">Hapus semua contoh</button>':'')+'</div></section>';
+  return '<section class="sheet desk"><h2>Meja penulis</h2><p style="color:var(--ink-soft);margin-bottom:6px">'+saveState+'</p><p style="color:var(--ink-soft);margin-bottom:14px">Auto-save: <b>'+(autoSave?'AKTIF':'NONAKTIF')+'</b> (atur di Pengaturan). '+(autoSave?'Perubahan langsung disimpan ke database.':'Perubahan akan ditahan sampai kamu menekan tombol Simpan.')+'</p><div class="acts"><button class="btn sm" type="button" data-act="novel-new">'+icon('plus')+'Buat Novel</button><button class="btn sm" type="button" data-act="ch-new">'+icon('plus')+'Tulis bab baru</button><button class="btn sm gold" type="button" data-act="import">'+icon('upload')+'Impor dari PDF / Word</button><button class="btn sm ghost" type="button" data-act="logo-settings">'+icon('image')+'Ganti Logo</button><button class="btn sm ghost" type="button" data-act="site-edit">Ubah sinopsis & tagline</button>'+(pendingSave?'<button class="btn sm" type="button" data-act="save-now">'+icon('upload')+'Simpan sekarang</button>':'')+(ex?'<button class="btn sm ghost" type="button" data-act="clear-ex">Hapus semua contoh</button>':'')+'</div></section>';
 }
 function chRow(c,adm){
   var wc=wordCount(c.body),mins=Math.max(1,Math.round(wc/200)),rd=readSet().indexOf(c.id)>=0;
-  return '<div class="row"><a class="rowlink" href="#b-'+c.id+'" data-go="b-'+c.id+'"><span class="hex num">'+esc(c.n)+'</span><span><span class="rt-title">'+esc(c.title)+'</span><div class="rt-meta">'+fmt(wc)+' kata &middot; '+mins+' menit baca '+exStamp(c)+'</div></span><span class="done">'+(rd?'sudah dibaca':'')+'</span></a>'+(adm?'<div class="rowact"><button class="btn ghost sm" type="button" data-act="ch-pub" data-id="'+c.id+'">'+(c.status==='draft'?'Terbitkan':'Jadikan draft')+'</button><button class="btn ghost sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah</button><button class="btn ghost sm" type="button" data-act="ch-del" data-id="'+c.id+'">Hapus</button></div>':'')+'</div>';
+  return '<div class="row"><a class="rowlink" href="#b-'+c.id+'" data-go="b-'+c.id+'"><span class="hex num">'+esc(c.n)+'</span><span><span class="rt-title">'+esc(c.title)+'</span><div class="rt-meta">'+fmt(wc)+' kata &middot; '+mins+' menit baca '+exStamp(c)+'</div></span><span class="done">'+(rd?'sudah dibaca':'')+'</span></a>'
+  +(adm?'<div class="rowact">'
+    +'<button class="chip-btn primary" type="button" data-act="ch-edit-body" data-id="'+c.id+'" title="Edit teks/naskah bab">'+icon('edit')+'Edit Isi</button>'
+    +'<button class="chip-btn" type="button" data-act="ch-edit-identity" data-id="'+c.id+'" title="Ubah judul, nomor, volume, status">Ubah Bab</button>'
+    +'<button class="chip-btn" type="button" data-act="ch-pub" data-id="'+c.id+'">'+(c.status==='draft'?'Terbitkan':'Draft')+'</button>'
+    +'<button class="chip-btn" type="button" data-act="ch-del" data-id="'+c.id+'">Hapus</button>'
+    +'</div>':'')+'</div>';
 }
-
 function vBaca(){
   var ns=novels();
   var h='<div class="ph"><div><div class="kicker">Perpustakaan</div><h1>Baca</h1><p class="sub">'+ns.length+' novel di rak ini</p></div>';
   if(admin)h+='<div class="acts"><a class="btn sm" href="#nbaru" data-go="nbaru">'+icon('plus')+'Buat Novel</a></div>';
   h+='</div>';
-  if(!ns.length){
-    return h+'<div class="sheet empty"><p class="hand">Rak masih kosong.</p><p>'+(admin?'Tekan "Buat Novel" untuk memulai novel pertamamu. Setelah itu, tambahkan chapter di dalamnya.':'Penulis belum menerbitkan novel.')+'</p></div>';
-  }
+  if(!ns.length)return h+'<div class="sheet empty"><p class="hand">Rak masih kosong.</p><p>'+(admin?'Tekan "Buat Novel" untuk memulai novel pertamamu. Setelah itu, tambahkan chapter di dalamnya.':'Penulis belum menerbitkan novel.')+'</p></div>';
   h+='<div class="novel-grid">';
   ns.forEach(function(n){
     var chs=chaptersOf(n.id);
     var read=chs.filter(function(c){return readSet().indexOf(c.id)>=0}).length;
     var pub=chs.filter(function(c){return c.status!=='draft'}).length;
-    h+='<a class="novel-card" href="#n-'+n.id+'" data-go="n-'+n.id+'">'
-      + '<div class="novel-cover">'+(n.cover?'<img src="'+esc(n.cover)+'" alt="" loading="lazy">':'<span>'+esc((n.title||'?').charAt(0).toUpperCase())+'</span>')+'</div>'
-      + '<div class="novel-meta">'
-      + '<h3>'+esc(n.title)+'</h3>'
-      + (n.author?'<p class="novel-author">oleh '+esc(n.author)+'</p>':'')
-      + '<p class="novel-sum">'+esc((n.synopsis||'').replace(/\n+/g,' ').slice(0,110))+'</p>'
-      + '<p class="novel-stats">'+(canEdit?chs.length+' bab &middot; '+pub+' terbit':chs.length+' bab &middot; '+read+' dibaca')+'</p>'
-      + (n.status?'<p class="novel-stats"><span class="chip" style="align-self:flex-start">'+esc(n.status)+'</span></p>':'')
-      + '</div></a>';
+    h+='<a class="novel-card" href="#n-'+n.id+'" data-go="n-'+n.id+'"><div class="novel-cover">'+(n.cover?'<img src="'+esc(n.cover)+'" alt="" loading="lazy">':'<span>'+esc((n.title||'?').charAt(0).toUpperCase())+'</span>')+'</div><div class="novel-meta"><h3>'+esc(n.title)+'</h3>'+(n.author?'<p class="novel-author">oleh '+esc(n.author)+'</p>':'')+'<p class="novel-sum">'+esc((n.synopsis||'').replace(/\n+/g,' ').slice(0,110))+'</p><p class="novel-stats">'+(canEdit?chs.length+' bab &middot; '+pub+' terbit':chs.length+' bab &middot; '+read+' dibaca')+'</p>'+(n.status?'<p class="novel-stats"><span class="chip" style="align-self:flex-start">'+esc(n.status)+'</span></p>':'')+'</div></a>';
   });
   return h+'</div>';
 }
-
 function vNovel(id){
   var n=novel(id);if(!n)return vBaca();
   var chs=chaptersOf(id);
@@ -731,9 +695,7 @@ function vNovel(id){
   if(n.author)h+='<p style="font-weight:700;color:var(--ink-soft);margin-top:2px">oleh '+esc(n.author)+'</p>';
   var tags=[];if(n.genre)tags.push(n.genre);if(n.status)tags.push(n.status);
   if(tags.length)h+='<div class="novel-hero-tags">'+tags.map(function(t){return '<span class="chip">'+esc(t)+'</span>'}).join('')+'</div>';
-  if(n.synopsis){
-    h+='<div class="body" style="--fs:15px;margin-top:12px">'+paras(n.synopsis).map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>';
-  }
+  if(n.synopsis)h+='<div class="body" style="--fs:15px;margin-top:12px">'+paras(n.synopsis).map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+'</div>';
   h+='<div class="acts" style="margin-top:14px">';
   if(chs.length)h+='<a class="btn gold" href="#b-'+chs[0].id+'" data-go="b-'+chs[0].id+'">'+icon('book')+'Mulai baca</a>';
   if(admin){
@@ -743,14 +705,10 @@ function vNovel(id){
   }
   h+='</div></div></div>';
   h+='<div class="vol">Daftar Bab</div>';
-  if(!chs.length){
-    h+='<div class="sheet empty"><p class="hand">Belum ada bab.</p>'+(admin?'<p>Tekan "Buat Chapter" untuk menulis bab pertama.</p>':'')+'</div>';
-  }else{
-    h+='<div class="toc">'+chs.map(function(c){return chRow(c,admin)}).join('')+'</div>';
-  }
+  if(!chs.length)h+='<div class="sheet empty"><p class="hand">Belum ada bab.</p>'+(admin?'<p>Tekan "Buat Chapter" untuk menulis bab pertama.</p>':'')+'</div>';
+  else h+='<div class="toc">'+chs.map(function(c){return chRow(c,admin)}).join('')+'</div>';
   return h;
 }
-
 function vNovelEditor(id){
   var n=id?novel(id):null;
   if(id&&!n)return vBaca();
@@ -758,33 +716,26 @@ function vNovelEditor(id){
   novelCoverTemp = undefined;
   var h='<div class="editor-page">';
   h+='<a class="back" href="'+(n?'#n-'+n.id:'#baca')+'" data-go="'+(n?'n-'+n.id:'baca')+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+'Kembali</a>';
-  h+='<h1 style="margin:6px 0 20px">'+(n?'Ubah Novel':'Buat Novel Baru')+'</h1>';
+  h+='<h1>'+(n?'Ubah Novel':'Buat Novel Baru')+'</h1>';
   h+=field('Judul novel','<input class="in" id="ne-t" value="'+esc(n?n.title:'')+'" maxlength="140" placeholder="Contoh: Hollow Night">','ne-t');
   h+='<div class="f2">';
   h+=field('Penulis','<input class="in" id="ne-a" value="'+esc(n?n.author||'':'')+'" maxlength="80" placeholder="Nama pena">','ne-a');
   h+=field('Genre','<input class="in" id="ne-g" value="'+esc(n?n.genre||'':'')+'" maxlength="60" placeholder="Fantasi, Petualangan">','ne-g');
-  h+='</div>';
-  h+='<div class="f2">';
+  h+='</div><div class="f2">';
   h+=field('Status','<select class="in" id="ne-st"><option value="">—</option>'+['Ongoing','Completed','Hiatus','Dropped'].map(function(s){return '<option value="'+s+'"'+((n&&n.status===s)?' selected':'')+'>'+s+'</option>'}).join('')+'</select>','ne-st');
   h+=field('Tagline','<input class="in" id="ne-tag" value="'+esc(n?n.tagline||'':'')+'" maxlength="120" placeholder="Kalimat singkat tentang novel">','ne-tag');
   h+='</div>';
   h+=field('Sinopsis','<textarea class="in" id="ne-s" rows="6" placeholder="Ringkasan cerita...">'+esc(n?n.synopsis||'':'')+'</textarea>','ne-s');
   h+='<div class="f"><span class="lb">Cover Novel</span><div class="imgf">';
   h+='<img id="ne-cover-prev" '+((n&&n.cover)?'src="'+esc(n.cover)+'"':'hidden')+' alt="" style="width:110px;height:165px;object-fit:cover;border-radius:6px;border:1px solid var(--paper-edge);background:var(--night)">';
-  h+='<div style="display:flex;flex-direction:column;gap:6px">';
-  h+='<label class="btn ghost sm" style="cursor:pointer"><input id="ne-cover-file" type="file" accept="image/*" hidden>Pilih gambar cover</label>';
-  h+='<button class="btn ghost sm" type="button" data-act="ne-cover-clear">Hapus cover</button>';
-  h+='<p class="hint" style="margin:0;max-width:220px">Disarankan rasio 2:3 (misal 600×900).</p>';
-  h+='</div></div></div>';
+  h+='<div style="display:flex;flex-direction:column;gap:6px"><label class="btn ghost sm" style="cursor:pointer"><input id="ne-cover-file" type="file" accept="image/*" hidden>Pilih gambar cover</label><button class="btn ghost sm" type="button" data-act="ne-cover-clear">Hapus cover</button><p class="hint" style="margin:0;max-width:220px">Disarankan rasio 2:3 (misal 600×900).</p></div></div></div>';
   h+='<div class="acts" style="justify-content:flex-end;margin-top:20px">';
   if(n)h+='<button class="btn ghost" type="button" data-act="novel-del" data-id="'+n.id+'" style="margin-right:auto;color:var(--red);border-color:var(--red)">Hapus novel</button>';
-  h+='<button class="btn ghost" type="button" data-act="novel-cancel">Batal</button>';
-  h+='<button class="btn" type="button" data-act="novel-save-page" data-id="'+(n?n.id:'')+'">Simpan Novel</button>';
-  h+='</div></div>';
+  h+='<button class="btn ghost" type="button" data-act="novel-cancel">Batal</button><button class="btn" type="button" data-act="novel-save-page" data-id="'+(n?n.id:'')+'">Simpan Novel</button></div></div>';
   return h;
 }
 
-function vChapterEditor(id){
+function vChapterBodyEditor(id){
   var c=id?chById(id):null;
   if(id&&!c)return vHome();
   if(!canEdit)return '<div class="sheet empty"><p class="hand">Hanya Author yang bisa membuka halaman ini.</p></div>';
@@ -793,25 +744,44 @@ function vChapterEditor(id){
   var h='<div class="editor-page">';
   var backTo = nid ? '#n-'+nid : '#baca';
   h+='<a class="back" href="'+backTo+'" data-go="'+backTo.slice(1)+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(nid?'Kembali ke novel':'Kembali')+'</a>';
-  h+='<h1 style="margin:6px 0 16px">'+(c?'Ubah Bab':'Bab Baru')+'</h1>';
-  h+='<div class="f2">';
-  h+=field('Judul bab','<input class="in" id="ce-t" value="'+esc(c?c.title:'')+'" maxlength="140" placeholder="Judul bab">','ce-t');
-  h+=field('Nomor','<input class="in" id="ce-n" type="number" min="0" step="1" value="'+esc(c?c.n:nextNumForNovel(nid))+'">','ce-n');
-  h+='</div>';
-  h+='<div class="f2">';
-  h+=field('Volume atau arc (opsional)','<input class="in" id="ce-v" list="ce-v-list" value="'+esc(c?c.vol||'':'')+'" maxlength="60"><datalist id="ce-v-list">'+allVolumes().map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist>','ce-v');
-  h+=field('Status','<select class="in" id="ce-st"><option value="draft"'+((c&&c.status==='draft')?' selected':(!c?' selected':''))+'>Draft</option><option value="published"'+((c&&c.status==='published')?' selected':'')+'>Terbit</option></select>','ce-st');
-  h+='</div>';
-  if(!c){
-    h+=field('Novel','<select class="in" id="ce-novel">'+ns.map(function(n){return '<option value="'+esc(n.id)+'"'+(n.id===nid?' selected':'')+'>'+esc(n.title)+'</option>'}).join('')+'</select>','ce-novel');
-  }
+  h+='<h1>'+(c?'Edit Isi: '+esc(c.title):'Bab Baru — Tulis Isi')+'</h1>';
+  if(!c)h+='<p class="hint" style="margin:-8px 0 14px;color:var(--ink-soft)">Identitas bab (judul, nomor, volume, status) bisa diisi belakangan lewat tombol <b>Ubah Bab</b> di daftar isi.</p>';
+  if(!c)h+=field('Novel','<select class="in" id="ce-novel">'+ns.map(function(n){return '<option value="'+esc(n.id)+'"'+(n.id===nid?' selected':'')+'>'+esc(n.title)+'</option>'}).join('')+'</select>','ce-novel');
   h+='<div class="f"><span class="lb">Isi bab</span>'+richBox('ce-b',c?c.body:'')+'</div>';
   h+='<div class="acts" style="justify-content:flex-end;margin-top:18px">';
   if(c)h+='<button class="btn ghost" type="button" data-act="ch-del-from-editor" data-id="'+c.id+'" style="margin-right:auto;color:var(--red);border-color:var(--red)">Hapus bab</button>';
-  h+='<button class="btn ghost" type="button" data-act="ch-cancel">Batal</button>';
-  h+='<button class="btn" type="button" data-act="ch-save-page" data-id="'+(c?c.id:'')+'">Simpan bab</button>';
-  h+='</div></div>';
+  h+='<button class="btn ghost" type="button" data-act="ch-cancel">Batal</button><button class="btn" type="button" data-act="ch-save-body" data-id="'+(c?c.id:'')+'">Simpan Isi</button></div></div>';
   return h;
+}
+
+function chapterIdentityModal(id){
+  var c=id?chById(id):null;
+  if(!c)return;
+  var nid=(novelOf(c.id)||{}).id||'';
+  var ns=novels();
+  var h=modalHead('Ubah Bab','Hanya identitas bab (judul, nomor, volume, status). Untuk naskahnya, pakai tombol <b>Edit Isi</b>.');
+  h+=field('Judul bab','<input class="in" id="ci-t" value="'+esc(c.title)+'" maxlength="140">','ci-t');
+  h+='<div class="f2">';
+  h+=field('Nomor','<input class="in" id="ci-n" type="number" min="0" step="1" value="'+esc(c.n)+'">','ci-n');
+  h+=field('Volume / arc','<input class="in" id="ci-v" list="ci-v-list" value="'+esc(c.vol||'')+'" maxlength="60"><datalist id="ci-v-list">'+allVolumes().map(function(v){return '<option value="'+esc(v)+'">'}).join('')+'</datalist>','ci-v');
+  h+='</div>';
+  h+=field('Status','<select class="in" id="ci-st"><option value="draft"'+(c.status==='draft'?' selected':'')+'>Draft</option><option value="published"'+(c.status==='published'?' selected':'')+'>Terbit</option></select>','ci-st');
+  if(ns.length)h+=field('Novel','<select class="in" id="ci-novel">'+ns.map(function(n){return '<option value="'+esc(n.id)+'"'+(n.id===nid?' selected':'')+'>'+esc(n.title)+'</option>'}).join('')+'</select>','ci-novel');
+  openModal(h+modalFoot('Simpan Identitas'),{save:function(){
+    var t=val('ci-t').trim();if(!t){toast('Judul wajib diisi.');return}
+    var n=parseInt(val('ci-n'),10);if(isNaN(n))n=0;
+    var v=val('ci-v').trim();var st=val('ci-st')==='published'?'published':'draft';
+    var newNid=val('ci-novel')||nid;
+    commit(function(d){
+      var x=d.chapters.find(function(q){return q.id===c.id});
+      x.title=t;x.n=n;x.vol=v;x.status=st;
+      if(newNid&&newNid!==nid){
+        d.novels.forEach(function(nn){nn.chapterIds=(nn.chapterIds||[]).filter(function(q){return q!==c.id})});
+        var dest=d.novels.find(function(nn){return nn.id===newNid});
+        if(dest)dest.chapterIds=(dest.chapterIds||[]).concat(c.id);
+      }
+    },'Identitas bab tersimpan');
+  }});
 }
 
 function vReader(id){
@@ -823,22 +793,16 @@ function vReader(id){
   var fs=clamp(parseInt(lsGet('hn-fs')||'18',10)||18,15,26);
   var backTo = nv ? 'n-'+nv.id : 'baca';
   function nav(){return '<div class="rd-nav">'+(prev?'<a class="btn ghost" href="#b-'+prev.id+'" data-go="b-'+prev.id+'">'+icon('back')+'Bab '+esc(prev.n)+'</a>':'<span></span>')+(next?'<a class="btn" href="#b-'+next.id+'" data-go="b-'+next.id+'">Bab '+esc(next.n)+'</a>':'<a class="btn ghost" href="#'+backTo+'" data-go="'+backTo+'">Daftar bab</a>')+'</div>'}
-  return '<div class="rd-wrap"><div class="rd-tools"><a class="back" href="#'+backTo+'" data-go="'+backTo+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(nv?esc(nv.title):'Daftar isi')+'</a><div class="acts"><button class="btn ghost sm" type="button" data-act="fs" data-d="-1" aria-label="Perkecil huruf">A-</button><button class="btn ghost sm" type="button" data-act="fs" data-d="1" aria-label="Perbesar huruf">A+</button>'+(admin?'<button class="btn sm" type="button" data-act="ch-edit" data-id="'+c.id+'">Ubah bab</button>':'')+'</div></div><article class="reader" id="reader"><header><div class="kicker">'+(c.vol?esc(c.vol)+' &middot; ':'')+'Bab '+esc(c.n)+' '+exStamp(c)+'</div><h1>'+esc(c.title)+'</h1>'+ORN+'</header><div class="body" style="--fs:'+fs+'px">'+c.body+'</div></article>'+nav()+'</div>';
+  return '<div class="rd-wrap"><div class="rd-tools"><a class="back" href="#'+backTo+'" data-go="'+backTo+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(nv?esc(nv.title):'Daftar isi')+'</a><div class="acts"><button class="btn ghost sm" type="button" data-act="fs" data-d="-1" aria-label="Perkecil huruf">A-</button><button class="btn ghost sm" type="button" data-act="fs" data-d="1" aria-label="Perbesar huruf">A+</button>'+(admin?'<button class="btn sm" type="button" data-act="ch-edit-body" data-id="'+c.id+'">Edit Isi</button><button class="btn sm" type="button" data-act="ch-edit-identity" data-id="'+c.id+'">Ubah Bab</button>':'')+'</div></div><article class="reader" id="reader"><header><div class="kicker">'+(c.vol?esc(c.vol)+' &middot; ':'')+'Bab '+esc(c.n)+' '+exStamp(c)+'</div><h1>'+esc(c.title)+'</h1>'+ORN+'</header><div class="body" style="--fs:'+fs+'px">'+c.body+'</div></article>'+nav()+'</div>';
 }
 
-function pageHead(t,extra){
-  var T=TYPES[t];
-  return '<div class="ph"><div><div class="kicker">Buku catatan</div><h1>'+T.label+'</h1><p class="sub">'+T.note+'</p></div>'+(admin?'<div class="acts"><button class="btn sm" type="button" data-act="lore-new" data-t="'+t+'">'+icon('plus')+'Tambah '+T.single+'</button></div>':'')+'</div>';
-}
+function pageHead(t){var T=TYPES[t];return '<div class="ph"><div><div class="kicker">Buku catatan</div><h1>'+T.label+'</h1><p class="sub">'+T.note+'</p></div>'+(admin?'<div class="acts"><button class="btn sm" type="button" data-act="lore-new" data-t="'+t+'">'+icon('plus')+'Tambah '+T.single+'</button></div>':'')+'</div>'}
 function searchBox(ph){return '<input class="in q" type="search" id="q" placeholder="'+ph+'" aria-label="'+ph+'">'}
 function admBtns(e){return admin?'<div class="cadm"><button class="btn ghost sm" type="button" data-act="lore-edit" data-id="'+e.id+'">Ubah</button><button class="btn ghost sm" type="button" data-act="lore-del" data-id="'+e.id+'">Hapus</button></div>':''}
 function initials(n){return esc(String(n||'?').trim().split(/\s+/).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase())}
 function portrait(e){return '<div class="portrait">'+(e.img?'<img src="'+e.img+'" alt="">':initials(e.title))+'</div>'}
 function mod(v){var m=Math.floor((v-10)/2);return (m>=0?'+':'')+m}
-function statsHtml(e){
-  var s=e.stats||[];if(!s.some(function(v){return v!=null&&v!==''}))return '';
-  return '<div class="stats">'+STATK.map(function(k,i){var v=s[i];if(v==null||v==='')return '<div class="st"><span>'+k+'</span><b>-</b></div>';return '<div class="st"><span>'+k+'</span><b>'+esc(v)+'</b><i>'+mod(+v)+'</i></div>'}).join('')+'</div>';
-}
+function statsHtml(e){var s=e.stats||[];if(!s.some(function(v){return v!=null&&v!==''}))return '';return '<div class="stats">'+STATK.map(function(k,i){var v=s[i];if(v==null||v==='')return '<div class="st"><span>'+k+'</span><b>-</b></div>';return '<div class="st"><span>'+k+'</span><b>'+esc(v)+'</b><i>'+mod(+v)+'</i></div>'}).join('')+'</div>'}
 function vLore(t){
   var list=ofType(t),h=pageHead(t);
   if(t==='world')list.sort(function(a,b){return (a.cat||'').localeCompare(b.cat||'','id')||a.title.localeCompare(b.title,'id')});
@@ -918,12 +882,7 @@ function openModal(html,ctx){
   var f=o.querySelector('input:not([type=file]):not([type=checkbox]):not([type=range]),textarea,.rt-area');if(f&&f.focus)f.focus();
 }
 function closeModal(){var o=document.getElementById('ov');if(o)o.remove();modalCtx=null}
-function busy(on,msg){
-  var b=document.getElementById('busy');
-  if(!on){if(b)b.remove();return}
-  if(!b){b=document.createElement('div');b.id='busy';b.className='busy';document.body.appendChild(b)}
-  b.textContent=msg||'Menyimpan...';
-}
+function busy(on,msg){var b=document.getElementById('busy');if(!on){if(b)b.remove();return}if(!b){b=document.createElement('div');b.id='busy';b.className='busy';document.body.appendChild(b)}b.textContent=msg||'Menyimpan...'}
 function makeSlug(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,120)}
 function slugFor(t){return (makeSlug(t)||'bab')+'-'+Math.random().toString(36).slice(2,6)}
 function rowToCh(r){
@@ -944,10 +903,10 @@ async function loadContent(){
     var hasRow=!!(sq.data&&sq.data.data);
     if(hasRow){
       var d=sq.data.data;
-      S.site=d.site||{tagline:'',synopsis:'',author:'',avatar:''};
-      S.site.avatar=S.site.avatar||'';
-      S.lore=d.lore||[];
-      S.novels=d.novels||[];
+      S.site=d.site||{tagline:'',synopsis:'',author:'',avatar:'',logo:''};
+      S.site.avatar=S.site.avatar||'';S.site.logo=S.site.logo||'';
+      if(S.site.logo)lsSet('hn-logo-cache',S.site.logo);
+      S.lore=d.lore||[];S.novels=d.novels||[];
     }
     if(!cq.error){
       var rows=cq.data||[];dbIds={};rows.forEach(function(r){dbIds[r.id]=1});
@@ -962,20 +921,17 @@ async function loadContent(){
 }
 async function persist(next){
   if(!db)throw new Error('no db');
-  var keep={};
-  var idMap={};
+  var keep={};var idMap={};
   var list=next.chapters.filter(function(c){return !c.example});
   for(var i=0;i<list.length;i++){
     var c=list[i];
     var row={title:c.title,volume:c.vol||null,chapter_number:(c.n==null||isNaN(c.n))?null:c.n,content:c.body,status:c.status==='draft'?'draft':'published'};
     if(!dbIds[c.id]){
-      var oldId=c.id;
-      row.slug=slugFor(c.title);
+      var oldId=c.id;row.slug=slugFor(c.title);
       var ins=await db.from('chapters').insert(row).select('id,slug').single();
       if(ins.error)throw ins.error;
       var newId=String(ins.data.id);
-      idMap[oldId]=newId;
-      c.id=newId;
+      idMap[oldId]=newId;c.id=newId;
       if(ins.data.slug)c.slug=ins.data.slug;
       dbIds[newId]=1;
     }else{
@@ -989,16 +945,8 @@ async function persist(next){
     keep[c.id]=1;
   }
   var ids=Object.keys(dbIds);
-  for(var j=0;j<ids.length;j++){
-    if(!keep[ids[j]]){
-      var dl=await db.from('chapters').delete().eq('id',ids[j]).select('id');
-      if(dl.error)throw dl.error;
-      delete dbIds[ids[j]];
-    }
-  }
-  (next.novels||[]).forEach(function(n){
-    n.chapterIds=(n.chapterIds||[]).map(function(id){return idMap[id]||id}).filter(function(id){return keep[id]||next.chapters.some(function(c){return c.id===id&&c.example;})});
-  });
+  for(var j=0;j<ids.length;j++){if(!keep[ids[j]]){var dl=await db.from('chapters').delete().eq('id',ids[j]).select('id');if(dl.error)throw dl.error;delete dbIds[ids[j]]}}
+  (next.novels||[]).forEach(function(n){n.chapterIds=(n.chapterIds||[]).map(function(id){return idMap[id]||id}).filter(function(id){return keep[id]||next.chapters.some(function(c){return c.id===id&&c.example;})})});
   var up=await db.from('hn_site').upsert({id:'main',data:{v:1,site:next.site,lore:next.lore,novels:next.novels},updated_at:new Date().toISOString()}).select('id');
   if(up.error)throw up.error;
   if(!up.data||!up.data.length)throw new Error('ditolak');
@@ -1009,14 +957,10 @@ async function persistNow(){
   busy(true,'Menyimpan ke database...');
   try{
     await persist(S);
-    pendingSave=false;
-    busy(false);render({keep:true});notify();
-    toast('Perubahan tersimpan');
-    return true;
+    pendingSave=false;busy(false);render({keep:true});notify();
+    toast('Perubahan tersimpan');return true;
   }catch(e){
-    busy(false);
-    console.error(e);
-    var m=String((e&&e.message)||e);
+    busy(false);console.error(e);var m=String((e&&e.message)||e);
     toast(m==='ditolak'||(e&&e.code==='42501')?'Ditolak database ('+(e&&e.code||'RLS')+').':'Gagal menyimpan: '+m);
     return false;
   }
@@ -1033,8 +977,7 @@ function stageOrCommit(fn,okMsg){
       return ok;
     });
   }else{
-    pendingSave=true;
-    closeModal();render({keep:true});notify();
+    pendingSave=true;closeModal();render({keep:true});notify();
     toast((okMsg||'Perubahan disiapkan')+' — jangan lupa tekan Simpan');
     return Promise.resolve(true);
   }
@@ -1045,17 +988,12 @@ function commit(fn,okMsg){
   return stageOrCommit(fn,okMsg);
 }
 async function saveChapterFromPage(){
-  var btn=document.querySelector('[data-act="ch-save-page"]');
+  var btn=document.querySelector('[data-act="ch-save-body"]');
   if(!btn)return;
   var cid=btn.getAttribute('data-id');
-  var title=val('ce-t').trim();
   var body=readRich('ce-b');
-  var n=parseInt(val('ce-n'),10);if(isNaN(n))n=0;
-  var vol=val('ce-v').trim();
-  var st=val('ce-st')==='published'?'published':'draft';
   var c=cid?chById(cid):null;
   var novelId=c?(novelOf(cid)||{}).id:val('ce-novel');
-  if(!title){toast('Isi judul bab dulu.');return}
   if(!textOf(body).trim()){toast('Isi bab masih kosong.');return}
   if(!novelId){toast('Pilih novel dulu.');return}
   var tempId=uid('c');
@@ -1063,21 +1001,21 @@ async function saveChapterFromPage(){
   if(c){
     var t=next.chapters.find(function(x){return x.id===c.id});
     if(!t){toast('Bab tidak ditemukan.');return}
-    t.title=title;t.n=n;t.vol=vol;t.body=body;t.status=st;
-    delete t.example;
+    t.body=body;delete t.example;
   }else{
-    next.chapters.push({id:tempId,title:title,n:n,vol:vol,body:body,status:st,t:Date.now()});
+    var existing=chaptersOf(novelId);
+    var nAuto=existing.reduce(function(m,x){return Math.max(m,+x.n||0)},0)+1;
+    next.chapters.push({id:tempId,title:'Bab '+nAuto,n:nAuto,vol:'',body:body,status:'draft',t:Date.now()});
     var nv=next.novels.find(function(x){return x.id===novelId});
     if(nv)nv.chapterIds=(nv.chapterIds||[]).concat(tempId);
   }
   S=next;
   if(!db||!canEdit){pendingSave=true;toast('Perubahan disiapkan (belum login).');go('n-'+novelId);return}
-  busy(true,'Menyimpan bab...');
+  busy(true,'Menyimpan isi bab...');
   try{
     await persist(S);
-    pendingSave=false;
-    busy(false);
-    toast('Bab tersimpan');
+    pendingSave=false;busy(false);
+    toast('Isi bab tersimpan');
     go('n-'+novelId);
   }catch(e){
     busy(false);console.error(e);
@@ -1091,37 +1029,16 @@ async function saveNovelFromPage(){
   var nid=btn.getAttribute('data-id');
   var title=val('ne-t').trim();
   if(!title){toast('Isi judul novel dulu.');return}
-  var data={
-    title:title,
-    author:val('ne-a').trim(),
-    genre:val('ne-g').trim(),
-    status:val('ne-st'),
-    tagline:val('ne-tag').trim(),
-    synopsis:val('ne-s').trim()
-  };
+  var data={title:title,author:val('ne-a').trim(),genre:val('ne-g').trim(),status:val('ne-st'),tagline:val('ne-tag').trim(),synopsis:val('ne-s').trim()};
   var next=clone(S);
   var n=nid?next.novels.find(function(x){return x.id===nid}):null;
-  if(n){
-    Object.assign(n,data);
-    if(novelCoverTemp!==undefined)n.cover=novelCoverTemp;
-  }else{
-    n={id:uid('n'),title:data.title,author:data.author,genre:data.genre,status:data.status,tagline:data.tagline,synopsis:data.synopsis,cover:novelCoverTemp||'',chapterIds:[],t:Date.now()};
-    next.novels.push(n);
-  }
+  if(n){Object.assign(n,data);if(novelCoverTemp!==undefined)n.cover=novelCoverTemp}
+  else{n={id:uid('n'),title:data.title,author:data.author,genre:data.genre,status:data.status,tagline:data.tagline,synopsis:data.synopsis,cover:novelCoverTemp||'',chapterIds:[],t:Date.now()};next.novels.push(n)}
   S=next;
   if(!db||!canEdit){pendingSave=true;toast('Perubahan disiapkan (belum login).');go('n-'+n.id);return}
   busy(true,'Menyimpan novel...');
-  try{
-    await persist(S);
-    pendingSave=false;
-    busy(false);
-    toast('Novel tersimpan');
-    go('n-'+n.id);
-  }catch(e){
-    busy(false);console.error(e);
-    toast('Gagal menyimpan: '+((e&&e.message)||e));
-    render({keep:true});
-  }
+  try{await persist(S);pendingSave=false;busy(false);toast('Novel tersimpan');go('n-'+n.id)}
+  catch(e){busy(false);console.error(e);toast('Gagal menyimpan: '+((e&&e.message)||e));render({keep:true})}
 }
 
 var FLAT={DIV:1,SECTION:1,ARTICLE:1,BODY:1,TABLE:1,TBODY:1,THEAD:1,TFOOT:1,TR:1,TD:1,TH:1,FIGURE:1,MAIN:1,CENTER:1,HEADER:1,FOOTER:1,ASIDE:1,NAV:1,DL:1,DD:1,DT:1};
@@ -1129,8 +1046,7 @@ var SKIP={SCRIPT:1,STYLE:1,IMG:1,SVG:1,IFRAME:1,OBJECT:1,EMBED:1,NOSCRIPT:1,CANV
 function inlineNode(c){
   if(c.nodeType===3)return esc(c.nodeValue.replace(/ /g,' '));
   if(c.nodeType!==1)return '';
-  var tg=c.tagName;
-  if(SKIP[tg])return '';
+  var tg=c.tagName;if(SKIP[tg])return '';
   if(tg==='BR')return '<br>';
   var inner=inlineChildren(c);
   if(tg==='STRONG'||tg==='B')return inner.trim()?'<strong>'+inner+'</strong>':inner;
@@ -1142,8 +1058,7 @@ function inlineNode(c){
   if(tg==='A'){var href=c.getAttribute('href')||'';if(!href)return inner;if(!/^(https?:|mailto:|#|\/)/i.test(href))return inner;return '<a href="'+esc(href)+'">'+inner+'</a>'}
   var st=(c.getAttribute&&c.getAttribute('style'))||'';
   if(tg==='SPAN'&&inner.trim()){
-    var b=/font-weight\s*:\s*(bold|[6-9]00)/i.test(st),it=/font-style\s*:\s*italic/i.test(st);
-    var extra='';
+    var b=/font-weight\s*:\s*(bold|[6-9]00)/i.test(st),it=/font-style\s*:\s*italic/i.test(st);var extra='';
     var fs=st.match(/font-size\s*:\s*([^;]+)/i);if(fs)extra+='font-size:'+fs[1]+';';
     var ff=st.match(/font-family\s*:\s*([^;]+)/i);if(ff)extra+='font-family:'+ff[1]+';';
     var col=st.match(/(?:^|;)\s*color\s*:\s*([^;]+)/i);if(col)extra+='color:'+col[1]+';';
@@ -1158,16 +1073,15 @@ function safeImg(el){
   var src,extra='';
   if(typeof el==='string'){src=el}
   else{
-    src=el.getAttribute('src')||'';
-    var attrs=[];
-    ['alt','style','data-align','data-wrap','data-border','data-round','data-shadow','data-rotate','data-offset-x','data-offset-y','data-position'].forEach(function(k){
+    src=el.getAttribute('src')||'';var attrs=[];
+    ['alt','style','data-align','data-wrap','data-border','data-border-color','data-round','data-shadow','data-rotate','data-offset-x','data-offset-y'].forEach(function(k){
       var v=el.getAttribute(k);if(v!=null&&v!=='')attrs.push(k+'="'+esc(v)+'"');
     });
     if(attrs.length)extra=' '+attrs.join(' ');
   }
   src=String(src||'').trim();
-  if(!(/^https:\/\//i.test(src)||/^data:image\/(png|jpe?g|webp|gif);base64,/i.test(src)))return '';
-  return '<figure><img src="'+esc(src)+'"'+extra+' loading="lazy"></figure>';
+  if(!(/^https:\/\//i.test(src)||/^data:image\/(png|jpe?g|webp|gif|svg\+xml);base64,/i.test(src)))return '';
+  return '<figure data-wrap="'+(typeof el==='string'?'':(el.getAttribute('data-wrap')||'none'))+'" data-align="'+(typeof el==='string'?'':(el.getAttribute('data-align')||'center'))+'"><img src="'+esc(src)+'"'+extra+' loading="lazy"></figure>';
 }
 function blank(h){return !h.replace(/<br>|&nbsp;|\s/g,'')}
 function blocksOf(node,out){
@@ -1192,11 +1106,7 @@ function blocksOf(node,out){
   }
   flush();
 }
-function cleanHtml(html){
-  var d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),out=[];
-  blocksOf(d.body,out);
-  return out.join('');
-}
+function cleanHtml(html){var d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),out=[];blocksOf(d.body,out);return out.join('')}
 function textToHtml(t){
   t=String(t).replace(/\r\n?/g,'\n').trim();
   var heads=function(line){return esc(line).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>')};
@@ -1204,8 +1114,7 @@ function textToHtml(t){
   var wrapped=/\n\s*\n/.test(t);
   return blocks.map(function(b){
     b=b.trim();if(!b)return '';
-    var m=b.match(/^(#{1,3})\s+(.+)$/);
-    if(m)return '<h2>'+heads(m[2])+'</h2>';
+    var m=b.match(/^(#{1,3})\s+(.+)$/);if(m)return '<h2>'+heads(m[2])+'</h2>';
     if(/^(-{3,}|\*{3,}|_{3,})$/.test(b))return '<hr>';
     return '<p>'+heads(wrapped?b.replace(/\s*\n\s*/g,' '):b)+'</p>';
   }).join('');
@@ -1213,17 +1122,9 @@ function textToHtml(t){
 var HEADRE=/^\s*((bab|chapter|bagian|part)\s+(\d+|[ivxlcdm]+)\b|(prolog|prologue|epilog|epilogue|interlude|intermezzo)\b)/i;
 function splitChapters(html,fallback){
   var d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),kids=[].slice.call(d.body.children);
-  function isHead(el){
-    if(el.tagName==='H2')return true;
-    if(el.tagName==='P'){var t=el.textContent.trim();return t.length>0&&t.length<=80&&HEADRE.test(t)}
-    return false;
-  }
+  function isHead(el){if(el.tagName==='H2')return true;if(el.tagName==='P'){var t=el.textContent.trim();return t.length>0&&t.length<=80&&HEADRE.test(t)}return false}
   var chunks=[],cur=null,pre=[];
-  kids.forEach(function(el){
-    if(isHead(el)){cur={title:el.textContent.trim().replace(/\s+/g,' '),parts:[]};chunks.push(cur)}
-    else if(cur)cur.parts.push(el.outerHTML);
-    else pre.push(el.outerHTML);
-  });
+  kids.forEach(function(el){if(isHead(el)){cur={title:el.textContent.trim().replace(/\s+/g,' '),parts:[]};chunks.push(cur)}else if(cur)cur.parts.push(el.outerHTML);else pre.push(el.outerHTML)});
   var res=[];
   if(!chunks.length){return [{title:fallback,html:pre.join('')}]}
   if(textOf(pre.join('')).trim().length>200)res.push({title:fallback,html:pre.join('')});
@@ -1233,11 +1134,7 @@ function splitChapters(html,fallback){
   return res;
 }
 var LIBS={mammoth:'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js',pdf:'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'},LIBP={};
-function loadLib(k){
-  if(LIBP[k])return LIBP[k];
-  LIBP[k]=new Promise(function(res,rej){var s=document.createElement('script');s.src=LIBS[k];s.onload=res;s.onerror=function(){LIBP[k]=null;rej(new Error('lib'))};document.head.appendChild(s)});
-  return LIBP[k];
-}
+function loadLib(k){if(LIBP[k])return LIBP[k];LIBP[k]=new Promise(function(res,rej){var s=document.createElement('script');s.src=LIBS[k];s.onload=res;s.onerror=function(){LIBP[k]=null;rej(new Error('lib'))};document.head.appendChild(s)});return LIBP[k]}
 async function pdfToHtml(file){
   await loadLib('pdf');
   var lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -1248,11 +1145,8 @@ async function pdfToHtml(file){
     for(var i=0;i<tc.items.length;i++){
       it=tc.items[i];if(typeof it.str!=='string')continue;
       var x=it.transform[4],y=it.transform[5],h=it.height||Math.abs(it.transform[3])||10;
-      if(cur&&Math.abs(cur.y-y)<Math.max(2,h*.4)){
-        var gap=x-cur.ex;
-        if(gap>h*.2&&!/\s$/.test(cur.t)&&!/^\s/.test(it.str))cur.t+=' ';
-        cur.t+=it.str;cur.ex=x+(it.width||0);
-      }else{if(cur)lines.push(cur);cur={t:it.str,x:x,y:y,h:h,p:p,ex:x+(it.width||0)}}
+      if(cur&&Math.abs(cur.y-y)<Math.max(2,h*.4)){var gap=x-cur.ex;if(gap>h*.2&&!/\s$/.test(cur.t)&&!/^\s/.test(it.str))cur.t+=' ';cur.t+=it.str;cur.ex=x+(it.width||0)}
+      else{if(cur)lines.push(cur);cur={t:it.str,x:x,y:y,h:h,p:p,ex:x+(it.width||0)}}
     }
     if(cur)lines.push(cur);
   }
@@ -1276,33 +1170,18 @@ async function pdfToHtml(file){
     else if(/[a-zà-ÿ]-$/.test(buf)&&/^[a-z]/.test(t))buf=buf.slice(0,-1)+t;
     else buf+=' '+t;
   }
-  push();
-  return out.join('');
+  push();return out.join('');
 }
 async function fileToChunks(file){
   var ext=(file.name.split('.').pop()||'').toLowerCase(),base=file.name.replace(/\.[^.]+$/,'').replace(/[_]+/g,' ').trim()||'Bab baru',html='';
-  if(ext==='docx'){
-    await loadLib('mammoth');
-    var r=await window.mammoth.convertToHtml({arrayBuffer:await file.arrayBuffer()},{convertImage:window.mammoth.images.imgElement(function(){return Promise.resolve({src:''})})});
-    html=cleanHtml(r.value);
-  }else if(ext==='pdf'){html=await pdfToHtml(file)}
+  if(ext==='docx'){await loadLib('mammoth');var r=await window.mammoth.convertToHtml({arrayBuffer:await file.arrayBuffer()},{convertImage:window.mammoth.images.imgElement(function(){return Promise.resolve({src:''})})});html=cleanHtml(r.value)}
+  else if(ext==='pdf'){html=await pdfToHtml(file)}
   else if(ext==='txt'||ext==='md'||ext==='markdown'){html=textToHtml(await file.text())}
   else if(ext==='html'||ext==='htm'){html=cleanHtml(await file.text())}
   else throw new Error('type');
   return splitChapters(html,base);
 }
-var FONT_OPTS=[
-  ['inherit','Default'],
-  ['Literata,Georgia,serif','Literata'],
-  ['Georgia,\'Times New Roman\',serif','Georgia'],
-  ['\'Times New Roman\',serif','Times New Roman'],
-  ['Nunito,Arial,sans-serif','Nunito'],
-  ['Arial,Helvetica,sans-serif','Arial'],
-  ['Verdana,sans-serif','Verdana'],
-  ['\'Courier New\',monospace','Courier New'],
-  ['Metamorphous,Georgia,serif','Metamorphous'],
-  ['Caveat,cursive','Caveat (tulisan tangan)']
-];
+var FONT_OPTS=[['inherit','Default'],['Literata,Georgia,serif','Literata'],['Georgia,\'Times New Roman\',serif','Georgia'],['\'Times New Roman\',serif','Times New Roman'],['Nunito,Arial,sans-serif','Nunito'],['Arial,Helvetica,sans-serif','Arial'],['Verdana,sans-serif','Verdana'],['\'Courier New\',monospace','Courier New'],['Metamorphous,Georgia,serif','Metamorphous'],['Caveat,cursive','Caveat (tulisan tangan)']];
 var SIZE_OPTS=[11,12,14,16,18,20,22,24,28,32,40,48,64];
 var BLOCK_OPTS=[['p','Teks biasa'],['h1','Judul 1'],['h2','Judul 2'],['h3','Judul 3'],['h4','Judul 4'],['blockquote','Kutipan']];
 
@@ -1346,85 +1225,74 @@ function writeToolbarHTML(){
   bar+='</div>';
   return bar;
 }
-
-/* === v1.7 Image toolbar — Google Docs/Word style === */
 function imageToolbarHTML(){
   var bar='<div class="rt-bar" data-mode="image" role="toolbar" aria-label="Alat gambar">';
   bar+='<div class="img-tools-wrap">';
-  // Size + rotation + width sliders
   bar+='<div class="img-group"><label>Ukuran</label><div class="img-slider"><input type="range" id="ie-size" min="10" max="100" value="100" step="1"><output id="ie-sizev">100%</output></div></div>';
   bar+='<div class="img-group"><label>Putar</label><div class="img-slider"><input type="range" id="ie-rot" min="-180" max="180" value="0" step="1"><output id="ie-rotv">0°</output></div></div>';
   bar+='<div class="img-group"><label>Opasitas</label><div class="img-slider"><input type="range" id="ie-op" min="10" max="100" value="100" step="1"><output id="ie-opv">100%</output></div></div>';
-  // Alignment
   bar+='<div class="img-group"><label>Posisi</label><div class="img-btn-group">';
-  bar+='<button type="button" data-act="img-align" data-v="left" title="Rata kiri">'+icon('alignLeft')+'</button>';
-  bar+='<button type="button" data-act="img-align" data-v="center" title="Tengah">'+icon('alignCenter')+'</button>';
-  bar+='<button type="button" data-act="img-align" data-v="right" title="Rata kanan">'+icon('alignRight')+'</button>';
+  bar+='<button type="button" data-act="img-align" data-v="left" title="Rata kiri">⯇</button>';
+  bar+='<button type="button" data-act="img-align" data-v="center" title="Tengah">≡</button>';
+  bar+='<button type="button" data-act="img-align" data-v="right" title="Rata kanan">⯈</button>';
   bar+='</div></div>';
-  // Text wrap
-  bar+='<div class="img-group"><label>Wrap</label><div class="img-btn-group">';
-  bar+='<button type="button" data-act="img-wrap" data-v="none" title="Baris baru (block)">▭</button>';
-  bar+='<button type="button" data-act="img-wrap" data-v="wrap" title="Teks mengelilingi">▥</button>';
+  bar+='<div class="img-group"><label>Wrap</label><div class="img-btn-group" style="gap:4px">';
+  ['inline','square','tight','through','topbottom','behind','front'].forEach(function(mode){
+    var label={inline:'Inline',square:'Square',tight:'Tight',through:'Through',topbottom:'Top&Bottom',behind:'Behind',front:'In Front'}[mode];
+    bar+='<button type="button" data-act="img-wrap" data-v="'+mode+'" title="Wrap: '+label+'" style="padding:0 6px;min-width:36px">'+(WRAP_ICONS[mode]||label)+'</button>';
+  });
   bar+='</div></div>';
-  // Border
   bar+='<div class="img-group"><label>Bingkai</label><div class="img-slider"><input type="range" id="ie-bw" min="0" max="12" value="0" step="1"><output id="ie-bwv">0px</output></div><label class="rt-color-btn" title="Warna bingkai" style="min-width:28px;min-height:28px;padding:0 4px"><span class="sw" id="ie-bc-sw" style="--sw:#B3372B"></span><input type="color" id="ie-bc" value="#B3372B"></label></div>';
-  // Corner
   bar+='<div class="img-group"><label>Sudut</label><div class="img-slider"><input type="range" id="ie-round" min="0" max="999" value="6" step="1"><output id="ie-roundv">6px</output></div></div>';
-  // Shadow
   bar+='<div class="img-group"><label>Bayangan</label><div class="img-btn-group">';
   bar+='<button type="button" data-act="img-shadow" data-v="0" title="Tanpa">—</button>';
   bar+='<button type="button" data-act="img-shadow" data-v="1" title="Halus">▢</button>';
   bar+='<button type="button" data-act="img-shadow" data-v="2" title="Kuat">▣</button>';
   bar+='</div></div>';
-  // Offset X/Y sliders (free positioning)
   bar+='<div class="img-group"><label>X</label><div class="img-slider"><input type="range" id="ie-ox" min="-200" max="200" value="0" step="1"><output id="ie-oxv">0</output></div></div>';
   bar+='<div class="img-group"><label>Y</label><div class="img-slider"><input type="range" id="ie-oy" min="-200" max="200" value="0" step="1"><output id="ie-oyv">0</output></div></div>';
-  // Reset
   bar+='<button type="button" class="rtb" data-act="img-reset" title="Reset semua">'+icon('reset')+'</button>';
   bar+='<span class="rt-sep"></span>';
   bar+='<button type="button" class="rtb" data-act="img-alt" title="Teks alternatif (untuk pembaca layar)">Alt</button>';
   bar+='<span class="rt-sep"></span>';
   bar+='<button type="button" class="rtb img-done" data-act="img-done" title="Selesai mengatur gambar">'+icon('check')+'<span style="margin-left:4px">Selesai</span></button>';
   bar+='<button type="button" class="rtb img-del" data-act="img-delete" title="Hapus gambar">'+icon('trash')+'</button>';
-  bar+='<div class="img-tools-help">Klik &amp; geser gambar di editor untuk memindahkan secara bebas, atau pakai slider X/Y. Semua perubahan langsung tersimpan di gambar.</div>';
-  bar+='</div>';
-  bar+='</div>';
+  bar+='<div class="img-tools-help">Seret gambar untuk memindahkan secara bebas, atau pakai slider X / Y. Wrap: <b>Inline</b> · <b>Square</b> · <b>Tight</b> · <b>Through</b> · <b>Top&amp;Bottom</b> · <b>Behind</b> · <b>In&nbsp;Front</b>.</div>';
+  bar+='</div></div>';
   return bar;
 }
 
+/* v1.8: richBox now has toolbar in a sticky slot BELOW the top bar, separate from the paper sheet. */
 function richBox(id,html){
-  return '<div class="rt">'+writeToolbarHTML()+'<div class="rt-area" id="'+id+'" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Isi">'+(html||'<p><br></p>')+'</div></div>';
+  return '<div class="rt">'
+    +'<div class="rt-toolbar-slot" data-rt-toolbar="'+id+'">'+writeToolbarHTML()+'</div>'
+    +'<div class="rt-area-wrap"><div class="rt-area" id="'+id+'" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Isi">'+(html||'<p><br></p>')+'</div></div>'
+  +'</div>';
 }
 function readRich(id){var a=document.getElementById(id);return a?cleanHtml(a.innerHTML):''}
-
-function getRtBar(){return document.querySelector('.rt-bar')}
+function getRtBar(){return document.querySelector('.rt-toolbar-slot .rt-bar')||document.querySelector('.rt-bar')}
 function getRtArea(){return document.querySelector('.rt-area')}
 
 function enterImageMode(img){
-  var bar=getRtBar();
-  if(!bar)return;
+  var bar=getRtBar();if(!bar)return;
   document.querySelectorAll('.rt-area img.sel').forEach(function(x){x.classList.remove('sel')});
-  ieImg=img;
-  img.classList.add('sel');
+  ieImg=img;img.classList.add('sel');
   bar.outerHTML=imageToolbarHTML();
   syncImageToolbarFromState();
   bindImageDrag();
 }
 function exitImageMode(){
-  var bar=getRtBar();
-  if(!bar)return;
+  var bar=getRtBar();if(!bar)return;
   document.querySelectorAll('.rt-area img.sel').forEach(function(x){x.classList.remove('sel')});
   ieImg=null;
-  var tmp=document.createElement('div');
-  tmp.innerHTML=writeToolbarHTML();
+  var tmp=document.createElement('div');tmp.innerHTML=writeToolbarHTML();
   bar.replaceWith(tmp.firstChild);
 }
 function syncImageToolbarFromState(){
   if(!ieImg)return;
   var bar=getRtBar();if(!bar)return;
   var img=ieImg;
-  var size=img.style.width||'100%';
-  var sizePct=parseFloat(size)||100;
+  var size=img.style.width||'100%';var sizePct=parseFloat(size)||100;
   var rot=parseFloat(img.getAttribute('data-rotate')||'0')||0;
   var op=img.style.opacity?Math.round(parseFloat(img.style.opacity)*100):100;
   var bw=parseFloat(img.getAttribute('data-border')||'0')||0;
@@ -1434,17 +1302,16 @@ function syncImageToolbarFromState(){
   var ox=parseFloat(img.getAttribute('data-offset-x')||'0')||0;
   var oy=parseFloat(img.getAttribute('data-offset-y')||'0')||0;
   var align=img.getAttribute('data-align')||'center';
-  var wrap=img.getAttribute('data-wrap')||'none';
+  var wrap=img.getAttribute('data-wrap')||'square';
   setVal('ie-size',Math.round(sizePct));setTxt('ie-sizev',Math.round(sizePct)+'%');
   setVal('ie-rot',rot);setTxt('ie-rotv',rot+'°');
   setVal('ie-op',op);setTxt('ie-opv',op+'%');
   setVal('ie-bw',bw);setTxt('ie-bwv',bw+'px');
-  setVal('ie-round',round);setTxt('ie-roundv',round==='999'? '∞':round+'px');
+  setVal('ie-round',round);setTxt('ie-roundv',round>=999?'∞':round+'px');
   setVal('ie-ox',ox);setTxt('ie-oxv',ox);
   setVal('ie-oy',oy);setTxt('ie-oyv',oy);
   var bcEl=bar.querySelector('#ie-bc');if(bcEl)bcEl.value=bc;
   var bcSw=bar.querySelector('#ie-bc-sw');if(bcSw)bcSw.style.setProperty('--sw',bc);
-  // Highlight active buttons
   bar.querySelectorAll('[data-act="img-align"]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===align)});
   bar.querySelectorAll('[data-act="img-wrap"]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===wrap)});
   bar.querySelectorAll('[data-act="img-shadow"]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===shadow)});
@@ -1452,12 +1319,11 @@ function syncImageToolbarFromState(){
 function setVal(id,v){var e=document.getElementById(id);if(e)e.value=v}
 function setTxt(id,t){var e=document.getElementById(id);if(e)e.textContent=t}
 
-/* === Apply image styles to img (called on every change) === */
 function applyImageStyle(){
   if(!ieImg)return;
   var img=ieImg;
   var align=img.getAttribute('data-align')||'center';
-  var wrap=img.getAttribute('data-wrap')||'none';
+  var wrap=img.getAttribute('data-wrap')||'square';
   var bw=parseFloat(img.getAttribute('data-border')||'0')||0;
   var bc=img.getAttribute('data-border-color')||'#B3372B';
   var round=parseFloat(img.getAttribute('data-round')||'6')||0;
@@ -1468,66 +1334,45 @@ function applyImageStyle(){
   img.style.border = bw>0 ? (bw+'px solid '+bc) : 'none';
   img.style.borderRadius = round>=999 ? '50%' : (round+'px');
   img.style.boxShadow = shadow==='1' ? '0 4px 12px rgba(0,0,0,.25)' : shadow==='2' ? '0 10px 30px rgba(0,0,0,.5)' : 'none';
-  img.style.transform = 'translate('+ox+'px,'+oy+'px) rotate('+rot+'deg)';
-  img.style.transformOrigin = 'center center';
-  // Alignment + wrap (position in flow)
-  if(wrap==='wrap'){
-    img.style.cssFloat = align==='left'?'left':align==='right'?'right':'none';
-    img.style.display='block';
-    img.style.margin = align==='left'?'6px 16px 10px 0':align==='right'?'6px 0 10px 16px':'14px auto';
+  var baseTrans='translate('+ox+'px,'+oy+'px) rotate('+rot+'deg)';
+  if(wrap==='behind'||wrap==='front'){
+    img.style.transform=baseTrans;
   }else{
-    img.style.cssFloat='none';
-    img.style.display='block';
-    img.style.margin = align==='left'?'14px auto 14px 0':align==='right'?'14px 0 14px auto':'14px auto';
+    img.style.transform=baseTrans;
   }
   var fig=img.closest('figure');
-  if(fig){fig.style.margin='1.4em 0';fig.style.textAlign='center';fig.style.display='block';fig.style.position='relative';}
+  if(fig){fig.style.margin='1.4em 0';fig.style.textAlign='center';fig.style.display='block';fig.style.position='relative'}
 }
 function imgDeleteNow(){
   if(!ieImg)return;
-  var fig=ieImg.closest('figure');
-  if(fig)fig.remove();else ieImg.remove();
-  ieImg=null;
-  exitImageMode();
+  var fig=ieImg.closest('figure');if(fig)fig.remove();else ieImg.remove();
+  ieImg=null;exitImageMode();
   toast('Gambar dihapus. Tekan Simpan bab untuk menyimpan.');
 }
-function imgAskAlt(){
-  if(!ieImg)return;
-  var cur=ieImg.alt||'';
-  var v=prompt('Teks alternatif gambar (untuk pembaca layar):',cur);
-  if(v===null)return;
-  ieImg.alt=v;
-  toast('Teks alternatif disimpan di gambar.');
-}
+function imgAskAlt(){if(!ieImg)return;var cur=ieImg.alt||'';var v=prompt('Teks alternatif gambar (untuk pembaca layar):',cur);if(v===null)return;ieImg.alt=v;toast('Teks alternatif disimpan di gambar.')}
 function imgReset(){
   if(!ieImg)return;
-  ieImg.style.width='';
-  ieImg.style.opacity='';
+  ieImg.style.width='';ieImg.style.opacity='';
   ieImg.setAttribute('data-align','center');
-  ieImg.setAttribute('data-wrap','none');
+  ieImg.setAttribute('data-wrap','square');
   ieImg.setAttribute('data-border','0');
   ieImg.setAttribute('data-round','6');
   ieImg.setAttribute('data-shadow','0');
   ieImg.setAttribute('data-rotate','0');
   ieImg.setAttribute('data-offset-x','0');
   ieImg.setAttribute('data-offset-y','0');
-  applyImageStyle();
-  syncImageToolbarFromState();
+  applyImageStyle();syncImageToolbarFromState();
   toast('Gambar direset ke default.');
 }
-
-/* === Free-drag image with cursor/finger === */
 var imgDragState=null;
 function bindImageDrag(){
   if(!ieImg)return;
-  // Use pointer events (works for mouse + touch)
   ieImg.style.touchAction='none';
   if(ieImg.__hnDragBound)return;
   ieImg.__hnDragBound=true;
   ieImg.addEventListener('pointerdown',function(ev){
     if(!ieImg||ev.button===2)return;
-    // Only drag when in image mode
-    if(ieImg!==arguments.callee.target && !ieImg.classList.contains('sel'))return;
+    if(!ieImg.classList.contains('sel'))return;
     ev.preventDefault();
     var ox0=parseFloat(ieImg.getAttribute('data-offset-x')||'0')||0;
     var oy0=parseFloat(ieImg.getAttribute('data-offset-y')||'0')||0;
@@ -1538,24 +1383,16 @@ function bindImageDrag(){
   ieImg.addEventListener('pointermove',function(ev){
     if(!imgDragState||imgDragState.img!==ieImg)return;
     ev.preventDefault();
-    var dx=ev.clientX-imgDragState.startX;
-    var dy=ev.clientY-imgDragState.startY;
-    var nx=Math.round(imgDragState.ox0+dx);
-    var ny=Math.round(imgDragState.oy0+dy);
+    var dx=ev.clientX-imgDragState.startX,dy=ev.clientY-imgDragState.startY;
+    var nx=Math.round(imgDragState.ox0+dx),ny=Math.round(imgDragState.oy0+dy);
     nx=clamp(nx,-300,300);ny=clamp(ny,-300,300);
     ieImg.setAttribute('data-offset-x',nx);
     ieImg.setAttribute('data-offset-y',ny);
     ieImg.style.transform='translate('+nx+'px,'+ny+'px) rotate('+(parseFloat(ieImg.getAttribute('data-rotate')||'0')||0)+'deg)';
-    setVal('ie-ox',nx);setTxt('ie-oxv',nx);
-    setVal('ie-oy',ny);setTxt('ie-oyv',ny);
+    setVal('ie-ox',nx);setTxt('ie-oxv',nx);setVal('ie-oy',ny);setTxt('ie-oyv',ny);
   });
-  ieImg.addEventListener('pointerup',function(ev){
-    if(imgDragState&&imgDragState.img===ieImg){
-      ieImg.classList.remove('dragging');
-      imgDragState=null;
-    }
-  });
-  ieImg.addEventListener('pointercancel',function(){if(imgDragState&&imgDragState.img===ieImg){ieImg.classList.remove('dragging');imgDragState=null;}});
+  ieImg.addEventListener('pointerup',function(){if(imgDragState&&imgDragState.img===ieImg){ieImg.classList.remove('dragging');imgDragState=null}});
+  ieImg.addEventListener('pointercancel',function(){if(imgDragState&&imgDragState.img===ieImg){ieImg.classList.remove('dragging');imgDragState=null}});
 }
 
 var imgRange=null;
@@ -1579,17 +1416,15 @@ async function insertImage(file,area){
     var sel=window.getSelection();
     if(imgRange&&area.contains(imgRange.commonAncestorContainer)){sel.removeAllRanges();sel.addRange(imgRange)}
     else{var r=document.createRange();r.selectNodeContents(area);r.collapse(false);sel.removeAllRanges();sel.addRange(r)}
-    document.execCommand('insertHTML',false,'<figure><img src="'+esc(url)+'" alt="" data-align="center" data-wrap="none" data-round="6" data-border="0" data-rotate="0" data-offset-x="0" data-offset-y="0"></figure><p><br></p>');
+    document.execCommand('insertHTML',false,'<figure data-wrap="square" data-align="center"><img src="'+esc(url)+'" alt="" data-align="center" data-wrap="square" data-round="6" data-border="0" data-rotate="0" data-offset-x="0" data-offset-y="0"></figure><p><br></p>');
     busy(false);
     setTimeout(function(){
-      var imgs=area.querySelectorAll('img');
-      var last=imgs[imgs.length-1];
+      var imgs=area.querySelectorAll('img');var last=imgs[imgs.length-1];
       if(last)enterImageMode(last);
     },30);
     toast('Gambar ditambahkan. Seret gambar untuk memindahkan, atau pakai slider. Tekan Selesai kalau sudah.');
   }catch(e){
-    busy(false);console.error(e);
-    var m=String((e&&e.message)||e);
+    busy(false);console.error(e);var m=String((e&&e.message)||e);
     toast(/bucket/i.test(m)?'Bucket chapter-images belum dibuat. Jalankan SQL tahap 2 di Supabase.':/row-level|policy|permission|unauthor/i.test(m)?'Upload ditolak. Pastikan masih login dan SQL tahap 2 sudah dijalankan.':'Gagal mengunggah gambar: '+m);
   }
 }
@@ -1614,16 +1449,11 @@ function rtCmd(cmd){
   else if(cmd==='h2'){var sel=window.getSelection(),n=sel&&sel.anchorNode;while(n&&n.nodeType!==1)n=n.parentNode;document.execCommand('formatBlock',false,(n&&n.closest&&n.closest('h2'))?'p':'h2')}
   else if(cmd==='quote')document.execCommand('formatBlock',false,'blockquote');
   else if(cmd==='hr')document.execCommand('insertHorizontalRule');
-  else if(cmd==='link'){
-    var u=prompt('Alamat tautan (https://...)','https://');
-    if(u&&/^https?:\/\//i.test(u))document.execCommand('createLink',false,u);
-  }
+  else if(cmd==='link'){var u=prompt('Alamat tautan (https://...)','https://');if(u&&/^https?:\/\//i.test(u))document.execCommand('createLink',false,u)}
   else if(cmd==='image'){
-    var sl=window.getSelection();
-    imgRange=(sl&&sl.rangeCount&&a&&a.contains(sl.anchorNode))?sl.getRangeAt(0).cloneRange():null;
+    var sl=window.getSelection();imgRange=(sl&&sl.rangeCount&&a&&a.contains(sl.anchorNode))?sl.getRangeAt(0).cloneRange():null;
     var inp=document.createElement('input');inp.type='file';inp.accept='image/*';
-    inp.onchange=function(){if(inp.files&&inp.files[0])insertImage(inp.files[0],a)};
-    inp.click();
+    inp.onchange=function(){if(inp.files&&inp.files[0])insertImage(inp.files[0],a)};inp.click();
   }
   else if(cmd==='clear'){document.execCommand('removeFormat');document.execCommand('formatBlock',false,'p')}
 }
@@ -1635,8 +1465,7 @@ function rtSel(cmd,value){
 }
 function applyStyleToSelection(prop,value){
   var sel=window.getSelection();if(!sel||!sel.rangeCount)return;
-  var range=sel.getRangeAt(0);
-  if(range.collapsed)return;
+  var range=sel.getRangeAt(0);if(range.collapsed)return;
   var span=document.createElement('span');span.style[propToCamel(prop)]=value;
   try{range.surroundContents(span)}catch(e){var frag=range.extractContents();span.appendChild(frag);range.insertNode(span)}
   sel.removeAllRanges();var r=document.createRange();r.selectNodeContents(span);sel.addRange(r);
@@ -1687,10 +1516,7 @@ function loreEditor(type,id){
     if(type==='world'||type==='char'||type==='map')data.img=modalImg;
     if(type!=='gloss')data.body=readRich('le-b');
     var newId=id||uid('e');
-    commit(function(d){
-      if(e){var x=d.lore.find(function(q){return q.id===e.id});Object.assign(x,data);delete x.example}
-      else d.lore.push(Object.assign({id:newId,type:type,t:Date.now()},data));
-    },'Tersimpan');
+    commit(function(d){if(e){var x=d.lore.find(function(q){return q.id===e.id});Object.assign(x,data);delete x.example}else d.lore.push(Object.assign({id:newId,type:type,t:Date.now()},data))},'Tersimpan');
   }});
 }
 function pinEditor(entryId,i,x,y){
@@ -1704,8 +1530,7 @@ function profileModal(){
   var av=S.site.avatar;
   var initials=(S.site.author||'HN').split(/\s+/).slice(0,2).map(function(w){return w[0]}).join('').toUpperCase();
   var avatarHtml='<div class="profile-avatar" id="pv-avatar">'+(av?'<img src="'+esc(av)+'" alt="Foto profil">':'<span class="initials">'+esc(initials)+'</span>')+'</div>';
-  var h=modalHead('Profil Penulis','Identitas penulis yang tampil di web.')
-    +avatarHtml
+  var h=modalHead('Profil Penulis','Identitas penulis yang tampil di web.')+avatarHtml
     +(admin?'<div class="acts" style="justify-content:center;margin-bottom:14px"><label class="btn ghost sm" style="cursor:pointer"><input id="pf-file" type="file" accept="image/*" hidden>Ganti foto profil</label>'+(av?'<button class="btn ghost sm" type="button" data-act="pf-clear">Hapus foto</button>':'')+'</div>':'')
     +'<p style="margin-bottom:10px"><b>Nama:</b> '+esc(S.site.author||'—')+'</p>'
     +'<p>Hollow Night adalah ruang untuk membangun dunia ceritamu: novel, catatan lore, peta, lini masa, dan glosarium dalam satu tempat.</p>'
@@ -1714,52 +1539,35 @@ function profileModal(){
   openModal(h);
 }
 function socialModal(){
-  var items=[
-    ['Instagram','@kazu.png_','instagram','https://www.instagram.com/kazu.png_?mdxt=MWExd3R6amJkajUzbg=='],
-    ['YouTube','@kazualther','youtube','https://youtube.com/@kazualther?si=7oh8F3xHHhXNjBWB'],
-    ['Twitter / X','@KazuAltr','twitter','https://x.com/KazuAltr'],
-    ['Discord','Hollow Night Guild','discord','https://discord.gg/wkRNd4mAUG']
-  ];
-  openModal(modalHead('Media Sosial','Kanal resmi Hollow Night. Klik untuk mengunjungi.')
-    +items.map(function(x){
-      return '<a class="menu-item" style="text-decoration:none;color:inherit;border:1px solid var(--line);margin-bottom:8px" href="'+esc(x[3])+'" target="_blank" rel="noopener noreferrer">'+icon(x[2])+'<span>'+x[0]+'<small>'+x[1]+'</small></span>'+icon('external')+'</a>';
-    }).join('')
-    +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
+  var items=[['Instagram','@kazu.png_','instagram','https://www.instagram.com/kazu.png_?mdxt=MWExd3R6amJkajUzbg=='],['YouTube','@kazualther','youtube','https://youtube.com/@kazualther?si=7oh8F3xHHhXNjBWB'],['Twitter / X','@KazuAltr','twitter','https://x.com/KazuAltr'],['Discord','Hollow Night Guild','discord','https://discord.gg/wkRNd4mAUG']];
+  openModal(modalHead('Media Sosial','Kanal resmi Hollow Night. Klik untuk mengunjungi.')+items.map(function(x){return '<a class="menu-item" style="text-decoration:none;color:inherit;border:1px solid var(--line);margin-bottom:8px" href="'+esc(x[3])+'" target="_blank" rel="noopener noreferrer">'+icon(x[2])+'<span>'+x[0]+'<small>'+x[1]+'</small></span>'+icon('external')+'</a>'}).join('')+'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function helpModal(){
   var mail='juliandoniel07@gmail.com';
   openModal(modalHead('Bantuan','Panduan singkat untuk penulis & pembaca.')
-    +'<h3 style="margin:14px 0 6px">Novel & chapter</h3>'
-    +'<p>Buka menu <b>Baca</b> untuk melihat rak novel. Tekan <b>Buat Novel</b> untuk menambahkan cover, judul, sinopsis, dan identitas novel. Setelah novel dibuat, buka novelnya lalu tekan <b>Buat Chapter</b> untuk menulis bab pertama.</p>'
-    +'<h3 style="margin:14px 0 6px">Menulis bab</h3>'
-    +'<p>Editor bab terbuka sebagai halaman penuh dengan bar menu di atas. Toolbar editor mirip Google Docs: pilih font, ukuran, perataan, bullet, nomor, inden, warna, dan lainnya. Tombol <b>Simpan bab</b> di bawah untuk menyimpan.</p>'
-    +'<h3 style="margin:14px 0 6px">Menyisipkan gambar</h3>'
-    +'<p>Klik ikon 🖼 di toolbar tulisan. Setelah gambar diunggah, toolbar otomatis berubah menjadi <b>toolbar gambar</b>.</p>'
-    +'<h3 style="margin:14px 0 6px">Mengedit gambar</h3>'
-    +'<p>Klik gambar mana saja di dalam editor untuk membuka <b>toolbar gambar</b>. Kamu bisa:</p>'
+    +'<h3 style="margin:14px 0 6px">Novel & chapter</h3><p>Buka menu <b>Baca</b> untuk melihat rak novel. Tekan <b>Buat Novel</b> untuk menambahkan cover, judul, sinopsis, dan identitas novel. Setelah novel dibuat, buka novelnya lalu tekan <b>Buat Chapter</b> untuk menulis bab pertama.</p>'
+    +'<h3 style="margin:14px 0 6px">Menulis bab</h3><p>Editor bab terbuka sebagai halaman penuh. Toolbar editor melayang di atas halaman (tidak menempel ke kertas) supaya nyaman dipakai. Pilih font, ukuran, perataan, bullet, nomor, inden, warna, dan lainnya.</p>'
+    +'<h3 style="margin:14px 0 6px">Dua tombol: Ubah Bab vs Edit Isi</h3><p>Di daftar isi ada dua tombol berbeda:</p><ul style="padding-left:20px;margin:6px 0 10px"><li><b>Edit Isi</b> — membuka halaman khusus untuk menulis/mengedit naskah.</li><li><b>Ubah Bab</b> — membuka dialog untuk identitas bab saja (judul, nomor, volume, status).</li></ul>'
+    +'<h3 style="margin:14px 0 6px">Menyisipkan gambar</h3><p>Klik ikon 🖼 di toolbar tulisan. Setelah gambar diunggah, toolbar otomatis berubah menjadi <b>toolbar gambar</b>.</p>'
+    +'<h3 style="margin:14px 0 6px">Mengedit gambar</h3><p>Klik gambar mana saja di dalam editor untuk membuka <b>toolbar gambar</b>. Kamu bisa:</p>'
     +'<ul style="padding-left:20px;margin:6px 0 10px">'
-    +'<li><b>Seret gambar</b> langsung di editor untuk memindahkan secara bebas (bisa pakai jari juga di HP).</li>'
-    +'<li>Atur <b>ukuran, putaran, opasitas, bingkai (warna &amp; ketebalan), sudut, dan bayangan</b> lewat slider di toolbar.</li>'
-    +'<li>Klik tombol <b>kiri/tengah/kanan</b> untuk alignment, dan <b>wrap</b> untuk pilihan baris-baru vs teks-mengelilingi.</li>'
+    +'<li><b>Seret gambar</b> di editor untuk memindahkan bebas (bisa pakai jari di HP).</li>'
+    +'<li>Atur <b>ukuran, putaran, opasitas, bingkai (warna &amp; ketebalan), sudut, bayangan</b> lewat slider.</li>'
+    +'<li>Klik tombol <b>kiri/tengah/kanan</b> untuk posisi.</li>'
+    +'<li>Mode <b>wrap</b> lengkap seperti Google Docs / Word: <b>Inline</b>, <b>Square</b>, <b>Tight</b>, <b>Through</b>, <b>Top &amp; Bottom</b>, <b>Behind</b>, dan <b>In Front</b>.</li>'
     +'<li>Slider <b>X / Y</b> untuk menggeser posisi secara presisi.</li>'
-    +'<li><b>Reset</b> mengembalikan gambar ke default.</li>'
-    +'<li><b>Selesai</b> untuk kembali ke toolbar tulisan. <b>🗑</b> untuk hapus gambar.</li>'
-    +'</ul>'
-    +'<p>Setelah selesai, tekan <b>Simpan bab</b> agar semua perubahan tersimpan.</p>'
-    +'<h3 style="margin:14px 0 6px">Indikator & Mode Penulis</h3>'
-    +'<p>Di bar atas ada dua hal terpisah: <b>lampu indikator</b> <span class="save-light" style="vertical-align:middle"></span> hijau = tersimpan, merah = ada perubahan belum tersimpan; dan <b>tombol Mode Penulis</b> untuk menyalakan/mematikan alat edit.</p>'
-    +'<h3 style="margin:14px 0 6px">Impor dari PDF / Word</h3>'
-    +'<p>Buka <b>Impor dari PDF / Word</b> di Meja Penulis atau di halaman novel. Pilih file .docx / .pdf / .txt. Bab-bab dipecah otomatis dari judul seperti "Bab 1".</p>'
-    +'<h3 style="margin:14px 0 6px">Simpan otomatis & manual</h3>'
-    +'<p>Lampu hijau berarti tersimpan; lampu merah berarti belum. Atur <b>Auto-save ON/OFF</b> di <b>Pengaturan</b>. Shortcut: <b>Ctrl+S / Cmd+S</b>.</p>'
-    +'<h3 style="margin:14px 0 6px">Ada Masalah?/Masukan?</h3>'
-    +'<p>Kalau menemukan bug, punya ide, atau ingin memberi masukan, kirim email ke '
-    +'<a href="mailto:'+esc(mail)+'" style="color:var(--red);font-weight:800;text-decoration:underline">'+esc(mail)+'</a>.</p>'
+    +'<li><b>Reset</b> mengembalikan gambar ke default. <b>Selesai</b> untuk kembali ke toolbar tulisan. <b>🗑</b> untuk hapus gambar.</li>'
+    +'</ul><p>Setelah selesai, tekan <b>Simpan Isi</b> agar perubahan tersimpan.</p>'
+    +'<h3 style="margin:14px 0 6px">Indikator & Mode Penulis</h3><p>Di bar atas ada dua hal terpisah: <b>lampu indikator</b> <span class="save-light" style="vertical-align:middle"></span> hijau = tersimpan, merah = ada perubahan belum tersimpan; dan <b>tombol Mode Penulis</b> untuk menyalakan/mematikan alat edit.</p>'
+    +'<h3 style="margin:14px 0 6px">Logo Hollow Night</h3><p>Khusus Author yang sudah login: buka <b>Mode Penulis → menu titik tiga → Logo Hollow Night</b> atau tombol <b>Ganti Logo</b> di Meja Penulis. Unggah gambar PNG/JPG/SVG, lalu logo akan berubah di seluruh situs (header, hero beranda, favicon area).</p>'
+    +'<h3 style="margin:14px 0 6px">Impor dari PDF / Word</h3><p>Buka <b>Impor dari PDF / Word</b> di Meja Penulis atau di halaman novel. Pilih file .docx / .pdf / .txt. Bab-bab dipecah otomatis dari judul seperti "Bab 1".</p>'
+    +'<h3 style="margin:14px 0 6px">Simpan otomatis & manual</h3><p>Lampu hijau berarti tersimpan; lampu merah berarti belum. Atur <b>Auto-save ON/OFF</b> di <b>Pengaturan</b>. Shortcut: <b>Ctrl+S / Cmd+S</b>.</p>'
+    +'<h3 style="margin:14px 0 6px">Ada Masalah?/Masukan?</h3><p>Kalau menemukan bug, punya ide, atau ingin memberi masukan, kirim email ke <a href="mailto:'+esc(mail)+'" style="color:var(--red);font-weight:800;text-decoration:underline">'+esc(mail)+'</a>.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function aboutModal(){
-  openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel statis yang menyimpan konten di Supabase. Fitur: perpustakaan novel dengan cover, daftar bab bervolume, mode penulis, impor dokumen, editor kaya dengan toolbar gambar langsung (drag/rotate/free position), peta lokasi, lini masa, glosarium, dan lore dunia.</p>'
-    +'<p style="margin-top:10px">Versi 1.7 &middot; dibuat untuk para pencerita.</p>'
+  openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel statis dengan backend Supabase. Fitur: perpustakaan novel dengan cover, daftar bab bervolume, mode penulis, impor dokumen (docx/pdf/txt/md), editor kaya dengan toolbar gambar lengkap (drag/rotate/free position/7 mode wrap), peta lokasi dengan pin, lini masa, glosarium, lore dunia, dan pengaturan logo khusus Author.</p>'
+    +'<p style="margin-top:10px">Versi 1.8 &middot; dibuat untuk para pencerita.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function contactModal(){
@@ -1771,14 +1579,28 @@ function contactModal(){
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="ct-send">Kirim</button></div>');
 }
 function settingsModal(){
-  var theme=lsGet('hn-theme')||'auto';
-  var as=autoSave?'on':'off';
+  var theme=lsGet('hn-theme')||'auto';var as=autoSave?'on':'off';
   openModal(modalHead('Pengaturan','Sesuaikan tampilan web dan cara penyimpanan.')
     +field('Tema','<select class="in" id="st-theme"><option value="auto"'+(theme==='auto'?' selected':'')+'>Ikuti sistem</option><option value="light"'+(theme==='light'?' selected':'')+'>Terang</option><option value="dark"'+(theme==='dark'?' selected':'')+'>Gelap</option></select>','st-theme')
     +field('Ukuran huruf pembaca (px)','<input class="in" id="st-fs" type="number" min="15" max="26" value="'+(lsGet('hn-fs')||'18')+'">','st-fs')
     +'<div class="f"><label for="st-as">Auto-save (Mode Penulis)</label><select class="in" id="st-as"><option value="on"'+(as==='on'?' selected':'')+'>AKTIF — simpan otomatis setiap perubahan</option><option value="off"'+(as==='off'?' selected':'')+'>NONAKTIF — simpan hanya saat menekan tombol Simpan</option></select><p class="hint" style="margin:6px 0 0">Indikator lampu: <span class="save-light" style="vertical-align:middle"></span> hijau = tersimpan, <span class="save-light dirty" style="vertical-align:middle"></span> merah = ada perubahan belum tersimpan.</p></div>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Batal</button><button class="btn" type="button" data-act="st-save">Simpan</button></div>');
 }
+function logoSettingsModal(){
+  if(!admin){toast('Hanya Author yang bisa mengubah logo.');return}
+  var cur=currentLogo();
+  var isCustom=!!S.site.logo;
+  var h=modalHead('Logo Hollow Night','Khusus Author. Unggah gambar logo yang akan dipakai di seluruh situs (header, hero beranda, menu pop, dsb).')
+    +'<div class="logo-preview"><img id="lg-prev" src="'+esc(cur)+'" alt="Preview logo"></div>'
+    +'<p class="hint" style="margin-top:0">Disarankan PNG transparan atau SVG. Rasio ideal ~2:1 (misal 900×400). Ukuran maksimal sekitar 2 MB.</p>'
+    +'<div class="acts" style="margin-top:12px">'
+      +'<label class="btn gold sm" style="cursor:pointer"><input id="lg-file" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden>Unggah logo baru</label>'
+      +'<button class="btn ghost sm" type="button" data-act="logo-reset"'+(isCustom?'':' disabled')+'>Kembalikan ke default</button>'
+    +'</div>'
+    +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>';
+  openModal(h);
+}
+
 function roll(){
   var chs=chapters();if(!chs.length)return;
   var n=1+Math.floor(Math.random()*20),pick=n===20?chs[chs.length-1]:chs[Math.floor(Math.random()*chs.length)];
@@ -1817,11 +1639,7 @@ function importDialog(novelId){
         add.push({id:uid('c'),title:(r.querySelector('[data-k=t]').value.trim()||c.title),n:isNaN(n)?0:n,vol:vol,body:c.html,status:'draft',t:Date.now()+i});
       });
       if(!add.length){toast('Centang minimal satu bab.');return}
-      commit(function(d){
-        add.forEach(function(a){d.chapters.push(a)});
-        var nv=d.novels.find(function(x){return x.id===nid});
-        if(nv)nv.chapterIds=(nv.chapterIds||[]).concat(add.map(function(a){return a.id}));
-      },add.length+' bab ditambahkan sebagai draft');
+      commit(function(d){add.forEach(function(a){d.chapters.push(a)});var nv=d.novels.find(function(x){return x.id===nid});if(nv)nv.chapterIds=(nv.chapterIds||[]).concat(add.map(function(a){return a.id}))},add.length+' bab ditambahkan sebagai draft');
     }});
 }
 async function handleImport(files){
@@ -1849,18 +1667,13 @@ async function handleImport(files){
   save.hidden=false;
 }
 function siteEditor(){
-  openModal(modalHead('Sinopsis, tagline & profil')+field('Tagline di beranda','<input class="in" id="se-t" value="'+esc(S.site.tagline||'')+'" maxlength="120">','se-t')+field('Sinopsis (pisahkan paragraf dengan baris kosong)','<textarea class="in" id="se-s" rows="8">'+esc(S.site.synopsis||'')+'</textarea>','se-s')+field('Nama penulis (opsional)','<input class="in" id="se-a" value="'+esc(S.site.author||'')+'" maxlength="80">','se-a')+modalFoot('Simpan'),{
-    save:function(){var t=val('se-t').trim(),s=val('se-s').trim(),a=val('se-a').trim();commit(function(d){d.site.tagline=t;d.site.synopsis=s;d.site.author=a},'Sinopsis tersimpan')}
-  });
+  openModal(modalHead('Sinopsis, tagline & profil')+field('Tagline di beranda','<input class="in" id="se-t" value="'+esc(S.site.tagline||'')+'" maxlength="120">','se-t')+field('Sinopsis (pisahkan paragraf dengan baris kosong)','<textarea class="in" id="se-s" rows="8">'+esc(S.site.synopsis||'')+'</textarea>','se-s')+field('Nama penulis (opsional)','<input class="in" id="se-a" value="'+esc(S.site.author||'')+'" maxlength="80">','se-a')+modalFoot('Simpan'),{save:function(){var t=val('se-t').trim(),s=val('se-s').trim(),a=val('se-a').trim();commit(function(d){d.site.tagline=t;d.site.synopsis=s;d.site.author=a},'Sinopsis tersimpan')}});
 }
 
 document.addEventListener('click',function(ev){
   var a=ev.target.closest('[data-go]');
   if(a&&!ev.target.closest('[data-act]')){
-    if(pendingSave&&!autoSave){
-      if(!confirm('Ada perubahan belum disimpan. Tinggalkan halaman ini?')){ev.preventDefault();return}
-      pendingSave=false;
-    }
+    if(pendingSave&&!autoSave){if(!confirm('Ada perubahan belum disimpan. Tinggalkan halaman ini?')){ev.preventDefault();return}pendingSave=false}
     ev.preventDefault();closeModal();closeMenu();go(a.getAttribute('data-go'));return
   }
   var el=ev.target.closest('[data-act]');
@@ -1877,30 +1690,22 @@ document.addEventListener('click',function(ev){
     case 'novel-new':go('nbaru');break;
     case 'novel-edit':go('nubah-'+id);break;
     case 'novel-cancel':{var n=novel(id);go(n?'n-'+n.id:'baca');break}
-    case 'novel-del':armDelete(el,function(){
-      commit(function(d){
-        d.novels=d.novels.filter(function(n){return n.id!==id});
-        var ids=d.novels.reduce(function(a,n){return a.concat(n.chapterIds||[])},[]);
-        d.chapters=d.chapters.filter(function(c){return c.example||ids.indexOf(c.id)>=0});
-      },'Novel dihapus').then(function(ok){if(ok)go('baca')});
-    });break;
+    case 'novel-del':armDelete(el,function(){commit(function(d){d.novels=d.novels.filter(function(n){return n.id!==id});var ids=d.novels.reduce(function(a,n){return a.concat(n.chapterIds||[])},[]);d.chapters=d.chapters.filter(function(c){return c.example||ids.indexOf(c.id)>=0})},'Novel dihapus').then(function(ok){if(ok)go('baca')})});break;
     case 'novel-save-page':saveNovelFromPage();break;
     case 'ne-cover-clear':{novelCoverTemp='';var pv=document.getElementById('ne-cover-prev');if(pv){pv.src='';pv.hidden=true}break}
     case 'ch-new':{currentNovelId=el.getAttribute('data-novel')||currentNovelId;go('tulis');break}
-    case 'ch-edit':go('tulis-'+id);break;
+    case 'ch-edit-body':go('tulis-'+id);break;
+    case 'ch-edit-identity':chapterIdentityModal(id);break;
     case 'ch-cancel':{var cc=id?chById(id):null;var nid=cc?(novelOf(cc.id)||{}).id:currentNovelId;go(nid?'n-'+nid:'baca');break}
-    case 'ch-save-page':saveChapterFromPage();break;
+    case 'ch-save-body':saveChapterFromPage();break;
     case 'ch-del-from-editor':{var nid2=(novelOf(id)||{}).id;armDelete(el,function(){commit(function(d){d.chapters=d.chapters.filter(function(c){return c.id!==id});d.novels.forEach(function(n){n.chapterIds=(n.chapterIds||[]).filter(function(x){return x!==id})})},'Bab dihapus').then(function(ok){if(ok)go(nid2?'n-'+nid2:'baca')})});break}
     case 'ch-pub':{var pc=chById(id);if(pc){var ns=pc.status==='draft'?'published':'draft';commit(function(d){d.chapters.find(function(x){return x.id===id}).status=ns},ns==='published'?'Bab diterbitkan':'Bab dijadikan draft')}break}
     case 'ch-del':armDelete(el,function(){commit(function(d){d.chapters=d.chapters.filter(function(c){return c.id!==id});d.novels.forEach(function(n){n.chapterIds=(n.chapterIds||[]).filter(function(x){return x!==id})})},'Bab dihapus')});break;
     case 'import':importDialog(el.getAttribute('data-novel')||currentNovelId||(novels()[0]||{}).id);break;
     case 'site-edit':siteEditor();break;
-    case 'clear-ex':armDelete(el,function(){commit(function(d){
-      d.chapters=d.chapters.filter(function(c){return !c.example});
-      d.lore=d.lore.filter(function(e){return !e.example});
-      var valid={};d.chapters.forEach(function(c){valid[c.id]=1});
-      d.novels.forEach(function(n){n.chapterIds=(n.chapterIds||[]).filter(function(x){return valid[x]})});
-    },'Contoh dihapus')});break;
+    case 'logo-settings':logoSettingsModal();break;
+    case 'logo-reset':{commit(function(d){d.site.logo=''},'Logo dikembalikan ke default').then(function(ok){if(ok){lsSet('hn-logo-cache',null);logoSettingsModal()}});break}
+    case 'clear-ex':armDelete(el,function(){commit(function(d){d.chapters=d.chapters.filter(function(c){return !c.example});d.lore=d.lore.filter(function(e){return !e.example});var valid={};d.chapters.forEach(function(c){valid[c.id]=1});d.novels.forEach(function(n){n.chapterIds=(n.chapterIds||[]).filter(function(x){return valid[x]})})},'Contoh dihapus')});break;
     case 'lore-new':loreEditor(el.getAttribute('data-t'),null);break;
     case 'lore-edit':{var e=entry(id);if(e)loreEditor(e.type,id);break}
     case 'lore-del':armDelete(el,function(){var e=entry(id),pr=route;if(e&&route==='e-'+id)route=TYPES[e.type].tab;commit(function(d){d.lore=d.lore.filter(function(q){return q.id!==id})},'Dihapus').then(function(ok){if(!ok&&route!==pr){route=pr}render({keep:true})})});break;
@@ -1910,12 +1715,12 @@ document.addEventListener('click',function(ev){
     case 'pin-del':{var ix=+el.getAttribute('data-i'),eid=route.slice(2);armDelete(el,function(){commit(function(d){d.lore.find(function(q){return q.id===eid}).pins.splice(ix,1)},'Pin dihapus')});break}
     case 'map-click':{if(!(admin&&pinMode))break;if(ev.target.closest('.pin'))break;var r=el.getBoundingClientRect(),x=clamp((ev.clientX-r.left)/r.width*100,1,99),y=clamp((ev.clientY-r.top)/r.height*100,3,99);pinEditor(route.slice(2),-1,+x.toFixed(2),+y.toFixed(2));break}
     case 'rt':rtCmd(el.getAttribute('data-cmd'));break;
-    case 'img-done':exitImageMode();toast('Selesai mengatur gambar. Jangan lupa Simpan bab.');break;
+    case 'img-done':exitImageMode();toast('Selesai mengatur gambar. Jangan lupa Simpan Isi.');break;
     case 'img-delete':imgDeleteNow();break;
     case 'img-alt':imgAskAlt();break;
     case 'img-reset':imgReset();break;
     case 'img-align':{if(!ieImg)break;ieImg.setAttribute('data-align',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
-    case 'img-wrap':{if(!ieImg)break;ieImg.setAttribute('data-wrap',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
+    case 'img-wrap':{if(!ieImg)break;ieImg.setAttribute('data-wrap',el.getAttribute('data-v'));var fig=ieImg.closest('figure');if(fig)fig.setAttribute('data-wrap',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
     case 'img-shadow':{if(!ieImg)break;ieImg.setAttribute('data-shadow',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
     case 'img-clear':{modalImg='';var pv=document.getElementById('if-prev');if(pv)pv.hidden=true;break}
     case 'pf-clear':{commit(function(d){d.site.avatar=''},'Foto profil dihapus').then(function(){profileModal()});break}
@@ -1930,10 +1735,8 @@ document.addEventListener('click',function(ev){
 document.addEventListener('click',function(ev){
   var img=ev.target.closest('.rt-area img');
   if(!img)return;
-  // Don't intercept during active drag
   if(imgDragState)return;
-  ev.preventDefault();
-  enterImageMode(img);
+  ev.preventDefault();enterImageMode(img);
 },true);
 document.addEventListener('input',function(ev){
   var t=ev.target;
@@ -1944,7 +1747,6 @@ document.addEventListener('input',function(ev){
     document.execCommand(cmd,false,col);
   }
   if(t.id==='q')filterLore();
-  // Image toolbar slider inputs (live)
   if(!ieImg)return;
   if(t.id==='ie-size'){ieImg.style.width=t.value+'%';setTxt('ie-sizev',t.value+'%')}
   else if(t.id==='ie-rot'){ieImg.setAttribute('data-rotate',t.value);applyImageStyle();setTxt('ie-rotv',t.value+'°')}
@@ -1959,30 +1761,25 @@ document.addEventListener('change',function(ev){
   var t=ev.target;
   if(t.matches('.rt-sel[data-act="rt-sel"]')){rtSel(t.getAttribute('data-cmd'),t.value);return}
   if(t.id==='imp-file'&&t.files.length)handleImport(t.files);
-  if(t.id==='imp-novel'){var nv=novel(t.value);if(nv&&impChunks.length){var start=nextNumForNovel(nv.id);var used=0;document.querySelectorAll('.imp-row').forEach(function(r){var ci=+r.getAttribute('data-i');var c=impChunks[ci];var nInput=r.querySelector('[data-k=n]');if(c&&c.n==null){nInput.value=start+used;used++}else if(c){nInput.value=c.n}})}}
-  if(t.id==='if-file'&&t.files[0]){
-    readImage(t.files[0],1500,.82).then(function(u){
-      if(u.length>2200000){toast('Gambar masih terlalu besar. Pakai gambar yang lebih kecil.');return}
-      modalImg=u;var pv=document.getElementById('if-prev');if(pv){pv.src=u;pv.hidden=false}
-    }).catch(function(){toast('Gambar tidak bisa dibaca.')});
-  }
-  if(t.id==='pf-file'&&t.files[0]){
-    readImage(t.files[0],512,.85).then(function(u){
-      commit(function(d){d.site.avatar=u},'Foto profil diperbarui').then(function(){profileModal()});
-    }).catch(function(){toast('Gambar tidak bisa dibaca.')});
-  }
-  if(t.id==='ne-cover-file'&&t.files[0]){
-    readImage(t.files[0],900,.85).then(function(u){
-      novelCoverTemp=u;var pv=document.getElementById('ne-cover-prev');if(pv){pv.src=u;pv.hidden=false}
-    }).catch(function(){toast('Gambar tidak bisa dibaca.')});
+  if(t.id==='imp-novel'){var nv=novel(t.value);if(nv&&impChunks.length){var start=nextNumForNovel(nv.id);var used=0;document.querySelectorAll('.imp-row').forEach(function(r){var ci=+r.getAttribute('data-i');var c=impChunks[ci];var nInput=r.querySelector('[data-k=n]');if(c&&c.n==null){nInput.value=start+used;used++}else if(c){nInput.value=c.n}})}}}
+  if(t.id==='if-file'&&t.files[0]){readImage(t.files[0],1500,.82).then(function(u){if(u.length>2200000){toast('Gambar masih terlalu besar. Pakai gambar yang lebih kecil.');return}modalImg=u;var pv=document.getElementById('if-prev');if(pv){pv.src=u;pv.hidden=false}}).catch(function(){toast('Gambar tidak bisa dibaca.')})}
+  if(t.id==='pf-file'&&t.files[0]){readImage(t.files[0],512,.85).then(function(u){commit(function(d){d.site.avatar=u},'Foto profil diperbarui').then(function(){profileModal()})}).catch(function(){toast('Gambar tidak bisa dibaca.')})}
+  if(t.id==='ne-cover-file'&&t.files[0]){readImage(t.files[0],900,.85).then(function(u){novelCoverTemp=u;var pv=document.getElementById('ne-cover-prev');if(pv){pv.src=u;pv.hidden=false}}).catch(function(){toast('Gambar tidak bisa dibaca.')})}
+  if(t.id==='lg-file'&&t.files[0]){
+    readImage(t.files[0],900,.92).then(function(u){
+      if(u.length>2400000){toast('Logo masih terlalu besar. Pakai gambar yang lebih kecil.');return}
+      var pv=document.getElementById('lg-prev');if(pv)pv.src=u;
+      commit(function(d){d.site.logo=u},'Logo diperbarui').then(function(ok){
+        if(ok){lsSet('hn-logo-cache',u);toast('Logo tersimpan & diterapkan ke seluruh situs.')}
+        else{toast('Gagal menyimpan logo.')}
+      });
+    }).catch(function(){toast('Gambar logo tidak bisa dibaca.')});
   }
 });
 document.addEventListener('mousedown',function(ev){if(ev.target.closest('.rtb'))ev.preventDefault()});
 document.addEventListener('keydown',function(ev){
   if(ev.key==='Escape'){closeModal();closeMenu();if(ieImg)exitImageMode()}
-  if((ev.ctrlKey||ev.metaKey)&&(ev.key==='s'||ev.key==='S')){
-    if(canEdit&&(pendingSave||autoSave===false)){ev.preventDefault();persistNow()}
-  }
+  if((ev.ctrlKey||ev.metaKey)&&(ev.key==='s'||ev.key==='S')){if(canEdit&&(pendingSave||autoSave===false)){ev.preventDefault();persistNow()}}
 });
 document.addEventListener('paste',function(ev){
   var a=ev.target.closest&&ev.target.closest('.rt-area');if(!a)return;
@@ -1994,30 +1791,19 @@ document.addEventListener('paste',function(ev){
 });
 function filterLore(){
   var q=((document.getElementById('q')||{}).value||'').toLowerCase().trim(),c=(document.querySelector('[data-act=cat].on')||{getAttribute:function(){return ''}}).getAttribute('data-c');
-  document.querySelectorAll('[data-s]').forEach(function(n){
-    var ok=(!q||n.getAttribute('data-s').indexOf(q)>-1)&&(!c||n.getAttribute('data-cat')===c);
-    n.hidden=!ok;
-  });
-  document.querySelectorAll('[data-letter]').forEach(function(h){
-    var n=h.nextElementSibling,any=false;while(n&&!n.hasAttribute('data-letter')){if(!n.hidden)any=true;n=n.nextElementSibling}
-    h.hidden=!any;
-  });
+  document.querySelectorAll('[data-s]').forEach(function(n){var ok=(!q||n.getAttribute('data-s').indexOf(q)>-1)&&(!c||n.getAttribute('data-cat')===c);n.hidden=!ok});
+  document.querySelectorAll('[data-letter]').forEach(function(h){var n=h.nextElementSibling,any=false;while(n&&!n.hasAttribute('data-letter')){if(!n.hidden)any=true;n=n.nextElementSibling}h.hidden=!any});
 }
 var tick=false;
 window.addEventListener('scroll',function(){if(tick)return;tick=true;requestAnimationFrame(function(){tick=false;updateProg()})},{passive:true});
 window.addEventListener('hashchange',function(){
   var h=location.hash.slice(1);
   if(h&&h!==route&&valid(h)){
-    if(pendingSave&&!autoSave){
-      if(!confirm('Ada perubahan belum disimpan. Tinggalkan halaman ini?')){location.hash=route;return}
-      pendingSave=false;
-    }
+    if(pendingSave&&!autoSave){if(!confirm('Ada perubahan belum disimpan. Tinggalkan halaman ini?')){location.hash=route;return}pendingSave=false}
     pinMode=false;selPin=-1;ieImg=null;route=h;render();
   }
 });
-window.addEventListener('beforeunload',function(ev){
-  if(pendingSave&&!autoSave){ev.preventDefault();ev.returnValue='';return ''}
-});
+window.addEventListener('beforeunload',function(ev){if(pendingSave&&!autoSave){ev.preventDefault();ev.returnValue='';return ''}});
 function applySession(session){
   var a=!!(session&&session.user&&session.user.id===AUTHOR_UID);
   if(session&&!a){db.auth.signOut();return}
@@ -2037,12 +1823,14 @@ window.hnApp={
   chapters:function(){return chapters().filter(function(c){return !c.example}).map(function(c){return {id:c.id,title:c.title,vol:c.vol,n:c.n,status:c.status==='draft'?'draft':'published'}})},
   create:function(){if(canEdit){admin=true;go('tulis')}},
   edit:function(id){if(canEdit&&chById(id))go('tulis-'+id)},
+  editIdentity:function(id){if(canEdit&&chById(id))chapterIdentityModal(id)},
   togglePublish:function(id){var c=chById(id);if(!c||!canEdit)return;var ns=c.status==='draft'?'published':'draft';commit(function(d){d.chapters.find(function(x){return x.id===id}).status=ns},ns==='published'?'Bab diterbitkan':'Bab dijadikan draft')},
   remove:function(id){if(!canEdit)return;commit(function(d){d.chapters=d.chapters.filter(function(c){return c.id!==id});d.novels.forEach(function(n){n.chapterIds=(n.chapterIds||[]).filter(function(x){return x!==id})})},'Bab dihapus')},
   toggleAdmin:function(){admin=!admin;lsSet('hn-admin',admin?'1':'0');pinMode=false;render({keep:true});notify();return admin},
   save:function(){return persistNow()},
   hasPending:function(){return pendingSave},
-  autoSave:function(v){if(v===undefined)return autoSave;autoSave=!!v;lsSet('hn-autosave',autoSave?'1':'0');render({keep:true});return autoSave}
+  autoSave:function(v){if(v===undefined)return autoSave;autoSave=!!v;lsSet('hn-autosave',autoSave?'1':'0');render({keep:true});return autoSave},
+  openLogoSettings:function(){logoSettingsModal()}
 };
 (function(){
   var h=(location.hash||'').slice(1);
@@ -2172,7 +1960,8 @@ window.hnApp={
         <p>${escapeHTML(c.vol || "No volume")}${c.n ? " — Chapter " + escapeHTML(c.n) : ""}</p>
         <p>Status: <strong>${c.status === "draft" ? "draft" : "published"}</strong></p>
         <div class="hn-author-actions">
-          <button type="button" data-hn-act="edit" data-id="${escapeHTML(c.id)}">EDIT</button>
+          <button type="button" data-hn-act="edit" data-id="${escapeHTML(c.id)}">EDIT ISI</button>
+          <button type="button" data-hn-act="identity" data-id="${escapeHTML(c.id)}">UBAH BAB</button>
           <button type="button" data-hn-act="pub" data-id="${escapeHTML(c.id)}">${c.status === "draft" ? "PUBLISH" : "UNPUBLISH"}</button>
           <button type="button" data-hn-act="del" data-id="${escapeHTML(c.id)}">DELETE</button>
         </div>
@@ -2232,6 +2021,7 @@ window.hnApp={
     const id = b.dataset.id;
     const act = b.dataset.hnAct;
     if (act === "edit") { modal.hidden = true; api().edit(id); }
+    else if (act === "identity") { modal.hidden = true; api().editIdentity(id); }
     else if (act === "pub") { api().togglePublish(id); }
     else if (act === "del") { if (confirm("Hapus chapter ini secara permanen?")) api().remove(id); }
   });
