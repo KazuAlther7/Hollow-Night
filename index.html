@@ -1,13 +1,34 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
-/* Hollow Night v2.0 — sticky editor toolbars attached under the top bar */
+/* Hollow Night v2.1 — Morphing Top Bar & Fixed Toolbars */
 .rt{border:0;background:transparent;overflow:visible;display:flex;flex-direction:column;gap:12px}
-.rt-bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 68px);border:1px solid var(--paper-edge);border-radius:12px;box-shadow:0 5px 18px rgba(0,0,0,.13);padding:10px;background:var(--paper);gap:5px;z-index:15}
+.rt-bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);border:1px solid var(--paper-edge);border-radius:12px;box-shadow:0 5px 18px rgba(0,0,0,.13);padding:10px;background:var(--paper);gap:5px;z-index:15}
 .rt-bar[data-mode="image"]{border:1px solid var(--gold);border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.16);background:var(--paper)}
-.rt-area{background:var(--field);border:1px solid var(--paper-edge);border-radius:8px;box-shadow:inset 0 1px 3px rgba(0,0,0,.04);min-height:420px;position:relative}
-.editor-page .rt-bar{top:calc(env(safe-area-inset-top,0px) + 68px)}
-@media(max-width:680px){.rt-bar{top:calc(env(safe-area-inset-top,0px) + 116px);padding:7px}.rt-area{padding:14px;min-height:360px}.img-group{max-width:100%;height:auto;min-height:38px;flex-wrap:wrap}.img-slider input[type=range]{width:78px}}
-@media(max-width:760px){.rt-bar{top:calc(env(safe-area-inset-top,0px) + 116px)}}
+.rt-area{background:var(--field);border:1px solid var(--paper-edge);border-radius:8px;box-shadow:inset 0 1px 3px rgba(0,0,0,.04);min-height:420px;position:relative;display:flow-root}
+.editor-page .rt-bar{top:calc(env(safe-area-inset-top,0px) + 12px)}
+@media(max-width:680px){.rt-bar{top:calc(env(safe-area-inset-top,0px) + 12px);padding:7px}.rt-area{padding:14px;min-height:360px}.img-group{max-width:100%;height:auto;min-height:38px;flex-wrap:wrap}.img-slider input[type=range]{width:78px}}
 
+/* Morphing Top Bar Styles */
+body.is-editing .top { pointer-events: none; }
+body.is-editing .top .bar { pointer-events: auto; width: fit-content; margin: 0 auto; padding: 6px 12px; gap: 12px; border-radius: 999px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+body.is-editing .brand, body.is-editing .tabs { display: none; }
+body.is-editing .top { top: calc(env(safe-area-inset-top,0px) + 12px); position: fixed; left: 50%; transform: translateX(-50%); width: auto; z-index: 50; }
+body.is-editing .morph-menu-btn { display: flex !important; }
+body.is-editing .admin-tools { display: flex; gap: 8px; background: rgba(0,0,0,0.3); padding: 4px; border-radius: 999px; }
+body:not(.is-editing) .admin-tools { display: flex; align-items: center; gap: 8px; }
+.morph-menu-btn { display: none; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 0; color: var(--night-ink); cursor: pointer; }
+.morph-menu-btn:hover { background: rgba(255,255,255,0.2); }
+
+/* Floating Action Buttons */
+.hn-float-btn { position: fixed; z-index: 100; border-radius: 999px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-family: var(--f-ui); transition: transform 0.2s; }
+.hn-float-btn:hover { transform: translateY(-2px); }
+#hn-back-btn { bottom: 24px; left: 24px; background: var(--paper); color: var(--ink); border: 2px solid var(--paper-edge); padding: 10px 18px; font-size: 0.9rem; }
+#hn-format-btn { bottom: 24px; right: 24px; background: #8b5cf6; color: white; border: 0; width: 56px; height: 56px; padding: 0; }
+#hn-format-btn svg { width: 24px; height: 24px; }
+
+/* Text Wrapping Fixes */
+.rt-area figure { display: block; margin: 1em 0; }
+.rt-area img[data-wrap="wrap"], .rt-area img[data-wrap="tight"], .rt-area img[data-wrap="through"] { float: left; margin: 0.5em 1.5em 0.5em 0; }
+.rt-area img[data-align="right"][data-wrap="wrap"], .rt-area img[data-align="right"][data-wrap="tight"], .rt-area img[data-align="right"][data-wrap="through"] { float: right; margin: 0.5em 0 0.5em 1.5em; }
 </style></head><body>
 <title>Hollow Night</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -78,8 +99,8 @@ p{margin:0}
 .kicker{font:800 .72rem/1 var(--f-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
 .num{font-variant-numeric:tabular-nums}
 
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;padding-top:12px;max-width:1120px;margin:0 auto}
-.bar{position:relative;display:flex;align-items:center;gap:8px;background:var(--night);color:var(--night-ink);border-radius:16px;padding:6px 10px;box-shadow:var(--shadow);overflow:visible}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;padding-top:12px;max-width:1120px;margin:0 auto;transition:all .4s ease}
+.bar{position:relative;display:flex;align-items:center;gap:8px;background:var(--night);color:var(--night-ink);border-radius:16px;padding:6px 10px;box-shadow:var(--shadow);overflow:visible;transition:all .4s ease}
 .brand{display:block;flex:none;padding:4px 6px}
 .brand img{display:block;height:38px;width:auto}
 .tabs{display:flex;gap:2px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none;padding:2px}
@@ -218,7 +239,7 @@ button.chip{background:transparent}
 .reader header{text-align:center;margin-bottom:30px}
 .reader header h1{font-size:clamp(1.7rem,5vw,2.4rem);margin-top:10px}
 .orn{display:block;margin:14px auto 0;width:150px;height:14px;color:var(--red)}
-.body{font-family:var(--f-read);font-size:var(--fs,18px);line-height:1.85;hyphens:auto;overflow-wrap:break-word;position:relative}
+.body{font-family:var(--f-read);font-size:var(--fs,18px);line-height:1.85;hyphens:auto;overflow-wrap:break-word;position:relative;display:flow-root}
 .body p{margin:0 0 1.05em}
 .reader .body>p:first-child::first-letter{float:left;font:400 3.5em/.82 var(--f-display);padding:.07em .1em 0 0;color:var(--red)}
 .body h2{font-size:1.35em;margin:1.6em 0 .6em;text-align:center}
@@ -309,7 +330,7 @@ select.in{appearance:auto}
 .md .hint{color:var(--ink-soft);font-size:.92rem;margin-bottom:16px}
 .mfoot{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:8px}
 .rt{border:1.5px solid var(--paper-edge);border-radius:8px;background:var(--field);overflow:visible;position:relative}
-.rt-bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border:1px solid var(--paper-edge);border-bottom-width:1px;background:var(--paper);align-items:center;position:sticky;top:calc(env(safe-area-inset-top,0px) + 68px);z-index:15;transition:background .2s;border-radius:12px 12px 8px 8px;box-shadow:0 5px 18px rgba(0,0,0,.13);margin:-1px -1px 0}
+.rt-bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border:1px solid var(--paper-edge);border-bottom-width:1px;background:var(--paper);align-items:center;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:15;transition:background .2s;border-radius:12px 12px 8px 8px;box-shadow:0 5px 18px rgba(0,0,0,.13);margin:-1px -1px 0}
 .rt-bar[data-mode="image"]{background:linear-gradient(180deg,rgba(242,193,78,.28),var(--paper));border-color:var(--gold)}
 .rtb{min-width:34px;min-height:34px;padding:0 8px;border:1.5px solid transparent;background:transparent;border-radius:6px;font:700 .85rem/1 var(--f-ui);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);transition:background .12s}
 .rtb:hover{background:rgba(42,27,18,.08)}
@@ -326,7 +347,7 @@ select.in{appearance:auto}
 .rt-color-btn input[type=color]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
 .rt-color-btn .sw{display:inline-flex;flex-direction:column;align-items:center;line-height:1;gap:0}
 .rt-color-btn .sw::after{content:"";width:16px;height:3px;background:var(--sw,#B3372B);border-radius:2px;margin-top:1px}
-.rt-area{min-height:280px;max-height:65vh;overflow-y:auto;padding:16px 18px;font-family:var(--f-read);font-size:1.02rem;line-height:1.75;outline:0;position:relative;border-radius:0 0 8px 8px}
+.rt-area{min-height:280px;max-height:65vh;overflow-y:auto;padding:16px 18px;font-family:var(--f-read);font-size:1.02rem;line-height:1.75;outline:0;position:relative;border-radius:0 0 8px 8px;display:flow-root}
 .rt-area:focus{background:rgba(255,255,255,.3)}
 .rt-area p{margin:0 0 .9em}
 .rt-area h1{font-size:1.9rem;margin:1em 0 .5em;text-align:left;font-family:var(--f-display)}
@@ -337,22 +358,11 @@ select.in{appearance:auto}
 .rt-area ul,.rt-area ol{padding-left:1.6em;margin:0 0 1em}
 .rt-area hr{border:0;height:1.5em;text-align:center;margin:1em 0}
 .rt-area hr::after{content:"* * *";letter-spacing:.3em;color:var(--red)}
-.rt-area figure{margin:1em 0;display:contents}
+.rt-area figure{margin:1em 0;display:block;overflow:visible}
 .rt-area img{cursor:pointer;transition:outline .15s;max-width:100%;height:auto;vertical-align:middle;user-select:none;-webkit-user-drag:none;border-radius:6px}
 .rt-area img:hover{outline:2px solid rgba(242,193,78,.7);outline-offset:2px}
 .rt-area img.sel{outline:2px solid var(--red);outline-offset:2px;cursor:grab}
 .rt-area img.sel.dragging{cursor:grabbing;outline-color:var(--gold)}
-.rt-area img[data-wrap="none"], .rt-area img:not([data-wrap]){display:block;margin:1em auto}
-.rt-area img[data-wrap="inline"]{display:inline-block;margin:0 .3em;vertical-align:middle}
-.rt-area img[data-wrap="wrap"][data-align="left"]{float:left;margin:.3em 1em .5em 0}
-.rt-area img[data-wrap="wrap"][data-align="right"]{float:right;margin:.3em 0 .5em 1em}
-.rt-area img[data-wrap="tight"][data-align="left"]{float:left;margin:.3em 1em .5em 0;shape-outside:margin-box}
-.rt-area img[data-wrap="tight"][data-align="right"]{float:right;margin:.3em 0 .5em 1em;shape-outside:margin-box}
-.rt-area img[data-wrap="through"][data-align="left"]{float:left;margin:.3em 1em .5em 0}
-.rt-area img[data-wrap="through"][data-align="right"]{float:right;margin:.3em 0 .5em 1em}
-.rt-area img[data-wrap="top-bottom"]{display:block;clear:both;margin:1em auto}
-.rt-area img[data-wrap="behind"]{position:absolute;z-index:0}
-.rt-area img[data-wrap="front"]{position:absolute;z-index:10}
 .rt-area a{color:var(--red);text-decoration:underline}
 
 .rt-bar .img-tools-wrap{display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%}
@@ -368,7 +378,6 @@ select.in{appearance:auto}
 .img-btn-group button svg{width:17px;height:17px}
 .img-tools-help{font:600 .74rem/1.4 var(--f-ui);color:var(--ink-soft);width:100%;margin-top:2px}
 
-/* Fixed overlay handles for free transform */
 #hn-img-overlay{position:fixed;pointer-events:none;z-index:120;box-sizing:border-box;outline:1.5px solid #4285f4;outline-offset:0}
 #hn-img-overlay .hn-h{position:absolute;width:11px;height:11px;background:#fff;border:1.5px solid #4285f4;border-radius:50%;pointer-events:auto;box-sizing:border-box;box-shadow:0 1px 3px rgba(0,0,0,.35)}
 #hn-img-overlay .hn-nw{left:-6px;top:-6px;cursor:nwse-resize}
@@ -396,19 +405,10 @@ select.in{appearance:auto}
   .ff{opacity:.7}
 }
 
-.reader .body figure{display:contents}
+.reader .body figure{display:block;margin:1.4em 0;overflow:visible}
 .reader .body img{max-width:100%;height:auto;border-radius:6px;vertical-align:middle}
-.reader .body img[data-wrap="none"], .reader .body img:not([data-wrap]){display:block;margin:1em auto}
-.reader .body img[data-wrap="inline"]{display:inline-block;margin:0 .3em;vertical-align:middle}
-.reader .body img[data-wrap="wrap"][data-align="left"]{float:left;margin:.3em 1em .5em 0}
-.reader .body img[data-wrap="wrap"][data-align="right"]{float:right;margin:.3em 0 .5em 1em}
-.reader .body img[data-wrap="tight"][data-align="left"]{float:left;margin:.3em 1em .5em 0}
-.reader .body img[data-wrap="tight"][data-align="right"]{float:right;margin:.3em 0 .5em 1em}
-.reader .body img[data-wrap="through"][data-align="left"]{float:left;margin:.3em 1em .5em 0}
-.reader .body img[data-wrap="through"][data-align="right"]{float:right;margin:.3em 0 .5em 1em}
-.reader .body img[data-wrap="top-bottom"]{display:block;clear:both;margin:1em auto}
-.reader .body img[data-wrap="behind"]{position:absolute;z-index:0}
-.reader .body img[data-wrap="front"]{position:absolute;z-index:10}
+.reader .body img[data-wrap="wrap"], .reader .body img[data-wrap="tight"], .reader .body img[data-wrap="through"] { float: left; margin: 0.5em 1.5em 0.5em 0; }
+.reader .body img[data-align="right"][data-wrap="wrap"], .reader .body img[data-align="right"][data-wrap="tight"], .reader .body img[data-align="right"][data-wrap="through"] { float: right; margin: 0.5em 0 0.5em 1.5em; }
 .rtb[data-cmd=image]{padding:0 10px;font-size:.78rem}
 .rtb[data-cmd=link]{padding:0 10px}
 .profile-avatar{width:120px;height:120px;margin:0 auto 14px;border-radius:50%;overflow:hidden;border:3px solid var(--gold);background:var(--night);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.3)}
@@ -437,7 +437,7 @@ select.in{appearance:auto}
 .editor-page .rd-tools{position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px);z-index:10;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line)}
 </style>
 <div id="app"></div>
-<script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": "", "avatar": ""}, "novels": [], "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
+<script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": "", "avatar": "", "logos": {"home": "", "top": ""}}, "novels": [], "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
 <script id="hn-app">
 (function(){
 'use strict';
@@ -456,8 +456,8 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 function paras(t){return String(t||'').split(/\n{2,}/).map(function(s){return s.trim()}).filter(Boolean)}
 var S;
 try{S=JSON.parse(document.getElementById('hn-data').textContent)}catch(e){S=null}
-if(!S||!S.chapters){S={v:1,site:{tagline:'',synopsis:'',author:'',avatar:''},novels:[],chapters:[],lore:[]}}
-S.site=S.site||{};S.site.avatar=S.site.avatar||'';S.lore=S.lore||[];S.novels=S.novels||[];
+if(!S||!S.chapters){S={v:1,site:{tagline:'',synopsis:'',author:'',avatar:'',logos:{home:'',top:''}},novels:[],chapters:[],lore:[]}}
+S.site=S.site||{};S.site.avatar=S.site.avatar||'';S.site.logos=S.site.logos||{home:'',top:''};S.lore=S.lore||[];S.novels=S.novels||[];
 function migrateNovels(){
   if(!S.novels.length && S.chapters.length){
     S.novels.push({
@@ -635,9 +635,17 @@ function curTab(){
   return route;
 }
 function topbar(){
-  var tab=curTab(),h='<header class="top"><div class="bar"><a class="brand" href="#home" data-go="home" aria-label="Hollow Night, beranda"><img src="'+esc(S.site.logo||LOGO)+'" alt="Hollow Night"></a><nav class="tabs" aria-label="Menu utama">';
+  var tab=curTab(),h='<header class="top"><div class="bar">';
+  
+  h+='<button class="morph-menu-btn" data-act="toggle-menu-focus" aria-label="Menu">'+icon('dots')+'</button>';
+  
+  h+='<a class="brand" href="#home" data-go="home" aria-label="Hollow Night, beranda"><img src="'+esc(S.site.logos?.top||S.site.logo||LOGO)+'" alt="Hollow Night"></a>';
+  
+  h+='<nav class="tabs" aria-label="Menu utama">';
   TABS.forEach(function(t){h+='<a class="tab" href="#'+t[0]+'" data-go="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'>'+icon(t[2])+'<span>'+t[1]+'</span></a>'});
   h+='</nav>';
+  
+  h+='<div class="admin-tools">';
   if(canEdit){
     var lightCls = pendingSave ? 'save-light dirty' : 'save-light';
     var lightTitle = pendingSave ? 'Ada perubahan belum disimpan' : 'Semua perubahan tersimpan';
@@ -648,6 +656,8 @@ function topbar(){
       h+='<button class="adm saveall" type="button" data-act="save-now" title="Simpan semua perubahan sekarang">'+icon('upload')+'<span>Simpan</span></button>';
     }
   }
+  h+='</div>';
+  
   h+=moreMenu();
   if(route.indexOf('b-')===0)h+='<div class="prog" id="prog"></div>';
   return h+'</div></header>';
@@ -699,7 +709,7 @@ function vHome(){
   else cta+='<a class="btn gold" href="#baca" data-go="baca">'+icon('book')+'Buka perpustakaan</a>';
   cta+='<button class="btn nightghost" type="button" data-act="roll"><span class="d20" id="d20" style="display:inline-flex;width:22px;height:22px">'+D20+'</span>Lempar d20</button>';
   var syn=paras(S.site.synopsis).map(function(p){return '<p>'+esc(p)+'</p>'}).join('')||'<p>Sinopsis belum ditulis.</p>';
-  var h='<section class="hero"><div class="scene" aria-hidden="true">'+scene()+'</div><div class="hero-in"><img class="logo-big" src="'+esc(S.site.logo||LOGO)+'" alt="Hollow Night"><p class="tag">'+esc(S.site.tagline||'')+'</p><div class="cta">'+cta+'</div><div class="rollout" id="rollout" aria-live="polite"></div></div></section>';
+  var h='<section class="hero"><div class="scene" aria-hidden="true">'+scene()+'</div><div class="hero-in"><img class="logo-big" src="'+esc(S.site.logos?.home||S.site.logo||LOGO)+'" alt="Hollow Night"><p class="tag">'+esc(S.site.tagline||'')+'</p><div class="cta">'+cta+'</div><div class="rollout" id="rollout" aria-live="polite"></div></div></section>';
   if(admin)h+=deskPanel();
   h+='<div class="cols"><section class="sheet taped syn"><div class="sec-h"><h2>Sinopsis</h2>'+(admin?'<button class="btn ghost sm" type="button" data-act="site-edit">Ubah</button>':'')+'</div>'+syn+'</section>';
   h+='<section><div class="sec-h"><h2>Novel terbaru</h2><a class="kicker" href="#baca" data-go="baca">Semua novel</a></div>';
@@ -938,7 +948,41 @@ function render(opts){
   opts=opts||{};var y=window.scrollY;
   var body;
   try{body=view()}catch(err){console.error(err);body='<section class="sheet"><h1>Ups</h1><p>Halaman ini gagal dimuat.</p></section>'}
+  
+  var isEditingMode = route.indexOf('tulis')===0 || route.indexOf('b-')===0 || route.indexOf('babmeta-')===0;
+  document.body.classList.toggle('is-editing', isEditingMode);
+  
   APP.innerHTML=topbar()+'<main class="shell" id="main">'+body+'</main>'+footer();
+  
+  var fb = document.getElementById('hn-back-btn');
+  var fbtn = document.getElementById('hn-format-btn');
+  
+  if(route.indexOf('tulis')===0 || route.indexOf('babmeta-')===0) {
+      if(!fb) { fb=document.createElement('button'); fb.id='hn-back-btn'; fb.className='hn-float-btn'; document.body.appendChild(fb); }
+      fb.innerHTML=icon('back')+' Kembali';
+      var nid = route.indexOf('tulis')===0 ? (chById(route.slice(6))? (novelOf(route.slice(6))||{}).id : currentNovelId) : ((novelOf(route.slice(8))||{}).id);
+      fb.onclick = function(){ go(nid ? 'n-'+nid : 'baca'); };
+      fb.style.display = 'flex';
+  } else if(route.indexOf('b-')===0) {
+      if(!fb) { fb=document.createElement('button'); fb.id='hn-back-btn'; fb.className='hn-float-btn'; document.body.appendChild(fb); }
+      fb.innerHTML=icon('back')+' Kembali';
+      var nid = (novelOf(route.slice(2))||{}).id;
+      fb.onclick = function(){ go(nid ? 'n-'+nid : 'baca'); };
+      fb.style.display = 'flex';
+  } else {
+      if(fb) fb.style.display = 'none';
+  }
+  
+  if(route.indexOf('tulis')===0 || route.indexOf('b-')===0) {
+      if(!fbtn) { fbtn=document.createElement('button'); fbtn.id='hn-format-btn'; fbtn.className='hn-float-btn'; document.body.appendChild(fbtn); }
+      fbtn.innerHTML=icon('quill');
+      fbtn.title = 'Formatting Options (Coming Soon)';
+      fbtn.style.display = 'flex';
+      fbtn.onclick = function(){ toast('Fitur formatting akan segera hadir!'); };
+  } else {
+      if(fbtn) fbtn.style.display = 'none';
+  }
+
   window.scrollTo(0,opts.keep?y:0);
   updateProg();
 }
@@ -986,8 +1030,9 @@ async function loadContent(){
     var hasRow=!!(sq.data&&sq.data.data);
     if(hasRow){
       var d=sq.data.data;
-      S.site=d.site||{tagline:'',synopsis:'',author:'',avatar:''};
+      S.site=d.site||{tagline:'',synopsis:'',author:'',avatar:'',logos:{home:'',top:''}};
       S.site.avatar=S.site.avatar||'';
+      S.site.logos=S.site.logos||{home:'',top:''};
       S.lore=d.lore||[];
       S.novels=d.novels||[];
     }
@@ -1389,7 +1434,6 @@ function writeToolbarHTML(){
   return bar;
 }
 
-/* Google-Docs/Word style wrap icons */
 var WRAP_ICONS = {
   inline:'<svg viewBox="0 0 18 18" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="6" width="5" height="5"/><line x1="8" y1="7" x2="16.5" y2="7"/><line x1="8" y1="10" x2="16.5" y2="10"/><line x1="1.5" y1="14" x2="16.5" y2="14"/></svg>',
   wrap:'<svg viewBox="0 0 18 18" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="1.5" width="6" height="6"/><line x1="9" y1="2.5" x2="16.5" y2="2.5"/><line x1="9" y1="4.5" x2="16.5" y2="4.5"/><line x1="9" y1="6.5" x2="16.5" y2="6.5"/><line x1="1.5" y1="9.5" x2="16.5" y2="9.5"/><line x1="1.5" y1="12" x2="16.5" y2="12"/><line x1="1.5" y1="14.5" x2="16.5" y2="14.5"/></svg>',
@@ -1403,7 +1447,6 @@ var SHADOW_ICONS = {
   '2':'<svg viewBox="0 0 18 18" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="10" height="10" fill="currentColor" fill-opacity=".28"/><rect x="4.5" y="4.5" width="11" height="11" opacity=".8"/></svg>'
 };
 
-/* === v2.0 Image toolbar — Google Docs / Word style === */
 function imageToolbarHTML(){
   var bar='<div class="rt-bar" data-mode="image" role="toolbar" aria-label="Alat gambar">';
   bar+='<div class="img-tools-wrap">';
@@ -1451,7 +1494,6 @@ function readRich(id){var a=document.getElementById(id);return a?cleanHtml(a.inn
 function getRtBar(){return document.querySelector('.rt-bar')}
 function getRtArea(){return document.querySelector('.rt-area')}
 
-/* === Fixed overlay handles (resize + rotate) === */
 function ensureImageOverlay(){
   var ov=document.getElementById('hn-img-overlay');
   if(!ov){
@@ -1568,7 +1610,6 @@ function syncImageToolbarFromState(){
 function setVal(id,v){var e=document.getElementById(id);if(e)e.value=v}
 function setTxt(id,t){var e=document.getElementById(id);if(e)e.textContent=t}
 
-/* === Apply image styles from data attributes === */
 function applyImageStyle(){
   if(!ieImg)return;
   var img=ieImg;
@@ -1610,9 +1651,10 @@ function applyImageStyle(){
     img.style.cssFloat = 'none';
     if(!sizeVal) img.style.width = 'auto';
   } else if(wrap==='wrap'||wrap==='tight'||wrap==='through'){
-    if(align==='left'){ img.style.cssFloat='left'; img.style.margin='0.3em 1em 0.5em 0'; }
-    else if(align==='right'){ img.style.cssFloat='right'; img.style.margin='0.3em 0 0.5em 1em'; }
-    else { img.style.display='block'; img.style.margin='1em auto'; img.style.cssFloat='none'; }
+    img.style.display = 'block';
+    if(align==='left'){ img.style.cssFloat='left'; img.style.margin='0.5em 1.5em 0.5em 0'; }
+    else if(align==='right'){ img.style.cssFloat='right'; img.style.margin='0.5em 0 0.5em 1.5em'; }
+    else { img.style.cssFloat='none'; img.style.margin='1em auto'; }
     if(!sizeVal) img.style.width = '40%';
   } else if(wrap==='behind'||wrap==='front'){
     img.style.position = 'absolute';
@@ -1668,7 +1710,6 @@ function imgReset(){
   toast('Gambar direset ke default.');
 }
 
-/* === Free drag with pointer events (mouse + touch) === */
 var imgDragState=null;
 function bindImageDrag(){
   if(!ieImg)return;
@@ -1794,7 +1835,13 @@ function modalFoot(label,extra){return '<div class="mfoot">'+(extra||'')+'<butto
 function val(id){var e=document.getElementById(id);return e?e.value:''}
 function readImage(file,max,q){
   return new Promise(function(res,rej){
-    if(/svg/.test(file.type)){var fr=new FileReader();fr.onload=function(){res(fr.result)};fr.onerror=rej;fr.readAsDataURL(file);return}
+    if(file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/webp'){
+      var fr = new FileReader();
+      fr.onload = function(){ res(fr.result) };
+      fr.onerror = rej;
+      fr.readAsDataURL(file);
+      return;
+    }
     var url=URL.createObjectURL(file),im=new Image();
     im.onload=function(){var w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,max/Math.max(w,h));w=Math.round(w*k);h=Math.round(h*k);var c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);URL.revokeObjectURL(url);res(c.toDataURL('image/jpeg',q))};
     im.onerror=function(){URL.revokeObjectURL(url);rej(new Error('img'))};
@@ -1905,7 +1952,7 @@ function helpModal(){
 }
 function aboutModal(){
   openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel statis yang menyimpan konten di Supabase. Fitur: perpustakaan novel dengan cover, daftar bab bervolume, mode penulis, impor dokumen, editor kaya dengan toolbar gambar langsung (drag/resize/rotate/free position), peta lokasi, lini masa, glosarium, dan lore dunia.</p>'
-    +'<p style="margin-top:10px">Versi 2.0 &middot; dibuat untuk para pencerita.</p>'
+    +'<p style="margin-top:10px">Versi 2.1 &middot; dibuat untuk para pencerita.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function contactModal(){
@@ -1996,12 +2043,18 @@ async function handleImport(files){
 }
 function logoSettingsModal(){
   if(!admin||!canEdit){toast('Login dan aktifkan Mode Penulis untuk mengatur logo.');return}
-  var logo=S.site.logo||'';
+  var homeLogo=S.site.logos?.home||'';
+  var topLogo=S.site.logos?.top||'';
   var h=modalHead('Identitas Logo Hollow Night','Logo ini digunakan pada seluruh bagian website.');
-  h+='<div style="display:grid;place-items:center;min-height:130px;background:var(--night);border-radius:10px;padding:16px;margin-bottom:14px"><img id="logo-preview" src="'+esc(logo||LOGO)+'" alt="Pratinjau logo" style="max-width:100%;max-height:130px;object-fit:contain"></div>';
-  h+='<div class="f"><label for="logo-file">Unggah logo baru</label><input class="in" id="logo-file" type="file" accept="image/*"><small class="hint">PNG transparan disarankan. Logo akan langsung diperbarui setelah disimpan.</small></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">';
+  h+='<div style="background:var(--night);border-radius:10px;padding:16px;text-align:center"><div style="color:var(--night-ink);font-size:12px;margin-bottom:8px">Logo Beranda</div><img id="logo-preview-home" src="'+esc(homeLogo||LOGO)+'" alt="Pratinjau logo home" style="max-width:100%;max-height:80px;object-fit:contain"></div>';
+  h+='<div style="background:var(--night);border-radius:10px;padding:16px;text-align:center"><div style="color:var(--night-ink);font-size:12px;margin-bottom:8px">Logo Top Bar</div><img id="logo-preview-top" src="'+esc(topLogo||LOGO)+'" alt="Pratinjau logo top" style="max-width:100%;max-height:80px;object-fit:contain"></div>';
+  h+='</div>';
+  h+='<div class="f"><label for="logo-file-home">Unggah logo beranda (transparan disarankan)</label><input class="in" id="logo-file-home" type="file" accept="image/*"></div>';
+  h+='<div class="f"><label for="logo-file-top">Unggah logo top bar (transparan disarankan)</label><input class="in" id="logo-file-top" type="file" accept="image/*"></div>';
   h+='<div class="mfoot"><button class="btn ghost" data-act="logo-reset">Pakai logo bawaan</button><button class="btn ghost" data-act="m-close">Batal</button><button class="btn" data-act="logo-save">Simpan Logo</button></div>';
-  openModal(h);window.hnLogoTemp=logo;
+  openModal(h);
+  window.hnLogoTemp = { home: homeLogo, top: topLogo };
 }
 function siteEditor(){
   openModal(modalHead('Sinopsis, tagline & profil')+field('Tagline di beranda','<input class="in" id="se-t" value="'+esc(S.site.tagline||'')+'" maxlength="120">','se-t')+field('Sinopsis (pisahkan paragraf dengan baris kosong)','<textarea class="in" id="se-s" rows="8">'+esc(S.site.synopsis||'')+'</textarea>','se-s')+field('Nama penulis (opsional)','<input class="in" id="se-a" value="'+esc(S.site.author||'')+'" maxlength="80">','se-a')+modalFoot('Simpan'),{
@@ -2024,6 +2077,7 @@ document.addEventListener('click',function(ev){
   switch(act){
     case 'save-now':if(pendingSave){persistNow()}else{toast('Semua perubahan sudah tersimpan.')}break;
     case 'toggle-admin':admin=!admin;lsSet('hn-admin',admin?'1':'0');render({keep:true});notify();toast(admin?'Mode Penulis AKTIF':'Mode Penulis NONAKTIF');break;
+    case 'toggle-menu-focus':{document.body.classList.toggle('is-editing');render({keep:true});break}
     case 'roll':roll();break;
     case 'cipher':{var cx=document.getElementById('cx'),on=el.getAttribute('data-on')==='1';cx.textContent=on?el.getAttribute('data-enc'):el.getAttribute('data-dec');el.setAttribute('data-on',on?'0':'1');break}
     case 'fs':{var f=clamp((parseInt(lsGet('hn-fs')||'18',10)||18)+(+el.getAttribute('data-d'))*1,15,26);lsSet('hn-fs',String(f));var b=document.querySelector('.reader .body');if(b)b.style.setProperty('--fs',f+'px');updateProg();break}
@@ -2075,8 +2129,8 @@ document.addEventListener('click',function(ev){
     case 'img-wrap':{if(!ieImg)break;ieImg.setAttribute('data-wrap',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
     case 'img-shadow':{if(!ieImg)break;ieImg.setAttribute('data-shadow',el.getAttribute('data-v'));applyImageStyle();syncImageToolbarFromState();break}
     case 'img-clear':{modalImg='';var pv=document.getElementById('if-prev');if(pv)pv.hidden=true;break}
-    case 'logo-reset':window.hnLogoTemp='';var lp=document.getElementById('logo-preview');if(lp)lp.src=LOGO;break;
-    case 'logo-save':{var lu=window.hnLogoTemp||'';commit(function(d){d.site.logo=lu},'Logo Hollow Night diperbarui').then(function(ok){if(ok){closeModal();render({keep:true});toast('Logo diperbarui di seluruh website.')}});break}
+    case 'logo-reset':window.hnLogoTemp={home:'',top:''};var lph=document.getElementById('logo-preview-home');if(lph)lph.src=LOGO;var lpt=document.getElementById('logo-preview-top');if(lpt)lpt.src=LOGO;break;
+    case 'logo-save':{var lu=window.hnLogoTemp||{home:'',top:''};commit(function(d){d.site.logos=lu},'Logo Hollow Night diperbarui').then(function(ok){if(ok){closeModal();render({keep:true});toast('Logo diperbarui di seluruh website.')}});break}
     case 'pf-clear':{commit(function(d){d.site.avatar=''},'Foto profil dihapus').then(function(){profileModal()});break}
     case 'm-close':closeModal();break;
     case 'm-save':if(modalCtx&&modalCtx.save)modalCtx.save();break;
@@ -2123,8 +2177,11 @@ document.addEventListener('change',function(ev){
       modalImg=u;var pv=document.getElementById('if-prev');if(pv){pv.src=u;pv.hidden=false}
     }).catch(function(){toast('Gambar tidak bisa dibaca.')});
   }
-  if(t.id==='logo-file'&&t.files[0]){
-    readImage(t.files[0],1800,.9).then(function(u){if(u.length>2200000){toast('Logo terlalu besar. Pilih gambar lebih kecil.');return}window.hnLogoTemp=u;var lp=document.getElementById('logo-preview');if(lp)lp.src=u}).catch(function(){toast('Gambar tidak bisa dibaca.')});
+  if(t.id==='logo-file-home'&&t.files[0]){
+    readImage(t.files[0],1800,.9).then(function(u){window.hnLogoTemp.home=u;var lp=document.getElementById('logo-preview-home');if(lp)lp.src=u}).catch(function(){toast('Gambar tidak bisa dibaca.')});
+  }
+  if(t.id==='logo-file-top'&&t.files[0]){
+    readImage(t.files[0],1800,.9).then(function(u){window.hnLogoTemp.top=u;var lp=document.getElementById('logo-preview-top');if(lp)lp.src=u}).catch(function(){toast('Gambar tidak bisa dibaca.')});
   }
   if(t.id==='pf-file'&&t.files[0]){
     readImage(t.files[0],512,.85).then(function(u){
