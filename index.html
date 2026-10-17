@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
-/* Hollow Night v2.1 — Morphing Top Bar & Fixed Toolbars */
+/* Hollow Night v2.2 — Bar Utama Dilipat, Editor A4 Berhalaman & Toolbar Tetap */
 .rt{border:0;background:transparent;overflow:visible;display:flex;flex-direction:column;gap:12px}
 .rt-bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);border:1px solid var(--paper-edge);border-radius:12px;box-shadow:0 5px 18px rgba(0,0,0,.13);padding:10px;background:var(--paper);gap:5px;z-index:15}
 .rt-bar[data-mode="image"]{border:1px solid var(--gold);border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.16);background:var(--paper)}
@@ -7,22 +7,11 @@
 .editor-page .rt-bar{top:calc(env(safe-area-inset-top,0px) + 12px)}
 @media(max-width:680px){.rt-bar{top:calc(env(safe-area-inset-top,0px) + 12px);padding:7px}.rt-area{padding:14px;min-height:360px}.img-group{max-width:100%;height:auto;min-height:38px;flex-wrap:wrap}.img-slider input[type=range]{width:78px}}
 
-/* Morphing Top Bar Styles */
-body.is-editing .top { pointer-events: none; }
-body.is-editing .top .bar { pointer-events: auto; width: fit-content; margin: 0 auto; padding: 6px 12px; gap: 12px; border-radius: 999px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-body.is-editing .brand, body.is-editing .tabs { display: none; }
-body.is-editing .top { top: calc(env(safe-area-inset-top,0px) + 12px); position: fixed; left: 50%; transform: translateX(-50%); width: auto; z-index: 50; }
-body.is-editing .morph-menu-btn { display: flex !important; }
-body.is-editing .admin-tools { display: flex; gap: 8px; background: rgba(0,0,0,0.3); padding: 4px; border-radius: 999px; }
-body:not(.is-editing) .admin-tools { display: flex; align-items: center; gap: 8px; }
-.morph-menu-btn { display: none; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 0; color: var(--night-ink); cursor: pointer; }
-.morph-menu-btn:hover { background: rgba(255,255,255,0.2); }
-
 /* Floating Action Buttons */
 .hn-float-btn { position: fixed; z-index: 100; border-radius: 999px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-family: var(--f-ui); transition: transform 0.2s; }
 .hn-float-btn:hover { transform: translateY(-2px); }
 #hn-back-btn { bottom: 24px; left: 24px; background: var(--paper); color: var(--ink); border: 2px solid var(--paper-edge); padding: 10px 18px; font-size: 0.9rem; }
-#hn-format-btn { bottom: 24px; right: 24px; background: #8b5cf6; color: white; border: 0; width: 56px; height: 56px; padding: 0; }
+#hn-format-btn { top: calc(env(safe-area-inset-top,0px) + 12px); right: max(12px, env(safe-area-inset-right,0px)); background: #8b5cf6; color: white; border: 0; width: 56px; height: 56px; padding: 0; }
 #hn-format-btn svg { width: 24px; height: 24px; }
 
 /* Text Wrapping Fixes */
@@ -99,11 +88,22 @@ p{margin:0}
 .kicker{font:800 .72rem/1 var(--f-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
 .num{font-variant-numeric:tabular-nums}
 
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;padding-top:12px;max-width:1120px;margin:0 auto;transition:all .4s ease}
-.bar{position:relative;display:flex;align-items:center;gap:8px;background:var(--night);color:var(--night-ink);border-radius:16px;padding:6px 10px;box-shadow:var(--shadow);overflow:visible;transition:all .4s ease}
+.top{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);left:max(12px,env(safe-area-inset-left,0px));z-index:50;display:flex;flex-direction:column;align-items:flex-start;gap:8px;max-width:calc(100vw - 24px);margin:0;padding:0}
+.top.open{z-index:110}
+.top-row{display:flex;align-items:center;gap:8px;max-width:100%}
+.bar{position:relative;display:flex;align-items:center;background:var(--night);color:var(--night-ink);border-radius:999px;padding:3px;box-shadow:var(--shadow);overflow:visible;min-width:0}
+.bar-toggle{flex:none;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:transparent;border:0;color:var(--night-ink);cursor:pointer;transition:background .15s,color .15s}
+.bar-toggle:hover{background:rgba(255,255,255,.08)}
+.bar-toggle[aria-expanded="true"]{background:rgba(242,193,78,.18);color:var(--gold)}
+.bar-toggle svg{width:22px;height:22px}
+.bar-panel{min-width:0;overflow:hidden;max-width:0;opacity:0;visibility:hidden;transition:max-width .42s cubic-bezier(.22,.8,.3,1),max-height .42s cubic-bezier(.22,.8,.3,1),opacity .22s ease,visibility 0s linear .42s}
+.bar-panel.settled{overflow:visible}
+.top.open .bar-panel{opacity:1;visibility:visible;transition:max-width .42s cubic-bezier(.22,.8,.3,1),max-height .42s cubic-bezier(.22,.8,.3,1),opacity .3s ease .08s,visibility 0s}
+.top.no-anim *{transition:none!important}
+.bar-in{display:flex;align-items:center;gap:4px;padding:0 8px 0 4px;white-space:nowrap}
 .brand{display:block;flex:none;padding:4px 6px}
 .brand img{display:block;height:38px;width:auto}
-.tabs{display:flex;gap:2px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none;padding:2px}
+.tabs{display:flex;gap:2px;flex:none;padding:2px}
 .tabs::-webkit-scrollbar{display:none}
 .tab{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:10px;color:var(--night-ink);text-decoration:none;font:700 .88rem/1 var(--f-ui);white-space:nowrap;transition:background .15s}
 .tab svg{width:18px;height:18px;flex:none}
@@ -114,12 +114,14 @@ p{margin:0}
 .adm[aria-pressed="true"]{background:var(--gold);color:#1B1208;border-color:var(--gold)}
 .adm.saveall{background:var(--gold);color:#1B1208;border-color:var(--gold);animation:hnGlow 2s ease-in-out infinite}
 @keyframes hnGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,193,78,.5)}50%{box-shadow:0 0 0 6px rgba(242,193,78,0)}}
-.prog{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);width:0;border-radius:0 0 16px 16px}
-@media (max-width:760px){
-  .bar{flex-wrap:wrap}
-  .tabs{order:3;flex:1 0 100%}
-  .brand{margin-right:auto}
+.prog{position:fixed;left:0;top:env(safe-area-inset-top,0px);height:3px;background:var(--gold);width:0;z-index:70}
+@media (max-width:1100px){
+  .bar-panel{position:absolute;left:0;top:calc(100% + 8px);width:min(340px,calc(100vw - 24px));max-width:none;max-height:0;background:var(--night);border-radius:18px;box-shadow:var(--shadow)}
+  .bar-in{flex-direction:column;align-items:stretch;white-space:normal;gap:2px;padding:10px}
+  .tabs{flex-direction:column}
+  .brand{align-self:flex-start}
   .brand img{height:32px}
+  .menu-wrap{align-self:flex-end}
 }
 .save-indicator{
   flex:none;display:flex;align-items:center;justify-content:center;
@@ -160,7 +162,8 @@ p{margin:0}
 .menu-item small{display:block;color:var(--ink-soft);font-weight:600;font-size:.74rem;margin-top:1px}
 .menu-sep{height:1px;margin:6px 8px;background:var(--line)}
 
-main.shell{padding-block:22px 28px}
+main.shell{padding-block:78px 28px}
+body.has-adm main.shell{padding-top:122px}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 18px;border-radius:10px;border:2px solid transparent;font:800 .92rem/1.1 var(--f-ui);text-decoration:none;background:var(--red);color:var(--on-red);box-shadow:0 3px 0 rgba(0,0,0,.28);transition:transform .12s,box-shadow .12s}
 .btn:hover{transform:translateY(-1px)}
@@ -435,6 +438,25 @@ select.in{appearance:auto}
 
 .editor-page{max-width:900px;margin:0 auto}
 .editor-page .rd-tools{position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px);z-index:10;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line)}
+
+/* ===== v2.2 : kontrol pojok atas ===== */
+.top-row .save-indicator{min-height:44px;padding:0 14px;background:var(--night);border:1.5px solid rgba(235,217,180,.22);box-shadow:var(--shadow)}
+.top-adm{display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
+.top-adm .adm{white-space:nowrap;box-shadow:var(--shadow)}
+.top-adm .adm:not([aria-pressed="true"]):not(.saveall){background:var(--night)}
+
+/* ===== v2.2 : editor bab A4 berhalaman ===== */
+.rt.rt-doc{border:0;background:transparent;gap:0;overflow:visible}
+.editor-page .rt-doc>.rt-bar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 108px);margin:0 0 24px;border:1px solid var(--paper-edge);border-radius:12px;background:var(--paper);box-shadow:0 10px 24px -8px rgba(0,0,0,.4),0 0 0 5px rgba(0,0,0,.05);z-index:15}
+.editor-page .rt-doc>.rt-bar[data-mode="image"]{border-color:var(--gold)}
+@media (min-width:1560px){.editor-page .rt-doc>.rt-bar{top:calc(env(safe-area-inset-top,0px) + 12px)}}
+.doc-stage{position:relative;width:100%;overflow-x:clip}
+.doc-scale{position:absolute;top:0;left:50%;width:794px;margin-left:-397px;transform-origin:top center}
+.doc-pages{position:absolute;inset:0;z-index:0;pointer-events:none}
+.doc-pg{position:absolute;left:0;width:100%;box-sizing:border-box;background:var(--field);border:1px solid var(--paper-edge);border-radius:2px;box-shadow:0 1px 0 rgba(42,27,18,.12),0 16px 32px -14px rgba(42,27,18,.55)}
+.rt-doc .rt-area{position:relative;z-index:1;width:794px;max-width:none;box-sizing:border-box;min-height:1123px;max-height:none;overflow:visible;padding:96px;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.rt-doc .rt-area:focus{background:transparent}
+.rt-doc .rt-area>[data-pgp]{margin-top:var(--pgpush)!important}
 </style>
 <div id="app"></div>
 <script type="application/json" id="hn-data">{"v": 1, "site": {"tagline": "Selamat datang, petualang. Malam belum usai.", "synopsis": "Ini sinopsis contoh. Tulis ringkasan cerita Hollow Night di sini.\n\nBuka Mode Penulis lalu tekan Ubah untuk menggantinya dengan sinopsis novelmu.", "author": "", "avatar": "", "logos": {"home": "", "top": ""}}, "novels": [], "chapters": [{"id": "cdemo01", "n": 1, "vol": "", "title": "Selamat datang di Hollow Night", "example": true, "t": 1, "body": "\u003cp>Ini bab contoh supaya kamu bisa melihat bagaimana tampilan membaca di web ini. Huruf pertama dibuat besar seperti halaman buku dongeng.\u003c/p>\u003cp>Untuk mengganti bab ini, buka \u003cstrong>Mode Penulis\u003c/strong>, lalu pilih \u003cem>Impor dari PDF / Word\u003c/em> atau \u003cem>Tulis bab baru\u003c/em>. Bab contoh ini bisa dihapus kapan saja.\u003c/p>\u003chr>\u003cp>Pembaca bisa mengatur ukuran huruf dengan tombol A- dan A+, dan web ini mengingat bab terakhir yang mereka buka.\u003c/p>\u003cblockquote>\u003cp>Kutipan juga bisa ditulis di dalam bab, misalnya untuk surat, mantra, atau catatan harian.\u003c/p>\u003c/blockquote>"}], "lore": [{"id": "edemo01", "type": "world", "cat": "Wilayah", "title": "Tempat contoh", "example": true, "t": 1, "summary": "Satu kalimat tentang tempat ini, seperti catatan tangan di pinggir halaman.", "img": "", "body": "\u003cp>Tulis detail tempat, sejarah, atau aturan dunia di sini. Kamu bisa menambah gambar, kategori, dan teks panjang.\u003c/p>"}, {"id": "edemo02", "type": "char", "title": "Tokoh Contoh", "role": "Protagonis", "cls": "Ranger, Elf", "align": "Chaotic Good", "stats": [10, 17, 12, 14, 13, 8], "summary": "Satu kalimat yang menggambarkan tokoh ini.", "secret": "Ini rahasia contoh yang tersembunyi sampai pembaca mengklik kotaknya. Cocok untuk spoiler.", "img": "", "example": true, "t": 2, "body": "\u003cp>Tulis biografi tokoh di sini. Statistik ala DnD itu opsional, kosongkan kalau tidak perlu.\u003c/p>"}, {"id": "edemo03", "type": "map", "title": "Peta contoh", "example": true, "t": 3, "summary": "Klik pin bernomor untuk membaca catatan tiap lokasi.", "img": "", "body": "", "pins": [{"x": 23, "y": 50, "t": "Desa contoh", "d": "Catatan tentang lokasi ini muncul saat pembaca mengklik pin."}, {"x": 62, "y": 68, "t": "Danau contoh", "d": "Tulis rahasia, bahaya, atau kejadian penting di sini."}, {"x": 70, "y": 22, "t": "Gunung contoh", "d": "Setiap pin bisa diberi nama dan catatan sendiri."}]}, {"id": "edemo04", "type": "time", "title": "Peristiwa pertama", "when": "Dahulu kala", "ord": 1, "example": true, "t": 4, "summary": "Kejadian paling awal dalam sejarah dunia ini.", "body": ""}, {"id": "edemo05", "type": "time", "title": "Peristiwa kedua", "when": "Beberapa tahun kemudian", "ord": 2, "example": true, "t": 5, "summary": "Kejadian berikutnya. Urutan diatur dengan angka.", "body": ""}, {"id": "edemo06", "type": "gloss", "title": "Hollow", "example": true, "t": 6, "summary": "Istilah contoh. Tulis arti istilah khas dunia ceritamu di sini."}, {"id": "edemo07", "type": "gloss", "title": "Glosarium", "example": true, "t": 7, "summary": "Daftar istilah ini tersusun otomatis menurut abjad dan bisa dicari."}]}</script>
@@ -622,10 +644,12 @@ function valid(r){
 }
 function go(r){
   if(!valid(r))r='home';
+  var wasOpen=barOpen;
   pinMode=false;selPin=-1;
   ieImg=null;
   try{if(location.hash.slice(1)!==r)location.hash=r}catch(e){}
   route=r;render();
+  if(wasOpen)barCollapseAfterRender();
 }
 function curTab(){
   if(route.indexOf('b-')===0)return 'baca';
@@ -635,32 +659,30 @@ function curTab(){
   return route;
 }
 function topbar(){
-  var tab=curTab(),h='<header class="top"><div class="bar">';
-  
-  h+='<button class="morph-menu-btn" data-act="toggle-menu-focus" aria-label="Menu">'+icon('dots')+'</button>';
-  
+  var tab=curTab(),h='<header class="top" id="top"><div class="top-row"><div class="bar" id="bar">';
+  h+='<button class="bar-toggle" type="button" data-act="bar-toggle" aria-label="Buka menu utama" aria-expanded="false" aria-controls="bar-panel">'+icon('dots')+'</button>';
+  h+='<div class="bar-panel" id="bar-panel"><div class="bar-in">';
   h+='<a class="brand" href="#home" data-go="home" aria-label="Hollow Night, beranda"><img src="'+esc(S.site.logos?.top||S.site.logo||LOGO)+'" alt="Hollow Night"></a>';
-  
   h+='<nav class="tabs" aria-label="Menu utama">';
   TABS.forEach(function(t){h+='<a class="tab" href="#'+t[0]+'" data-go="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'>'+icon(t[2])+'<span>'+t[1]+'</span></a>'});
-  h+='</nav>';
-  
-  h+='<div class="admin-tools">';
+  h+='</nav>'+moreMenu()+'</div></div></div>';
   if(canEdit){
     var lightCls = pendingSave ? 'save-light dirty' : 'save-light';
     var lightTitle = pendingSave ? 'Ada perubahan belum disimpan' : 'Semua perubahan tersimpan';
     h+='<span class="save-indicator" title="'+lightTitle+'" aria-label="'+lightTitle+'"><span class="'+lightCls+'" aria-hidden="true"></span></span>';
-    if(admin)h+='<button class="adm" type="button" data-act="menu-item" data-m="logo" title="Pengaturan logo">Logo</button>';
+  }
+  h+='</div>';
+  if(canEdit){
+    h+='<div class="top-adm">';
     h+='<button class="adm mode-btn" type="button" data-act="toggle-admin" aria-pressed="'+(admin?'true':'false')+'" title="Aktif/nonaktifkan alat edit">'+icon('quill')+'<span>Mode Penulis</span></button>';
     if(pendingSave){
       h+='<button class="adm saveall" type="button" data-act="save-now" title="Simpan semua perubahan sekarang">'+icon('upload')+'<span>Simpan</span></button>';
     }
+    if(admin)h+='<button class="adm" type="button" data-act="menu-item" data-m="logo" title="Pengaturan logo">Logo</button>';
+    h+='</div>';
   }
-  h+='</div>';
-  
-  h+=moreMenu();
   if(route.indexOf('b-')===0)h+='<div class="prog" id="prog"></div>';
-  return h+'</div></header>';
+  return h+'</header>';
 }
 function moreMenu(){
   var items=[
@@ -832,9 +854,6 @@ function vChapterEditor(id){
   var ns=novels();
   var h='<div class="editor-page">';
   var backTo = nid ? '#n-'+nid : '#baca';
-  h+='<a class="back" href="'+backTo+'" data-go="'+backTo.slice(1)+'">'+icon('back').replace('<svg','<svg width="16" height="16"')+(nid?'Kembali ke novel':'Kembali')+'</a>';
-  h+='<h1 style="margin:6px 0 6px">'+(c?'Edit Isi Chapter':'Bab Baru')+'</h1>';
-  if(c)h+='<p class="hint" style="margin-bottom:18px;color:var(--ink-soft)">Naskah: Bab '+esc(c.n)+' — '+esc(c.title)+'. Identitas bab diubah lewat tombol “Ubah Bab” pada daftar isi.</p>';
   if(!c){
     h+='<div class="f2">';
     h+=field('Judul bab','<input class="in" id="ce-t" value="" maxlength="140" placeholder="Judul bab">','ce-t');
@@ -845,7 +864,7 @@ function vChapterEditor(id){
     h+='</div>';
     h+=field('Novel','<select class="in" id="ce-novel">'+ns.map(function(n){return '<option value="'+esc(n.id)+'"'+(n.id===nid?' selected':'')+'>'+esc(n.title)+'</option>'}).join('')+'</select>','ce-novel');
   }
-  h+='<div class="f"><span class="lb">Isi bab</span>'+richBox('ce-b',c?c.body:'')+'</div>';
+  h+=richBox('ce-b',c?c.body:'',true);
   h+='<div class="acts" style="justify-content:flex-end;margin-top:18px">';
   if(c)h+='<button class="btn ghost" type="button" data-act="ch-del-from-editor" data-id="'+c.id+'" style="margin-right:auto;color:var(--red);border-color:var(--red)">Hapus bab</button>';
   h+='<button class="btn ghost" type="button" data-act="ch-cancel">Batal</button>';
@@ -949,11 +968,11 @@ function render(opts){
   var body;
   try{body=view()}catch(err){console.error(err);body='<section class="sheet"><h1>Ups</h1><p>Halaman ini gagal dimuat.</p></section>'}
   
-  var isEditingMode = route.indexOf('tulis')===0 || route.indexOf('b-')===0 || route.indexOf('babmeta-')===0;
-  document.body.classList.toggle('is-editing', isEditingMode);
-  
+  document.body.classList.toggle('has-adm',!!canEdit);
+  barOpen=false;
   APP.innerHTML=topbar()+'<main class="shell" id="main">'+body+'</main>'+footer();
-  
+  docInit();
+
   var fb = document.getElementById('hn-back-btn');
   var fbtn = document.getElementById('hn-format-btn');
   
@@ -1486,10 +1505,21 @@ function imageToolbarHTML(){
   return bar;
 }
 
-function richBox(id,html){
-  return '<div class="rt">'+writeToolbarHTML()+'<div class="rt-area" id="'+id+'" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Isi">'+(html||'<p><br></p>')+'</div></div>';
+function richBox(id,html,doc){
+  var area='<div class="rt-area" id="'+id+'" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Isi">'+(html||'<p><br></p>')+'</div>';
+  if(doc)return '<div class="rt rt-doc">'+writeToolbarHTML()+'<div class="doc-stage" id="doc-stage"><div class="doc-scale" id="doc-scale"><div class="doc-pages" aria-hidden="true"></div>'+area+'</div></div></div>';
+  return '<div class="rt">'+writeToolbarHTML()+area+'</div>';
 }
-function readRich(id){var a=document.getElementById(id);return a?cleanHtml(a.innerHTML):''}
+function readRich(id){
+  var a=document.getElementById(id);if(!a)return '';
+  var c=a.cloneNode(true);
+  c.querySelectorAll('[data-pgp]').forEach(function(el){
+    el.removeAttribute('data-pgp');el.style.removeProperty('--pgpush');
+    if(!el.getAttribute('style'))el.removeAttribute('style');
+  });
+  c.querySelectorAll('.doc-pg,[data-pg]').forEach(function(x){x.remove()});
+  return cleanHtml(c.innerHTML);
+}
 
 function getRtBar(){return document.querySelector('.rt-bar')}
 function getRtArea(){return document.querySelector('.rt-area')}
@@ -1664,7 +1694,7 @@ function applyImageStyle(){
     if(align==='left'){ img.style.left='4%'; img.style.right='auto'; }
     else if(align==='right'){ img.style.left='auto'; img.style.right='4%'; }
     else { img.style.left='50%'; img.style.right='auto'; img.style.transform='translate(calc(-50% + '+ox+'px),'+oy+'px) rotate('+rot+'deg)'; }
-    img.style.top = '20%';
+    img.style.top = 'auto';
     if(!sizeVal) img.style.width = '50%';
     if(wrap==='behind' && !opVal) img.style.opacity = '0.55';
   } else { // none / top-bottom
@@ -1675,6 +1705,7 @@ function applyImageStyle(){
   }
 
   positionImageOverlay();
+  docSchedule();
 }
 
 function imgDeleteNow(){
@@ -1730,8 +1761,9 @@ function bindImageDrag(){
   img.addEventListener('pointermove',function(ev){
     if(!imgDragState||imgDragState.img!==img)return;
     ev.preventDefault();
-    var nx=Math.round(imgDragState.ox0+ev.clientX-imgDragState.startX);
-    var ny=Math.round(imgDragState.oy0+ev.clientY-imgDragState.startY);
+    var dsc=docScale();
+    var nx=Math.round(imgDragState.ox0+(ev.clientX-imgDragState.startX)/dsc);
+    var ny=Math.round(imgDragState.oy0+(ev.clientY-imgDragState.startY)/dsc);
     nx=clamp(nx,-500,500);ny=clamp(ny,-500,500);
     img.setAttribute('data-offset-x',nx);
     img.setAttribute('data-offset-y',ny);
@@ -1952,7 +1984,7 @@ function helpModal(){
 }
 function aboutModal(){
   openModal(modalHead('Tentang Hollow Night')+'<p>Hollow Night adalah aplikasi web novel statis yang menyimpan konten di Supabase. Fitur: perpustakaan novel dengan cover, daftar bab bervolume, mode penulis, impor dokumen, editor kaya dengan toolbar gambar langsung (drag/resize/rotate/free position), peta lokasi, lini masa, glosarium, dan lore dunia.</p>'
-    +'<p style="margin-top:10px">Versi 2.1 &middot; dibuat untuk para pencerita.</p>'
+    +'<p style="margin-top:10px">Versi 2.2 &middot; dibuat untuk para pencerita.</p>'
     +'<div class="mfoot"><button class="btn ghost" type="button" data-act="m-close">Tutup</button></div>');
 }
 function contactModal(){
@@ -1986,6 +2018,104 @@ function armDelete(btn,fn){
   if(armed){clearTimeout(armed.t);armed.btn.textContent=armed.label}
   var label=btn.textContent;btn.textContent='Yakin hapus?';
   armed={btn:btn,label:label,t:setTimeout(function(){btn.textContent=label;armed=null},3500)};
+}
+var barOpen=false,BAR_MQ='(max-width:1100px)';
+function barFit(panel,vert){
+  if(vert){panel.style.maxWidth='none';panel.style.maxHeight=panel.scrollHeight+'px'}
+  else{panel.style.maxHeight='none';panel.style.maxWidth=panel.scrollWidth+'px'}
+}
+function barSet(open){
+  var top=document.getElementById('top'),panel=document.getElementById('bar-panel');
+  if(!top||!panel)return;
+  var tg=top.querySelector('.bar-toggle'),vert=window.matchMedia(BAR_MQ).matches;
+  barOpen=!!open;
+  panel.classList.remove('settled');
+  if(open){
+    top.classList.add('open');
+    barFit(panel,vert);
+  }else{
+    top.classList.remove('open');
+    if(vert){panel.style.maxWidth='none';panel.style.maxHeight='0px'}
+    else{panel.style.maxHeight='none';panel.style.maxWidth='0px'}
+    closeMenu();
+  }
+  if(tg){tg.setAttribute('aria-expanded',open?'true':'false');tg.setAttribute('aria-label',open?'Tutup menu utama':'Buka menu utama')}
+}
+function barRefit(){var p=document.getElementById('bar-panel');if(p&&barOpen)barFit(p,window.matchMedia(BAR_MQ).matches)}
+function barCollapseAfterRender(){
+  var top=document.getElementById('top'),panel=document.getElementById('bar-panel');
+  if(!top||!panel)return;
+  top.classList.add('no-anim');
+  barSet(true);
+  panel.classList.add('settled');
+  void panel.offsetWidth;
+  top.classList.remove('no-anim');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){barSet(false)})});
+}
+document.addEventListener('transitionend',function(ev){
+  var t=ev.target;
+  if(t&&t.id==='bar-panel'&&barOpen&&(ev.propertyName==='max-width'||ev.propertyName==='max-height'))t.classList.add('settled');
+});
+
+var DOC={W:794,H:1123,G:32,M:96},docRaf=0,docObs=null;
+function docScale(){var sc=document.getElementById('doc-scale');return sc?(parseFloat(sc.getAttribute('data-s'))||1):1}
+function docSchedule(){
+  if(docRaf)return;
+  if(!document.querySelector('.rt-doc .rt-area'))return;
+  docRaf=requestAnimationFrame(docPaginate);
+}
+function docPaginate(){
+  docRaf=0;
+  var area=document.querySelector('.rt-doc .rt-area'),stage=document.getElementById('doc-stage'),sc=document.getElementById('doc-scale');
+  if(!area||!stage||!sc)return;
+  var pages=sc.querySelector('.doc-pages');
+  var P=DOC.H,G=DOC.G,M=DOC.M,PG=P+G,CH=P-2*M;
+  var s=Math.min(1,(stage.clientWidth||DOC.W)/DOC.W);
+  sc.setAttribute('data-s',s);
+  sc.style.transform=s<1?'scale('+s+')':'';
+  var kids=[].slice.call(area.children);
+  kids.forEach(function(el){
+    if(el.hasAttribute('data-pgp')){el.removeAttribute('data-pgp');el.style.removeProperty('--pgpush');if(!el.getAttribute('style'))el.removeAttribute('style')}
+  });
+  area.style.minHeight='0px';
+  var flow=kids.filter(function(el){
+    var cs=getComputedStyle(el);
+    return cs.position!=='absolute'&&cs.position!=='fixed'&&cs.float==='none'&&cs.display!=='none';
+  });
+  var S=0,prevBottom=null,pushes=[];
+  flow.forEach(function(el){
+    var top=el.offsetTop,h=el.offsetHeight,bottom=top+h;
+    var tS=top+S,bS=bottom+S;
+    var k=Math.floor(tS/PG),endK=k*PG+P-M;
+    if(prevBottom!==null&&bS>endK+0.5&&h<=CH){
+      var next=(k+1)*PG+M;
+      pushes.push([el,next-(prevBottom+S)]);
+      S=next-top;
+    }
+    prevBottom=bottom;
+  });
+  pushes.forEach(function(x){x[0].setAttribute('data-pgp','1');x[0].style.setProperty('--pgpush',Math.round(x[1])+'px')});
+  var n=Math.max(1,Math.ceil((area.offsetHeight+G)/PG));
+  var total=n*P+(n-1)*G;
+  area.style.minHeight=total+'px';
+  stage.style.height=Math.ceil(total*s)+'px';
+  if(pages.children.length!==n){
+    var html='';
+    for(var i=0;i<n;i++)html+='<div class="doc-pg" style="top:'+(i*PG)+'px;height:'+P+'px"></div>';
+    pages.innerHTML=html;
+  }
+  if(ieImg)positionImageOverlay();
+}
+function docInit(){
+  if(docObs){docObs.disconnect();docObs=null}
+  var area=document.querySelector('.rt-doc .rt-area');
+  if(!area)return;
+  docObs=new MutationObserver(docSchedule);
+  docObs.observe(area,{childList:true,subtree:true,characterData:true});
+  area.addEventListener('load',docSchedule,true);
+  area.addEventListener('input',docSchedule);
+  docPaginate();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(docSchedule);
 }
 function closeMenu(){var p=document.getElementById('menu-pop');if(p)p.hidden=true;var b=document.querySelector('.menu-btn');if(b)b.setAttribute('aria-expanded','false')}
 
@@ -2063,6 +2193,7 @@ function siteEditor(){
 }
 
 document.addEventListener('click',function(ev){
+  if(barOpen&&!ev.target.closest('#bar'))barSet(false);
   var a=ev.target.closest('[data-go]');
   if(a&&!ev.target.closest('[data-act]')){
     if(pendingSave&&!autoSave){
@@ -2077,7 +2208,7 @@ document.addEventListener('click',function(ev){
   switch(act){
     case 'save-now':if(pendingSave){persistNow()}else{toast('Semua perubahan sudah tersimpan.')}break;
     case 'toggle-admin':admin=!admin;lsSet('hn-admin',admin?'1':'0');render({keep:true});notify();toast(admin?'Mode Penulis AKTIF':'Mode Penulis NONAKTIF');break;
-    case 'toggle-menu-focus':{document.body.classList.toggle('is-editing');render({keep:true});break}
+    case 'bar-toggle':{barSet(!barOpen);if(barOpen&&ev.detail===0){var f1=document.querySelector('#bar-panel .tab');if(f1)f1.focus()}break}
     case 'roll':roll();break;
     case 'cipher':{var cx=document.getElementById('cx'),on=el.getAttribute('data-on')==='1';cx.textContent=on?el.getAttribute('data-enc'):el.getAttribute('data-dec');el.setAttribute('data-on',on?'0':'1');break}
     case 'fs':{var f=clamp((parseInt(lsGet('hn-fs')||'18',10)||18)+(+el.getAttribute('data-d'))*1,15,26);lsSet('hn-fs',String(f));var b=document.querySelector('.reader .body');if(b)b.style.setProperty('--fs',f+'px');updateProg();break}
@@ -2135,7 +2266,7 @@ document.addEventListener('click',function(ev){
     case 'm-close':closeModal();break;
     case 'm-save':if(modalCtx&&modalCtx.save)modalCtx.save();break;
     case 'menu':{var mp=document.getElementById('menu-pop'),open=el.getAttribute('aria-expanded')==='true';closeMenu();if(!open){mp.hidden=false;el.setAttribute('aria-expanded','true')}break}
-    case 'menu-item':{var m=el.getAttribute('data-m');closeMenu();if(m==='profile')profileModal();else if(m==='social')socialModal();else if(m==='help')helpModal();else if(m==='about')aboutModal();else if(m==='contact')contactModal();else if(m==='settings')settingsModal();else if(m==='logo')logoSettingsModal();break}
+    case 'menu-item':{var m=el.getAttribute('data-m');closeMenu();barSet(false);if(m==='profile')profileModal();else if(m==='social')socialModal();else if(m==='help')helpModal();else if(m==='about')aboutModal();else if(m==='contact')contactModal();else if(m==='settings')settingsModal();else if(m==='logo')logoSettingsModal();break}
     case 'ct-send':{var em=val('ct-e').trim(),msg=val('ct-m').trim();if(!em||!msg){toast('Isi email dan pesan dulu.');return}closeModal();toast('Pesanmu tercatat. Terima kasih!');break}
     case 'st-save':{var th=val('st-theme');lsSet('hn-theme',th);if(th==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',th);var fs=clamp(parseInt(val('st-fs'),10)||18,15,26);lsSet('hn-fs',String(fs));var rbody=document.querySelector('.reader .body');if(rbody)rbody.style.setProperty('--fs',fs+'px');var asv=val('st-as');autoSave=(asv!=='off');lsSet('hn-autosave',autoSave?'1':'0');closeModal();render({keep:true});toast('Pengaturan tersimpan. Auto-save: '+(autoSave?'AKTIF':'NONAKTIF'));break}
   }
@@ -2196,7 +2327,7 @@ document.addEventListener('change',function(ev){
 });
 document.addEventListener('mousedown',function(ev){if(ev.target.closest('.rtb'))ev.preventDefault()});
 document.addEventListener('keydown',function(ev){
-  if(ev.key==='Escape'){closeModal();closeMenu();if(ieImg)exitImageMode()}
+  if(ev.key==='Escape'){closeModal();closeMenu();if(ieImg)exitImageMode();if(barOpen){barSet(false);var tgl=document.querySelector('.bar-toggle');if(tgl)tgl.focus()}}
   if((ev.ctrlKey||ev.metaKey)&&(ev.key==='s'||ev.key==='S')){
     if(canEdit&&(pendingSave||autoSave===false)){ev.preventDefault();persistNow()}
   }
@@ -2222,7 +2353,7 @@ function filterLore(){
 }
 var tick=false;
 window.addEventListener('scroll',function(){if(tick)return;tick=true;requestAnimationFrame(function(){tick=false;updateProg();if(ieImg)positionImageOverlay()})},{passive:true});
-window.addEventListener('resize',function(){if(ieImg)positionImageOverlay()});
+window.addEventListener('resize',function(){if(ieImg)positionImageOverlay();barRefit();docSchedule()});
 window.addEventListener('hashchange',function(){
   var h=location.hash.slice(1);
   if(h&&h!==route&&valid(h)){
